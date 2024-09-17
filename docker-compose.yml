@@ -1,0 +1,79 @@
+version: "3.2"
+services:
+    cims_backend:
+        build:
+            context: ./backend
+        container_name: "cims"
+        command: sh -c "php artisan serve --host=0.0.0.0 && npm run dev"
+        # command: sh -c "php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
+        user: "www-data"
+        volumes:
+            - ./backend:/app
+            - ./backend/storage:/app/storage
+            - ./backend/bootstrap/cache:/app/bootstrap/cache
+            - ./backend/composer.json:/app/composer.json # Adjust to match the correct path to your composer.json
+        # ports:
+        #     - 80:8000
+        ports:
+            - 8050:8000
+        depends_on:
+            - mysql_host
+        networks:
+            - mysql-phpmyadmin
+        deploy:
+            resources:
+                limits:
+                    cpus: "3"
+                    memory: 8G
+
+    # user_service_queue:
+    #   build:
+    #     context: .
+    #     dockerfile: Dockerfile
+    #   command: "php artisan queue:work"
+    #   depends_on:
+    #     - mysql_host
+
+    frontend:
+        build:
+            context: ./frontend
+        container_name: cims_frontend
+        volumes:
+            - ./frontend:/app
+        ports:
+            - "5173:5173"
+        environment:
+            - VITE_BACKEND_URL=http://localhost:8000
+        command: sh -c "npm install && npm run dev"
+
+    mysql_host:
+        image: mariadb:10.5.8
+        environment:
+            MYSQL_DATABASE: cims
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - ./storage/dbdata:/var/lib/mysql
+        ports:
+            - 33061:3306
+        networks:
+            - mysql-phpmyadmin
+    # phpmyadmin
+    phpmyadmin:
+        depends_on:
+            - mysql_host
+        image: phpmyadmin
+        ports:
+            - "8010:80"
+        environment:
+            PMA_HOST: mysql_host
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - mysql-phpmyadmin
+        restart: unless-stopped
+        volumes:
+            - .:/app
+
+networks:
+    mysql-phpmyadmin:
