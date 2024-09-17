@@ -1,4 +1,4 @@
-FROM php:8.1.0
+FROM php:8.1-fpm
 
 # Update package lists and install required dependencies
 RUN apt-get update && \
@@ -15,6 +15,10 @@ WORKDIR /app
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
 
 # Set environment variable to allow Composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
