@@ -1,41 +1,37 @@
+# Dockerfile
 FROM php:8.1-fpm
 
-# Update package lists and install required dependencies
-RUN apt-get update && \
-    apt-get install -y openssl zip unzip git libpng-dev zlib1g-dev libjpeg-dev && \
-    docker-php-ext-configure gd --with-jpeg && \
-    docker-php-ext-install pdo_mysql gd
+# Set working directory
+WORKDIR /var/www/html
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    git \
+    libpq-dev
 
-# Set working directory and copy Laravel application files
-WORKDIR /app
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo pdo_mysql
 
-# Copy package.json and package-lock.json files
-# COPY composer.json ./app
+# Install Node.js 18
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
+# Copy the Laravel application to the container
+COPY ./techfood /var/www/html
 
-# Set environment variable to allow Composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Install Node.js dependencies
+RUN npm install
 
-COPY . .
-
-# # Ensure the storage and bootstrap/cache directories exist
-# RUN mkdir -p /app/storage
-
-# # Change ownership and permissions
-# RUN chown -R www-data:www-data /app/storage
-# RUN chmod -R 775 /app/storage
-
-# Install application dependencies
-RUN composer update
-RUN composer install 
-
-# Expose the port and start the PHP server
+# Expose port
 EXPOSE $PORT
-
