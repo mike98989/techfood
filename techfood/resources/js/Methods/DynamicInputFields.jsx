@@ -88,7 +88,6 @@ export const DynamicInputFields = () => {
                 }
             });
         });
-        //console.log("COMPUTED", batchCompute);
         setBatchComputValues(batchCompute);
     };
     return {
