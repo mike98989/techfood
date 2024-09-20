@@ -29,6 +29,26 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// Route::get('/analyse/{path?}', function () {
+//     return Inertia::render('Analyse');
+// })->middleware(['auth', 'verified'])->name('analyse')->where('path','.*');
+
+Route::get('/analyse/{parent?}/{child?}', function ($parent = null, $child = null) {
+    if (!$parent) {
+        // No parent, render the main pages component
+        return Inertia::render('Analyse');
+    } elseif ($parent && !$child) {
+        // Only parent exists, render the parent component
+        $component = ucfirst($parent);
+    } else {
+        // Both parent and child exist, render the child component within the parent
+        $component = ucfirst($parent) . '/' . ucfirst($child);
+    }
+    return Inertia::render('Analyse'.'/'.$component);
+})->middleware(['auth', 'verified'])->name('analyse');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
