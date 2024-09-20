@@ -75,9 +75,27 @@ export const DynamicInputFields = () => {
             po.batches.map((batch, index) => {
                 if (batch.batchNumber != "") {
                     let split = batch.batchNumber.slice(0, 6);
+                    let formatedDateString =
+                        "20" + split.replace(/(\d{2})(?=\d)/g, "$1-");
+                    const [year, month, day] = formatedDateString
+                        .split("-")
+                        .map(Number);
+                    const dateValue = new Date(year, month - 1, day); // Months are 0-based in JS (Jan = 0)
+                    let checkDate = false;
+                    console.log("date is " + dateValue);
+                    if (
+                        dateValue.getFullYear() === year &&
+                        dateValue.getMonth() === month - 1 &&
+                        dateValue.getDate() === day
+                    ) {
+                        checkDate = true;
+                    }
+
                     let formatted =
-                        !isNaN(split * 1) & (batch.batchNumber.length > 5) // Check if the value is a number and that the length of the value is above 5
-                            ? split.replace(/(\d{2})(?=\d)/g, "$1-")
+                        !isNaN(split * 1) &
+                        (batch.batchNumber.length > 5) &
+                        checkDate // Check if the value is a number and that the length of the value is above 5 and also if the value is a valid date value
+                            ? formatedDateString
                             : "Invalid Input";
                     let computed = {
                         date: formatted,
@@ -88,7 +106,6 @@ export const DynamicInputFields = () => {
                 }
             });
         });
-        //console.log("COMPUTED", batchCompute);
         setBatchComputValues(batchCompute);
     };
     return {
