@@ -56,7 +56,7 @@ export default function Analyse({ auth }) {
                         <motion.div>
                             <Card
                                 title="Protein"
-                                content="Protein content description goes here"
+                                content="Digitalization and monitoring of analysis results for protein from production"
                                 set_active_button={() =>
                                     setActiveButton("protein")
                                 }
@@ -66,7 +66,7 @@ export default function Analyse({ auth }) {
                         <motion.div>
                             <Card
                                 title="Lactose"
-                                content="Latose content description goes here"
+                                content="Digitalization and monitoring of analysis results for Lactose"
                                 set_active_button={() =>
                                     setActiveButton("lactose")
                                 }
@@ -76,7 +76,7 @@ export default function Analyse({ auth }) {
                         <motion.div>
                             <Card
                                 title="Water Content"
-                                content="Water content description goes here"
+                                content="Digitalization and monitoring of analysis results for moisture content from production"
                                 set_active_button={() =>
                                     setActiveButton("water")
                                 }

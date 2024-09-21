@@ -3,12 +3,16 @@ import { useState } from "react";
 export const DynamicInputFields = () => {
     const [poNumbers, setPoNumbers] = useState([]);
     const [proteinComputeValues, setProteinComputValues] = useState([]);
-    const [batchComputeValues, setBatchComputValues] = useState([]);
-
+    const [proteinChartValues, setProteinChartValues] = useState([]);
     const handleAddPoNumber = () => {
         setPoNumbers((prev) => [
             ...prev,
-            { poNumber: "", batches: [{ batchNumber: "", proteinValue: "" }] },
+            {
+                poNumber: "",
+                batches: [
+                    { batchNumber: "", proteinValue: "", derivedDate: "" },
+                ],
+            },
         ]);
     };
 
@@ -35,8 +39,12 @@ export const DynamicInputFields = () => {
     const handleInputChange = (poIndex, batchIndex, field, value) => {
         setPoNumbers((prev) => {
             const updatedPoNumbers = [...prev];
-            //console.log(updatedPoNumbers);
             if (batchIndex != null) {
+                if (field === "batchNumber") {
+                    updatedPoNumbers[poIndex].batches[batchIndex][
+                        "derivedDate"
+                    ] = getDateFromBatchInput(value);
+                }
                 updatedPoNumbers[poIndex].batches[batchIndex][field] = value;
             } else {
                 updatedPoNumbers[poIndex][field] = value; // Update PO Number field
@@ -68,56 +76,68 @@ export const DynamicInputFields = () => {
         setProteinComputValues(resultCount);
     };
 
-    const handleBatchCompute = (constant) => {
-        const inputedValues = poNumbers;
-        let batchCompute = [];
-        inputedValues.map((po, poIndex) => {
-            po.batches.map((batch, index) => {
-                if (batch.batchNumber != "") {
-                    let split = batch.batchNumber.slice(0, 6);
-                    let formatedDateString =
-                        "20" + split.replace(/(\d{2})(?=\d)/g, "$1-");
-                    const [year, month, day] = formatedDateString
-                        .split("-")
-                        .map(Number);
-                    const dateValue = new Date(year, month - 1, day); // Months are 0-based in JS (Jan = 0)
-                    let checkDate = false;
-                    console.log("date is " + dateValue);
-                    if (
-                        dateValue.getFullYear() === year &&
-                        dateValue.getMonth() === month - 1 &&
-                        dateValue.getDate() === day
-                    ) {
-                        checkDate = true;
-                    }
+    const getDateFromBatchInput = (batchNumber) => {
+        let split = batchNumber.slice(0, 6);
+        let formatedDateString = "20" + split.replace(/(\d{2})(?=\d)/g, "$1-");
+        const [year, month, day] = formatedDateString.split("-").map(Number);
+        const dateValue = new Date(year, month - 1, day); // Months are 0-based in JS (Jan = 0)
+        let checkDate = false;
+        if (
+            dateValue.getFullYear() === year &&
+            dateValue.getMonth() === month - 1 &&
+            dateValue.getDate() === day
+        ) {
+            checkDate = true;
+        }
 
-                    let formatted =
-                        !isNaN(split * 1) &
-                        (batch.batchNumber.length > 5) &
-                        checkDate // Check if the value is a number and that the length of the value is above 5 and also if the value is a valid date value
-                            ? formatedDateString
-                            : "Invalid Input";
-                    let computed = {
-                        date: formatted,
-                        original: batch.batchNumber,
-                    };
-                    batchCompute = [...batchCompute, computed];
-                    console.log(batchCompute);
+        let formatted =
+            !isNaN(split * 1) & (batchNumber.length > 5) & checkDate // Check if the value is a number and that the length of the value is above 5 and also if the value is a valid date value
+                ? formatedDateString
+                : "Invalid Input";
+        return formatted;
+    };
+
+    const computeProteinChart = (constant) => {
+        const resultMap = new Map();
+        // Iterate through the parent array `data` and its nested `batches`
+        poNumbers.forEach(({ batches }) => {
+            batches.forEach(({ proteinValue, derivedDate }) => {
+                if (!resultMap.has(derivedDate)) {
+                    resultMap.set(derivedDate, { good: 0, bad: 0 });
+                }
+                const dateEntry = resultMap.get(derivedDate);
+
+                if (proteinValue > constant.constants) {
+                    dateEntry.good += 1;
+                } else {
+                    dateEntry.bad += 1;
                 }
             });
         });
-        setBatchComputValues(batchCompute);
+
+        // Convert the Map to an array of objects
+        const resultArray = Array.from(
+            resultMap,
+            ([derivedDate, { good, bad }]) => ({
+                derivedDate,
+                good,
+                bad,
+            })
+        );
+        setProteinChartValues(resultArray);
+        //console.log(resultArray);
     };
+
     return {
         poNumbers,
         proteinComputeValues,
-        batchComputeValues,
+        proteinChartValues,
         handleAddPoNumber,
         handleAddBatch,
         handleRemoveBatch,
         handleInputChange,
         handleSubmit,
         handleProteinCompute,
-        handleBatchCompute,
+        computeProteinChart,
     };
 };

@@ -6,20 +6,49 @@ import { motion } from "framer-motion";
 import Aside from "@/Components/Aside";
 import { DynamicInputFields } from "../../Methods/DynamicInputFields"; // Import the hook
 import Modal from "@/Components/Modal";
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    BarElement,
+    Colors,
+    RadialLinearScale,
+} from "chart.js";
+
+import { Doughnut, Bar, Pie, PolarArea } from "react-chartjs-2";
+ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    BarElement,
+    Colors,
+    RadialLinearScale
+);
 
 export default function Protein({ auth }) {
     const [showModal, setShowModal] = useState(false);
     const {
         poNumbers,
         proteinComputeValues,
-        batchComputeValues,
+        proteinChartValues,
         handleAddPoNumber,
         handleAddBatch,
         handleRemoveBatch,
         handleInputChange,
         handleSubmit,
         handleProteinCompute,
-        handleBatchCompute,
+        computeProteinChart,
     } = DynamicInputFields();
     const proteinConstant = {
         constants: 72.5,
@@ -32,11 +61,30 @@ export default function Protein({ auth }) {
         animate: { width: "250px" }, // Expand to visible width
     };
 
+    //const labels = Utils.months({ count: 7 });
+    const data = {
+        labels: proteinChartValues.map((item) => item.derivedDate),
+        datasets: [
+            {
+                label: proteinConstant.approvedText,
+                data: proteinChartValues.map((item) => item.good),
+                backgroundColor: "green",
+                borderColor: "green",
+            },
+            {
+                label: proteinConstant.unApprovedText,
+                data: proteinChartValues.map((item) => item.bad),
+                backgroundColor: "red",
+                borderColor: "red",
+            },
+        ],
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 className="font-semibold text-xl text-gray-100 leading-tight">
                     Analyse - Protein
                 </h2>
             }
@@ -68,8 +116,8 @@ export default function Protein({ auth }) {
                                             className="px-6 py-3"
                                         >
                                             Digitalization and monitoring of
-                                            analysis results for protein and
-                                            moisture content from production
+                                            analysis results for protein from
+                                            production
                                         </th>
                                     </tr>
                                 </thead>
@@ -81,7 +129,10 @@ export default function Protein({ auth }) {
                                                     PO Number{" "}
                                                     <button
                                                         type="button"
-                                                        className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-full text-sm p-1 ml-2 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                        className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-sm text-xs p-1 ml-2 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                        onClick={
+                                                            handleAddPoNumber
+                                                        }
                                                     >
                                                         <svg
                                                             className="w-3 h-3 text-white cursor-pointer"
@@ -91,9 +142,6 @@ export default function Protein({ auth }) {
                                                             height="24"
                                                             fill="none"
                                                             viewBox="0 0 24 24"
-                                                            onClick={
-                                                                handleAddPoNumber
-                                                            }
                                                         >
                                                             <path
                                                                 stroke="currentColor"
@@ -101,8 +149,9 @@ export default function Protein({ auth }) {
                                                                 strokeLinejoin="round"
                                                                 strokeWidth="2"
                                                                 d="M5 12h14m-7 7V5"
-                                                            />
+                                                            />{" "}
                                                         </svg>
+                                                        Add
                                                     </button>
                                                 </div>
                                                 <div className="col-span-2 text-center items-center justify-center">
@@ -121,7 +170,10 @@ export default function Protein({ auth }) {
                                 </thead>
                                 <tbody className="w-full border-b bg-gray-300 hover:bg-white">
                                     {poNumbers.map((po, poIndex) => (
-                                        <tr key={poIndex}>
+                                        <tr
+                                            key={poIndex}
+                                            className="even:bg-gray-400"
+                                        >
                                             <td
                                                 colSpan="6"
                                                 className="py-2 px-2"
@@ -161,16 +213,11 @@ export default function Protein({ auth }) {
                                                                 >
                                                                     <div className="w-1/3 mr-1">
                                                                         <input
-                                                                            type="number"
+                                                                            type="text"
                                                                             id="small-input"
                                                                             name="batch_number[]"
                                                                             value={
                                                                                 batch.batchNumber
-                                                                            }
-                                                                            onBlur={(
-                                                                                e
-                                                                            ) =>
-                                                                                handleBatchCompute()
                                                                             }
                                                                             onChange={(
                                                                                 e
@@ -192,7 +239,7 @@ export default function Protein({ auth }) {
 
                                                                     <div className="flex flex-row w-2/3">
                                                                         <input
-                                                                            type="text"
+                                                                            type="number"
                                                                             id="small-input"
                                                                             name="protein_value[]"
                                                                             value={
@@ -288,18 +335,11 @@ export default function Protein({ auth }) {
                                                                                     d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
                                                                                 />
                                                                             </svg>
-                                                                            {batchComputeValues[
-                                                                                batchIndex
-                                                                            ] && (
-                                                                                <span className="text-xs text-black">
-                                                                                    {
-                                                                                        batchComputeValues[
-                                                                                            batchIndex
-                                                                                        ]
-                                                                                            .date
-                                                                                    }
-                                                                                </span>
-                                                                            )}
+                                                                            <span className="text-xs text-black">
+                                                                                {
+                                                                                    batch.derivedDate
+                                                                                }
+                                                                            </span>
                                                                         </>
                                                                     </div>
                                                                     <div className="flex flex-row w-1/3 text-center justify-center items-center">
@@ -311,16 +351,20 @@ export default function Protein({ auth }) {
                                                                                 1 ? (
                                                                                 <div className="flex items-center">
                                                                                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                                                                                    {
-                                                                                        proteinConstant.approvedText
-                                                                                    }
+                                                                                    <span className="text-gray-800">
+                                                                                        {
+                                                                                            proteinConstant.approvedText
+                                                                                        }
+                                                                                    </span>
                                                                                 </div>
                                                                             ) : (
                                                                                 <div className="flex items-center">
                                                                                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>{" "}
-                                                                                    {
-                                                                                        proteinConstant.unApprovedText
-                                                                                    }
+                                                                                    <span className="text-gray-800">
+                                                                                        {
+                                                                                            proteinConstant.unApprovedText
+                                                                                        }
+                                                                                    </span>
                                                                                 </div>
                                                                             ))}
                                                                     </div>
@@ -339,15 +383,21 @@ export default function Protein({ auth }) {
                                             colSpan="6"
                                             className="py-2 px-2 flex justify-end"
                                         >
-                                            <button
-                                                type="submit"
-                                                className="px-3 self-end py-2 text-xs font-medium text-center text-white bg-gray-800 mr-2 rounded-lg hover:bg-gray-800"
-                                                onClick={() =>
-                                                    setShowModal(true)
-                                                }
-                                            >
-                                                View Graph
-                                            </button>
+                                            {proteinComputeValues.length !=
+                                                0 && (
+                                                <button
+                                                    type="submit"
+                                                    className="px-3 self-end py-2 text-xs font-medium text-center text-white bg-gray-800 mr-2 rounded-lg hover:bg-gray-800"
+                                                    onClick={() => {
+                                                        setShowModal(true),
+                                                            computeProteinChart(
+                                                                proteinConstant
+                                                            );
+                                                    }}
+                                                >
+                                                    View Graph
+                                                </button>
+                                            )}
 
                                             <button
                                                 type="submit"
@@ -455,16 +505,12 @@ export default function Protein({ auth }) {
             </div>
 
             <Modal show={showModal}>
-                <div className="relative p-0 w-full max-w-2xl max-h-full">
-                    <div className="relative bg-gray-800 rounded-lg shadow dark:bg-gray-700">
-                        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                                Terms of Service
-                            </h3>
+                <div className="relative p-0 w-auto max-w-2xl max-h-full">
+                    <div className="relative rounded-lg shadow bg-gray-300">
+                        <div className="flex items-center justify-between p-1 md:p-1 rounded-t">
                             <button
                                 type="button"
                                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-hide="default-modal"
                                 onClick={() => setShowModal(!showModal)}
                             >
                                 <svg
@@ -476,9 +522,9 @@ export default function Protein({ auth }) {
                                 >
                                     <path
                                         stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
                                         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                                     />
                                 </svg>
@@ -486,40 +532,13 @@ export default function Protein({ auth }) {
                             </button>
                         </div>
 
-                        <div className="p-4 md:p-5 space-y-4">
-                            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                With less than a month to go before the European
-                                Union enacts new consumer privacy laws for its
-                                citizens, companies around the world are
-                                updating their terms of service agreements to
-                                comply.
-                            </p>
-                            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                The European Union’s General Data Protection
-                                Regulation (G.D.P.R.) goes into effect on May 25
-                                and is meant to ensure a common set of data
-                                rights in the European Union. It requires
-                                organizations to notify users as soon as
-                                possible of high-risk data breaches that could
-                                personally affect them.
-                            </p>
-                        </div>
-
-                        <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button
-                                data-modal-hide="default-modal"
-                                type="button"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            >
-                                I accept
-                            </button>
-                            <button
-                                data-modal-hide="default-modal"
-                                type="button"
-                                className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            >
-                                Decline
-                            </button>
+                        <div className="p-3 md:p-5 flex justify-center items-center">
+                            <div className="w-3/4 shadow-lg bg-white p-4 rounded-md text-center flex flex-col">
+                                <h3 className="mb-2 text-md text-gray-700">
+                                    Protein content status in production
+                                </h3>
+                                <Bar data={data} />
+                            </div>
                         </div>
                     </div>
                 </div>
