@@ -239,7 +239,7 @@ export default function Protein({ auth }) {
 
                                                                     <div className="flex flex-row w-2/3">
                                                                         <input
-                                                                            type="text"
+                                                                            type="number"
                                                                             id="small-input"
                                                                             name="protein_value[]"
                                                                             value={
