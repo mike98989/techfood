@@ -8,12 +8,12 @@ const Aside = (props) => {
                 className="left-0 z-40 w-140 h-screen transition-transform -translate-x-full sm:translate-x-0"
                 aria-label="Sidebar"
             >
-                <div className="h-full px-3 py-4 overflow-y-auto bg-gradient-to-r from-gray-200 to-gray-50 shadow-xl">
+                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-500 shadow-xl">
                     <a
                         href="https://flowbite.com/"
                         className="flex items-center ps-2.5 mb-5"
                     >
-                        <span className="self-center text-xl font-semibold whitespace-nowrap text-gray-800">
+                        <span className="self-center text-xl font-semibold whitespace-nowrap text-gray-100">
                             TechFood
                         </span>
                     </a>
@@ -39,7 +39,7 @@ const Aside = (props) => {
                         <li>
                             <a
                                 href="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                                className="flex items-center p-2 text-gray-50 rounded-lg bg-gray-700 group"
                             >
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white"
