@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import Aside from "@/Components/Aside";
 import { DynamicInputFields } from "../../Methods/DynamicInputFields"; // Import the hook
 import Modal from "@/Components/Modal";
+import PropTypes from "prop-types";
+
 import {
     Chart as ChartJS,
     ArcElement,
@@ -36,7 +38,7 @@ ChartJS.register(
     RadialLinearScale
 );
 
-export default function Protein({ auth }) {
+const Protein = ({ auth }) => {
     const [showModal, setShowModal] = useState(false);
     const {
         poNumbers,
@@ -545,4 +547,10 @@ export default function Protein({ auth }) {
             </Modal>
         </AuthenticatedLayout>
     );
-}
+};
+
+Protein.propTypes = {
+    auth: PropTypes.object,
+};
+
+export default Protein;

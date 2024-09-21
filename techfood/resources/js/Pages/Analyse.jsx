@@ -4,8 +4,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import Aside from "@/Components/Aside";
+import PropTypes from "prop-types";
 
-export default function Analyse({ auth }) {
+const Analyse = ({ auth }) => {
     const [activeButton, setActiveButton] = useState("");
     // Define the variants for the divs
     const divVariants = {
@@ -88,4 +89,9 @@ export default function Analyse({ auth }) {
             </div>
         </AuthenticatedLayout>
     );
-}
+};
+Analyse.propTypes = {
+    auth: PropTypes.object,
+};
+
+export default Analyse;

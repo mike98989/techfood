@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
+import PropTypes from "prop-types";
 
 const Card = (props) => {
     const { title, content, set_active_button, href = null } = props;
@@ -38,6 +39,13 @@ const Card = (props) => {
             </a>
         </div>
     );
+};
+
+Card.propTypes = {
+    title: PropTypes.string,
+    content: PropTypes.string,
+    set_active_button: PropTypes.func,
+    href: PropTypes.string,
 };
 
 export default Card;

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
+import PropTypes from "prop-types";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -179,3 +180,8 @@ export default function Authenticated({ user, header, children }) {
         </div>
     );
 }
+Authenticated.propTypes = {
+    children: PropTypes.node,
+    header: PropTypes.node,
+    user: PropTypes.object,
+};

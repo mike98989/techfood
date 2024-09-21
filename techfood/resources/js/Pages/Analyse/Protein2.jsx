@@ -5,10 +5,10 @@ import { Head } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import Aside from "@/Components/Aside";
 import { DynamicInputFields } from "../../Methods/DynamicInputFields"; // Import the hook
+import PropTypes from "prop-types";
 
-export default function Protein({ auth }) {
+const Protein = ({ auth }) => {
     const [POInputFields, setPOInputFields] = useState([{ value: "" }]);
-    //const [inputFields, setInputFields] = useState([{ value: "" }]);
     const {
         inputFields,
         handleInputChange,
@@ -26,33 +26,6 @@ export default function Protein({ auth }) {
         initial: { width: 0 }, // Start hidden
         animate: { width: "250px" }, // Expand to visible width
     };
-    // // Handle adding new input field
-    // const handleAddField = () => {
-    //     setInputFields([...inputFields, { value: "" }]);
-    // };
-
-    // // Handle input change
-    // const handleInputChange = (index, event) => {
-    //     const values = [...inputFields];
-    //     values[index].value = event.target.value;
-    //     setInputFields(values);
-    // };
-
-    // // Handle removing an input field
-    // const handleRemoveField = (index) => {
-    //     const values = [...inputFields];
-    //     values.splice(index, 1);
-    //     setInputFields(values);
-    // };
-
-    // // Handle form submission
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     // Collect all input field values
-    //     const allValues = inputFields.map((field) => field.value);
-    //     console.log("Submitted Values: ", allValues);
-    //     // You can send the values to your server or further process them here
-    // };
 
     return (
         <AuthenticatedLayout
@@ -294,4 +267,10 @@ export default function Protein({ auth }) {
             </div>
         </AuthenticatedLayout>
     );
-}
+};
+
+Protein.propTypes = {
+    auth: PropTypes.bool,
+};
+
+export default Protein;
