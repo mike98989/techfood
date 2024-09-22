@@ -19,5 +19,5 @@ export default function Guest({ children }) {
     );
 }
 Guest.propTypes = {
-    children: PropTypes.bool,
+    children: PropTypes.node,
 };
