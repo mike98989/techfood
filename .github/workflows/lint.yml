@@ -21,5 +21,5 @@ jobs:
         working-directory: ./techfood  # Ensure you're in the correct directory
 
       - name: Run ESLint
-        run: npx eslint .
+        run: npx eslint resources
 
