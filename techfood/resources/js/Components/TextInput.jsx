@@ -26,9 +26,3 @@ export default forwardRef(function TextInput(
         />
     );
 });
-
-TextInput.propTypes = {
-    type: PropTypes.string,
-    className: PropTypes.string,
-    isFocused: PropTypes.bool,
-};

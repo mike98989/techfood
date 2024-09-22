@@ -3,7 +3,11 @@ import pluginReact from "eslint-plugin-react";
 
 
 export default [
-  {files: ["**/*.{js,mjs,cjs,jsx}"]},
-  {languageOptions: { globals: globals.browser }},
+  {
+    files: ["resources/js/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    ignores: ["vendor/*"], // Exclude vendor and third-party directories from linting
+  },
+  { languageOptions: { globals: globals.browser } },
   pluginReact.configs.flat.recommended,
 ];
+
