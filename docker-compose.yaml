@@ -35,6 +35,8 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - 33061:3306
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
     networks:
       - app-network
 
