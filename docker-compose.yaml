@@ -23,8 +23,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/var/www
-      - /var/www/node_modules # Avoid node_modules conflicts
+      - ./frontend:/var/www/frontend
     environment:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
@@ -41,7 +40,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./backend/storage/dbdata:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - app-network
 
@@ -58,6 +57,9 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+
+volumes:
+  mysql_data:
 
 networks:
   app-network:

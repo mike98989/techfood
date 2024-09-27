@@ -2,10 +2,10 @@
 FROM node:18
 
 # Set the working directory in the container
-WORKDIR /var/www
+WORKDIR /var/www/frontend
 
 # Copy the package.json and package-lock.json files
-COPY package*.json ./
+COPY package*.json .
 
 # Install React app dependencies
 
