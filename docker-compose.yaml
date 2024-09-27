@@ -40,7 +40,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./backend/storage/dbdata:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - app-network
 
@@ -57,6 +57,9 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+
+volumes:
+  mysql_data:
 
 networks:
   app-network:
