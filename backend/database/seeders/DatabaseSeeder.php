@@ -13,6 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //LabInputs::factory(100)->create();
+        LabInputs::factory(100)->create();
     }
 }
