@@ -23,7 +23,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/var/www
+      - ./frontend:/var/www/frontend
     environment:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
