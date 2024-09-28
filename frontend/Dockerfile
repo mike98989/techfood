@@ -2,7 +2,7 @@
 FROM node:18
 
 # Set the working directory in the container
-WORKDIR /var/www/frontend
+WORKDIR /var/www
 
 # Copy the package.json and package-lock.json files
 COPY package*.json .

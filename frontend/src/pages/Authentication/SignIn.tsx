@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import LogoDark from "../../images/logo/techfood-logo.svg";
 import Logo from "../../images/logo/logo.svg";
 import LoginSvgImage from "../../components/Misc/LoginSvgImage";
-
+import { ReusableMethods } from "../../methods/ReusableMethods";
 const SignIn: React.FC = () => {
+  const { UserLogin } = ReusableMethods();
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
                 Sign In to Techfood
               </h2>
 
-              <form>
+              <form onSubmit={() => UserLogin(this)} method="POST">
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
@@ -104,7 +104,7 @@ const SignIn: React.FC = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Sign In"
+                    value="Sign Ingg"
                     className="w-full cursor-pointer rounded-lg border border-success bg-success p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
