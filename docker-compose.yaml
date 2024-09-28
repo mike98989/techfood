@@ -1,67 +1,68 @@
 version: "3.8"
 
 services:
-  # backend:
-  #   build:
-  #     context: ./backend # Set the context to the frontend directory
-  #     dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
-  #   command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - ./backend:/var/www/backend
-  #   depends_on:
-  #     - mysql_host
-  #   networks:
-  #     - app-network
+  backend:
+    build:
+      context: ./backend # Set the context to the frontend directory
+      dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
+    command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/backend
+    depends_on:
+      - mysql_host
+    networks:
+      - app-network
 
   frontend:
     build:
       context: ./frontend # Set the context to the frontend directory
       dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
-    #command: npm run dev
-    command: sh -c "npm run dev"
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/var/www
-    working_dir: /var/www
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    # depends_on:
-    #   - backend
+      - /var/www/node_modules # Avoid node_modules conflicts
+    # environment:
+    #   - WDS_SOCKET_HOST=127.0.0.1
+    #   - CHOKIDAR_USEPOLLING=true
+    #   - WATCHPACK_POLLING=true
+    command: sh -c "npm run dev"
+    depends_on:
+      - backend
     networks:
       - app-network
 
-  # mysql_host:
-  #   image: mysql:latest
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: techfood
-  #     MYSQL_PASSWORD: admin99yu76
-  #   ports:
-  #     - 3306:3306
-  #   volumes:
-  #     - mysql_data:/var/lib/mysql
-  #   networks:
-  #     - app-network
+  mysql_host:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: techfood
+      MYSQL_PASSWORD: admin99yu76
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
 
   # phpmyadmin
-  # phpmyadmin:
-  #   depends_on:
-  #     - mysql_host
-  #   image: phpmyadmin
-  #   ports:
-  #     - "8010:80"
-  #   environment:
-  #     PMA_HOST: mysql_host
-  #     MYSQL_ROOT_PASSWORD: root
-  #   networks:
-  #     - app-network
-  #   restart: unless-stopped
+  phpmyadmin:
+    depends_on:
+      - mysql_host
+    image: phpmyadmin
+    ports:
+      - "8010:80"
+    environment:
+      PMA_HOST: mysql_host
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - app-network
+    restart: unless-stopped
 
-# volumes:
-#   mysql_data:
+volumes:
+  mysql_data:
 
 networks:
   app-network:

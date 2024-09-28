@@ -5,7 +5,7 @@ import Logo from "../../images/logo/logo.svg";
 import LoginSvgImage from "../../components/Misc/LoginSvgImage";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 const SignIn: React.FC = () => {
-  const { UserLogin } = ReusableMethods();
+  const { UserLogin, formErrors } = ReusableMethods();
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -34,13 +34,34 @@ const SignIn: React.FC = () => {
                 Sign In to Techfood
               </h2>
 
+              {formErrors && (
+                <div
+                  className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                  role="alert"
+                >
+                  <svg
+                    className="flex-shrink-0 inline w-4 h-4 me-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                  </svg>
+                  <span className="sr-only">Info</span>
+                  <div>
+                    <span className="font-medium"></span> {formErrors}
+                  </div>
+                </div>
+              )}
+
               <form
                 id="login"
                 name="login"
                 onSubmit={(event) => {
                   event.preventDefault();
                   UserLogin({
-                    action_url: "hq_login", // End Point
+                    action_url: "user_login", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     contentType: "multipart/form-data", //Content Type
@@ -54,6 +75,7 @@ const SignIn: React.FC = () => {
                   <div className="relative">
                     <input
                       type="email"
+                      name="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
@@ -85,6 +107,7 @@ const SignIn: React.FC = () => {
                   <div className="relative">
                     <input
                       type="password"
+                      name="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />

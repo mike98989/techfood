@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
         // ],
 
         'api' => [
+                \Illuminate\Http\Middleware\HandleCors::class,
                 EnsureFrontendRequestsAreStateful::class,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ],

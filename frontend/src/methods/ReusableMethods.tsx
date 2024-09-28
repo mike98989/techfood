@@ -1,7 +1,11 @@
-import React from "react";
-import { fetchApi } from "./Requests";
+import React, { useState } from "react";
+import { httpRequest } from "./Requests";
+import { useNavigate } from "react-router-dom";
 import * as Constants from "../Utils/Constants";
 export const ReusableMethods = () => {
+  const { fetchApi } = httpRequest();
+  const navigate = useNavigate();
+  const [formErrors, setFormErrors] = useState("");
   // User Login Method
   const UserLogin = ({
     action_url,
@@ -27,13 +31,19 @@ export const ReusableMethods = () => {
       contentType, // Content Type
       // Authentication
     })
-      .then((response) => {
-        console.log("Post created successfully:", response);
+      .then((response: any) => {
+        if (response.token) {
+          navigate("/"); // or any other route
+        } else {
+          console.log(response);
+          setFormErrors(response);
+        }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        const message = JSON.parse(error[0]);
+        setFormErrors(message.message);
       });
   };
 
-  return { UserLogin };
+  return { UserLogin, formErrors };
 };
