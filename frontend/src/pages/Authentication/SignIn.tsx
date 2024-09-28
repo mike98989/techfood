@@ -34,7 +34,19 @@ const SignIn: React.FC = () => {
                 Sign In to Techfood
               </h2>
 
-              <form onSubmit={() => UserLogin(this)} method="POST">
+              <form
+                id="login"
+                name="login"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  UserLogin({
+                    action_url: "hq_login", // End Point
+                    method: "POST", // Method
+                    formId: "login", /// Form Id
+                    contentType: "multipart/form-data", //Content Type
+                  });
+                }}
+              >
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email

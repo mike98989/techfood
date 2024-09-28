@@ -5,13 +5,14 @@ FROM node:18
 WORKDIR /var/www
 
 # Copy the package.json and package-lock.json files
-COPY package*.json .
+COPY package*.json /var/www/
 
 # Install React app dependencies
 
 RUN npm install
 # Copy the React app code into the container
-COPY . .
+COPY . /var/www/
+
 
 
 # Build the React app for production
