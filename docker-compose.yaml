@@ -19,13 +19,16 @@ services:
     build:
       context: ./frontend # Set the context to the frontend directory
       dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
-    command: npm run dev
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/var/www/frontend
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - ./frontend:/var/www
+      - /var/www/node_modules # Avoid node_modules conflicts
+    # environment:
+    #   - WDS_SOCKET_HOST=127.0.0.1
+    #   - CHOKIDAR_USEPOLLING=true
+    #   - WATCHPACK_POLLING=true
+    command: sh -c "npm run dev"
     depends_on:
       - backend
     networks:
