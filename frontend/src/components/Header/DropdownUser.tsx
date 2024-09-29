@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ClickOutside from "../ClickOutside";
 import UserOne from "../../images/user/user-01.png";
-
+import { useSelector } from "react-redux";
+import { ReusableMethods } from "../../methods/ReusableMethods";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user = useSelector((state: any) => state.user.value);
+  const { userLogin, userLogout, formErrors } = ReusableMethods();
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -15,9 +18,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user.data.name}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user.data.email}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -99,7 +102,12 @@ const DropdownUser = () => {
               </Link>
             </li>
           </ul>
-          <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button
+            className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+            onClick={() => {
+              userLogout();
+            }}
+          >
             <svg
               className="fill-current"
               width="22"

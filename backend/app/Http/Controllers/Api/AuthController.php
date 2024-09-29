@@ -31,11 +31,20 @@ class AuthController extends Controller
 
         // Create a token for the user
         $token = $user->createToken('TechFood')->plainTextToken;
+
+       // Set token and user data in cookies
+       $cookieToken = cookie('auth_token', $token, 60 * 24,'/', null, true, true, false, 'None'); // 24 hours
+    //    $cookieUserData = cookie('user_data', $user, 60 * 24,'/', null, true, true, false, 'None'); // 24 hours
+
+    //    return response()->json(['message' => 'Login successful','status'=>'1'], 200)
+    //                     ->withCookie($cookieToken)
+    //                     ->withCookie($cookieUserData);
+
         // Return the token and user info
         return response()->json([
-            'token' => $token,
             'user' => $user,
-        ]);
+            'status'=>"1"
+        ],200)->withCookie($cookieToken);
     }
 
     public function logout(Request $request)

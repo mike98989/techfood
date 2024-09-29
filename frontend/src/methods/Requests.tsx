@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import * as Constants from "../Utils/Constants";
 interface FetchApiParams {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE"; // Specify allowed methods
@@ -7,6 +8,8 @@ interface FetchApiParams {
   authentication?: string | null;
 }
 export const httpRequest = () => {
+  const baseUrl: string =
+    Constants.BASE_URL + Constants.API + Constants.API_VERSION;
   const fetchApi = async ({
     url,
     method,
@@ -16,7 +19,7 @@ export const httpRequest = () => {
   }: FetchApiParams): Promise<AxiosResponse | Error> => {
     const config: AxiosRequestConfig = {
       method,
-      url,
+      url: baseUrl + url,
       data: formData,
       responseType: "stream",
       headers: {
