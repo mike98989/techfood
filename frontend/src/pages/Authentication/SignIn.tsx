@@ -4,8 +4,10 @@ import LogoDark from "../../images/logo/techfood-logo.svg";
 import Logo from "../../images/logo/logo.svg";
 import LoginSvgImage from "../../components/Misc/LoginSvgImage";
 import { ReusableMethods } from "../../methods/ReusableMethods";
+import SpinnerObject from "../../components/Spinner/Spinner";
 const SignIn: React.FC = () => {
-  const { UserLogin, formErrors } = ReusableMethods();
+  const { userLogin, formErrors } = ReusableMethods();
+  const { setIsLoading, Spinner } = SpinnerObject();
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -60,11 +62,12 @@ const SignIn: React.FC = () => {
                 name="login"
                 onSubmit={(event) => {
                   event.preventDefault();
-                  UserLogin({
+                  userLogin({
                     action_url: "user_login", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     contentType: "multipart/form-data", //Content Type
+                    setIsLoading,
                   });
                 }}
               >
@@ -76,6 +79,7 @@ const SignIn: React.FC = () => {
                     <input
                       type="email"
                       name="email"
+                      required
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
@@ -108,6 +112,7 @@ const SignIn: React.FC = () => {
                     <input
                       type="password"
                       name="password"
+                      required
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
@@ -137,11 +142,13 @@ const SignIn: React.FC = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
+                  <button
+                    // onClick={() => setIsLoading(!isLoading)}
                     type="submit"
-                    value="Sign Ingg"
                     className="w-full cursor-pointer rounded-lg border border-success bg-success p-4 text-white transition hover:bg-opacity-90"
-                  />
+                  >
+                    <Spinner /> Sign in
+                  </button>
                 </div>
 
                 <div className="mt-6 text-center">
