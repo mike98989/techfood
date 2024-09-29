@@ -5,7 +5,6 @@ const LabData = () => {
   return (
     <>
       <Breadcrumb pageName="Lab Results" />
-
       <div className="flex flex-col gap-10">
         <LabInputsTable />
       </div>

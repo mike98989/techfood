@@ -1,9 +1,24 @@
 import { useState } from "react";
 
+interface Batch {
+  batchNumber: string;
+  proteinValue: string;
+  derivedDate: string;
+  // Index signature to allow dynamic access by string
+  [key: string]: string;
+}
+interface PONumber {
+  poNumber: string;
+  batches: Batch[];
+  [key: string]: any;
+}
+
 export const DynamicInputFields = () => {
-  const [poNumbers, setPoNumbers] = useState([]);
-  const [proteinComputeValues, setProteinComputValues] = useState([]);
-  const [proteinChartValues, setProteinChartValues] = useState([]);
+  //const [poNumbers, setPoNumbers] = useState([]);
+  const [poNumbers, setPoNumbers] = useState<PONumber[]>([]);
+  const [proteinComputeValues, setProteinComputValues] = useState({});
+  const [proteinChartValues, setProteinChartValues] = useState({});
+
   const handleAddPoNumber = () => {
     setPoNumbers((prev) => [
       ...prev,
@@ -14,19 +29,26 @@ export const DynamicInputFields = () => {
     ]);
   };
 
-  const handleAddBatch = (poIndex) => {
+  const handleAddBatch = (poIndex: number) => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
       console.log(updatedPoNumbers);
       updatedPoNumbers[poIndex].batches.push({
         batchNumber: "",
         proteinValue: "",
+        derivedDate: "",
       });
       return updatedPoNumbers;
     });
   };
 
-  const handleRemoveBatch = (poIndex, batchIndex) => {
+  const handleRemoveBatch = ({
+    poIndex,
+    batchIndex,
+  }: {
+    poIndex: number;
+    batchIndex: number;
+  }) => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
       updatedPoNumbers[poIndex].batches.splice(batchIndex, 1);
@@ -34,7 +56,17 @@ export const DynamicInputFields = () => {
     });
   };
 
-  const handleInputChange = (poIndex, batchIndex, field, value) => {
+  const handleInputChange = ({
+    poIndex,
+    batchIndex,
+    field,
+    value,
+  }: {
+    poIndex: number;
+    batchIndex?: number | null;
+    field: string;
+    value: string;
+  }) => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
       if (batchIndex != null) {
@@ -50,17 +82,17 @@ export const DynamicInputFields = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: Event) => {
     event.preventDefault();
     console.log(poNumbers); // Your final JSON-like object
   };
 
-  const handleProteinCompute = (constant) => {
+  const handleProteinCompute = (constant: any) => {
     const resultCount = { countValid: 0, countInValid: 0, totalCount: 0 };
     const inputedValues = poNumbers;
     inputedValues.map((po, poIndex) => {
       po.batches.map((batch, index) => {
-        if (batch.proteinValue != 0) {
+        if (batch.proteinValue != "0") {
           resultCount.totalCount++;
           if (batch.proteinValue > constant.constants) {
             resultCount.countValid++;
@@ -70,10 +102,10 @@ export const DynamicInputFields = () => {
         }
       });
     });
-    setProteinComputValues(resultCount);
+    setProteinComputValues({ resultCount });
   };
 
-  const getDateFromBatchInput = (batchNumber) => {
+  const getDateFromBatchInput = (batchNumber: any) => {
     let split = batchNumber.slice(0, 6);
     let formatedDateString = "20" + split.replace(/(\d{2})(?=\d)/g, "$1-");
     const [year, month, day] = formatedDateString.split("-").map(Number);
@@ -88,13 +120,13 @@ export const DynamicInputFields = () => {
     }
 
     let formatted =
-      !isNaN(split * 1) & (batchNumber.length > 5) & checkDate // Check if the value is a number and that the length of the value is above 5 and also if the value is a valid date value
+      !isNaN(split * 1) && batchNumber.length > 5 && checkDate // Check if the value is a number and that the length of the value is above 5 and also if the value is a valid date value
         ? formatedDateString
         : "Invalid Input";
     return formatted;
   };
 
-  const computeProteinChart = (constant) => {
+  const computeProteinChart = (constant: any) => {
     const resultMap = new Map();
     // Iterate through the parent array `data` and its nested `batches`
     poNumbers.forEach(({ batches }) => {
@@ -121,7 +153,7 @@ export const DynamicInputFields = () => {
         bad,
       })
     );
-    setProteinChartValues(resultArray);
+    setProteinChartValues({ resultArray });
     //console.log(resultArray);
   };
 
