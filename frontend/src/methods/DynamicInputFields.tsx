@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { httpRequest } from "./Requests";
+
+const { fetchApi } = httpRequest();
 
 interface Batch {
   batchNumber: string;
   proteinValue: string;
+  lactoseValue: string;
+  waterValue: string;
   derivedDate: string;
   // Index signature to allow dynamic access by string
   [key: string]: string;
@@ -10,13 +15,21 @@ interface Batch {
 interface PONumber {
   poNumber: string;
   batches: Batch[];
-  [key: string]: any;
+}
+interface compute {
+  countValid: number;
+  countInValid: number;
+  totalCount: number;
 }
 
 export const DynamicInputFields = () => {
   //const [poNumbers, setPoNumbers] = useState([]);
   const [poNumbers, setPoNumbers] = useState<PONumber[]>([]);
-  const [proteinComputeValues, setProteinComputValues] = useState({});
+  const [computeValues, setComputValues] = useState<compute>({
+    countValid: 0,
+    countInValid: 0,
+    totalCount: 0,
+  });
   const [proteinChartValues, setProteinChartValues] = useState({});
 
   const handleAddPoNumber = () => {
@@ -24,7 +37,15 @@ export const DynamicInputFields = () => {
       ...prev,
       {
         poNumber: "",
-        batches: [{ batchNumber: "", proteinValue: "", derivedDate: "" }],
+        batches: [
+          {
+            batchNumber: "",
+            proteinValue: "",
+            lactoseValue: "",
+            waterValue: "",
+            derivedDate: "",
+          },
+        ],
       },
     ]);
   };
@@ -33,11 +54,19 @@ export const DynamicInputFields = () => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
       console.log(updatedPoNumbers);
-      updatedPoNumbers[poIndex].batches.push({
-        batchNumber: "",
-        proteinValue: "",
-        derivedDate: "",
-      });
+      updatedPoNumbers[poIndex] = {
+        ...updatedPoNumbers[poIndex], // Ensure you're not mutating the original state
+        batches: [
+          ...updatedPoNumbers[poIndex].batches, // Copy existing batches
+          {
+            batchNumber: "",
+            proteinValue: "",
+            lactoseValue: "",
+            waterValue: "",
+            derivedDate: "",
+          }, // Add new batch
+        ],
+      };
       return updatedPoNumbers;
     });
   };
@@ -82,19 +111,75 @@ export const DynamicInputFields = () => {
     });
   };
 
-  const handleSubmit = (event: Event) => {
+  const handleSubmit = (event: any, poNumbers: Object) => {
     event.preventDefault();
-    console.log(poNumbers); // Your final JSON-like object
+    // Create a new FormData object
+    const formData = new FormData();
+    // Append each key-value pair from the object to the FormData
+    Object.entries(poNumbers).forEach(([key, value]) => {
+      formData.append(key, poNumbers.toString()); // Convert to string where necessary
+    });
+
+    fetchApi({
+      url: "labinputs", // URL end point
+      method: "POST", // Method
+      formData: formData, //Form Data
+      contentType: "multipart/form-data", // Content Type
+      // Authentication
+    })
+      .then((response: any) => {
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
   };
 
-  const handleProteinCompute = (constant: any) => {
+  // const handleProteinCompute = (constant: any) => {
+  //   const resultCount = { countValid: 0, countInValid: 0, totalCount: 0 };
+  //   const inputedValues = poNumbers;
+  //   inputedValues.map((po, poIndex) => {
+  //     po.batches.map((batch, index) => {
+  //       if (batch.proteinValue != "0") {
+  //         resultCount.totalCount++;
+  //         if (batch.proteinValue > constant.constants) {
+  //           resultCount.countValid++;
+  //         } else {
+  //           resultCount.countInValid++;
+  //         }
+  //       }
+  //     });
+  //   });
+  //   setComputValues(resultCount);
+  // };
+
+  const handleCompute = (constant: any) => {
     const resultCount = { countValid: 0, countInValid: 0, totalCount: 0 };
     const inputedValues = poNumbers;
     inputedValues.map((po, poIndex) => {
       po.batches.map((batch, index) => {
-        if (batch.proteinValue != "0") {
+        //// Protein
+        if (batch.proteinValue != "") {
           resultCount.totalCount++;
-          if (batch.proteinValue > constant.constants) {
+          if (parseInt(batch.proteinValue) > constant.constants) {
+            resultCount.countValid++;
+          } else {
+            resultCount.countInValid++;
+          }
+        }
+        //// Lactose
+        if (batch.lactoseValue != "") {
+          resultCount.totalCount++;
+          if (parseInt(batch.lactoseValue) > constant.constants) {
+            resultCount.countValid++;
+          } else {
+            resultCount.countInValid++;
+          }
+        }
+        //// Water
+        if (batch.waterValue != "") {
+          resultCount.totalCount++;
+          if (parseInt(batch.waterValue) > constant.constants) {
             resultCount.countValid++;
           } else {
             resultCount.countInValid++;
@@ -102,7 +187,7 @@ export const DynamicInputFields = () => {
         }
       });
     });
-    setProteinComputValues({ resultCount });
+    setComputValues(resultCount);
   };
 
   const getDateFromBatchInput = (batchNumber: any) => {
@@ -159,14 +244,14 @@ export const DynamicInputFields = () => {
 
   return {
     poNumbers,
-    proteinComputeValues,
+    computeValues,
     proteinChartValues,
     handleAddPoNumber,
     handleAddBatch,
     handleRemoveBatch,
     handleInputChange,
     handleSubmit,
-    handleProteinCompute,
+    handleCompute,
     computeProteinChart,
   };
 };

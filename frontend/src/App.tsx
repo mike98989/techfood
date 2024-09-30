@@ -9,10 +9,12 @@ import SignUp from "./pages/Authentication/SignUp";
 // import Chart from "./pages/Chart";
 import ECommerce from "./pages/Dashboard/ECommerce";
 import FormElements from "./pages/Form/FormElements";
-import FormLayout from "./pages/Form/FormLayout";
+//import FormLayout from "./pages/Form/FormLayout";
 // import Profile from "./pages/Profile";
 // import Settings from "./pages/Settings";
 import LabData from "./pages/LabData";
+import ProteinLactosWater from "./pages/Form/Protein_lactos_water";
+
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -22,6 +24,7 @@ import ProtectedRoute from "./methods/ProtectedRoute";
 import { useDispatch } from "react-redux";
 import { setUser } from "./methods/reducers/user";
 import { useSelector } from "react-redux";
+import FormLayout from "./pages/Form/FormLayout";
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -97,6 +100,16 @@ function App() {
 
           <Route
             path="/protein_lactose_water"
+            element={
+              <DefaultLayout>
+                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <ProteinLactosWater />
+              </DefaultLayout>
+            }
+          />
+
+          <Route
+            path="/deviations_complaints"
             element={
               <DefaultLayout>
                 <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />

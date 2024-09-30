@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
 Route::middleware('guest')->group(function () {
-    Route::get('/labinputs', [LabInputsController::class, 'index'])->name('labinputs.index');
+   //Route::get('/labinputs', [LabInputsController::class, 'index'])->name('labinputs.index');
+    Route::apiResource('labinputs', LabInputsController::class);
 });
 
 //Route::middleware('guest')->group(function () {

@@ -145,7 +145,7 @@ const SignIn: React.FC = () => {
                   <button
                     // onClick={() => setIsLoading(!isLoading)}
                     type="submit"
-                    className="w-full cursor-pointer rounded-lg border border-success bg-success p-4 text-white transition hover:bg-opacity-90"
+                    className="w-full cursor-pointer rounded-lg bg-cyan-700 p-4 text-white transition hover:bg-opacity-90"
                   >
                     <Spinner /> Sign in
                   </button>
@@ -154,7 +154,7 @@ const SignIn: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <Link to="/auth/signup" className="text-success">
+                    <Link to="/auth/signup" className="text-cyan-700">
                       Sign Up
                     </Link>
                   </p>
