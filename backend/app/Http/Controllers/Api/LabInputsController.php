@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\LabInputs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class LabInputsController extends Controller
 {
@@ -15,9 +16,10 @@ class LabInputsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data =  LabInputs::all();
+        $user = $request->user();
+        $data =  LabInputs::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
         return response()->json(['data'=>$data],200);
         
     }
@@ -35,7 +37,37 @@ class LabInputsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validatedData = $request->validate([
+            '*.poNumber' => 'required|string',
+            '*.batches' => 'required|array',
+            '*.batches.*.batchNumber' => 'required|string',
+            '*.batches.*.proteinValue' => 'nullable|string',
+            '*.batches.*.lactoseValue' => 'nullable|string',
+            '*.batches.*.waterValue' => 'nullable|string',
+            '*.batches.*.derivedDate' => 'required|date',
+        ]);
+        $user = $request->user();
+            // Use a transaction to handle multiple inserts
+        DB::transaction(function () use ($validatedData, $user) {
+        // Loop through each PO entry in the request
+        foreach ($validatedData as $poData) {
+            // Save each batch associated with the PO Number
+            foreach ($poData['batches'] as $batchData) {
+                LabInputs::create([
+                    'user_id'=>$user->id,
+                    'PO_number' => $poData['poNumber'],  // Foreign key to purchase_orders
+                    'batch_number' => $batchData['batchNumber'],
+                    'protein_value' => $batchData['proteinValue'],
+                    'lactose_value' => $batchData['lactoseValue'],
+                    'water_value' => $batchData['waterValue'],
+                    'result_date' => $batchData['derivedDate'],
+                ]);
+            }
+        }
+    });
+
+        return response()->json(["message"=>"Lab data saved successfully","status"=>'1'],200);
     }
 
     /**

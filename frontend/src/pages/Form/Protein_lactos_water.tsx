@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { DynamicInputFields } from "../../methods/DynamicInputFields"; // Import the hook
+import { ReusableMethods } from "../../methods/ReusableMethods";
 import SpinnerObject from "../../components/Spinner/Spinner";
+import { useSelector } from "react-redux";
 
 export default function Protein() {
   const { setIsLoading, Spinner } = SpinnerObject();
+  const { formSubmit, formErrors } = ReusableMethods();
+  const user = useSelector((state: any) => state.user.value);
+
   const {
     poNumbers,
     computeValues,
@@ -12,7 +17,6 @@ export default function Protein() {
     handleAddBatch,
     handleRemoveBatch,
     handleInputChange,
-    handleSubmit,
     handleCompute,
     computeProteinChart,
   } = DynamicInputFields();
@@ -101,8 +105,40 @@ export default function Protein() {
                 Add PO
               </button>
             </div>
+            {formErrors && (
+              <div
+                className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                role="alert"
+              >
+                <svg
+                  className="flex-shrink-0 inline w-4 h-4 me-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span className="sr-only">Info</span>
+                <div>
+                  <span className="font-medium"></span> {formErrors}
+                </div>
+              </div>
+            )}
+
             <form
-              onSubmit={(e) => handleSubmit(e, poNumbers)}
+              onSubmit={(e) =>
+                formSubmit({
+                  event: e,
+                  action_url: "labinputs",
+                  method: "POST",
+                  formId: "",
+                  formData: poNumbers,
+                  contentType: "application/json",
+                  authentication: user.token,
+                  setIsLoading,
+                })
+              }
               method="POST"
               className="pb-5 items-center justify-center"
             >
@@ -206,6 +242,7 @@ export default function Protein() {
                             type="number"
                             id="small-input"
                             name="batch_number[]"
+                            required
                             value={batch.batchNumber}
                             onChange={(e) =>
                               handleInputChange({

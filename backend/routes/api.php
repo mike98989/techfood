@@ -17,8 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function (): void {
-Route::middleware('guest')->group(function () {
-   //Route::get('/labinputs', [LabInputsController::class, 'index'])->name('labinputs.index');
+Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('labinputs', LabInputsController::class);
 });
 

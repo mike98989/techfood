@@ -9,38 +9,48 @@ export const ReusableMethods = () => {
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState("");
 
-  // User Login Method
-  const userLogin = ({
-    action_url,
-    method,
-    formId,
-    contentType,
-    setIsLoading,
-  }: {
+  interface formDataType {
+    event: any;
     action_url: string;
     method: "GET" | "POST" | "PUT" | "DELETE"; // Specify allowed methods
     formId: string;
+    formData: Object;
     contentType: string;
+    authentication: string;
     setIsLoading: Function;
-  }) => {
+  }
+
+  // User Login Method
+  const userLogin = ({
+    event,
+    action_url,
+    method,
+    formId,
+    formData,
+    contentType,
+    authentication,
+    setIsLoading,
+  }: formDataType) => {
+    event.preventDefault();
     setIsLoading(true);
     const formElement = document.getElementById(
       formId
     ) as HTMLFormElement | null;
-    const formData = formElement && new FormData(formElement);
+    const form = formElement && new FormData(formElement);
     const url = action_url;
     fetchApi({
       url, // URL end point
       method, // Method
-      formData, //Form Data
+      formData: form, //Form Data
       contentType, // Content Type
-      // Authentication
+      authentication, // Authentication
     })
       .then((response: any) => {
         setIsLoading(false);
         if (response.status == "1") {
           localStorage.setItem("user_data", JSON.stringify(response.user));
-          dispatch(setUser({ data: response.user, token: "" }));
+          localStorage.setItem("token", response.token);
+          dispatch(setUser({ data: response.user, token: response.token }));
           navigate("/"); // or any other route
         } else {
           const message = JSON.parse(response);
@@ -60,5 +70,35 @@ export const ReusableMethods = () => {
     navigate("/auth/signin");
   };
 
-  return { userLogin, userLogout, formErrors };
+  const formSubmit = ({
+    event,
+    action_url,
+    method,
+    formId,
+    formData,
+    contentType,
+    authentication,
+    setIsLoading,
+  }: formDataType) => {
+    event.preventDefault();
+    setIsLoading(true);
+    fetchApi({
+      url: action_url, // URL end point
+      method, // Method
+      formData, //Form Data
+      contentType, // Content Type
+      authentication, // Authentication
+    })
+      .then((response: any) => {
+        setIsLoading(false);
+        console.log("response", response);
+        setFormErrors(response.message);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("error", error);
+      });
+  };
+
+  return { userLogin, userLogout, formErrors, formSubmit };
 };

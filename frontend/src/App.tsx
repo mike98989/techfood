@@ -37,11 +37,13 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    console.log("got heress");
     const userData = localStorage.getItem("user_data"); // Assuming you set this as a cookie
+    const userToken = localStorage.getItem("token"); // Assuming you set this as a cookie
     if (userData) {
       // Parse user data from JSON string
-      dispatch(setUser({ data: JSON.parse(userData) }));
+      dispatch(
+        setUser({ data: JSON.parse(userData), token: userToken?.trim() })
+      );
       // You might also want to set the token in your Axios headers
     }
   }, [dispatch]);

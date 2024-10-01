@@ -43,6 +43,7 @@ class AuthController extends Controller
         // Return the token and user info
         return response()->json([
             'user' => $user,
+            'token'=>$token,
             'status'=>"1"
         ],200)->withCookie($cookieToken);
     }
@@ -51,7 +52,7 @@ class AuthController extends Controller
     {
         // Revoke the token
         $request->user()->currentAccessToken()->delete();
-
+        
         return response()->json(['message' => 'Logged out successfully']);
     }
 }

@@ -61,12 +61,15 @@ const SignIn: React.FC = () => {
                 id="login"
                 name="login"
                 onSubmit={(event) => {
-                  event.preventDefault();
+                  //event.preventDefault();
                   userLogin({
+                    event,
                     action_url: "user_login", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
+                    formData: "", ///Form Data is empty because I used the form ID to grab the data instead
                     contentType: "multipart/form-data", //Content Type
+                    authentication: "",
                     setIsLoading,
                   });
                 }}

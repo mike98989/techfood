@@ -111,30 +111,6 @@ export const DynamicInputFields = () => {
     });
   };
 
-  const handleSubmit = (event: any, poNumbers: Object) => {
-    event.preventDefault();
-    // Create a new FormData object
-    const formData = new FormData();
-    // Append each key-value pair from the object to the FormData
-    Object.entries(poNumbers).forEach(([key, value]) => {
-      formData.append(key, poNumbers.toString()); // Convert to string where necessary
-    });
-
-    fetchApi({
-      url: "labinputs", // URL end point
-      method: "POST", // Method
-      formData: formData, //Form Data
-      contentType: "multipart/form-data", // Content Type
-      // Authentication
-    })
-      .then((response: any) => {
-        console.log("response", response);
-      })
-      .catch((error) => {
-        console.error("error", error);
-      });
-  };
-
   // const handleProteinCompute = (constant: any) => {
   //   const resultCount = { countValid: 0, countInValid: 0, totalCount: 0 };
   //   const inputedValues = poNumbers;
@@ -250,7 +226,6 @@ export const DynamicInputFields = () => {
     handleAddBatch,
     handleRemoveBatch,
     handleInputChange,
-    handleSubmit,
     handleCompute,
     computeProteinChart,
   };

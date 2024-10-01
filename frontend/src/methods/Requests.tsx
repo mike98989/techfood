@@ -3,13 +3,11 @@ import * as Constants from "../Utils/Constants";
 interface FetchApiParams {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE"; // Specify allowed methods
-  formData?: FormData | null;
+  formData?: any | null;
   contentType: string;
   authentication?: string | null;
 }
 export const httpRequest = () => {
-  const baseUrl: string =
-    Constants.BASE_URL + Constants.API + Constants.API_VERSION;
   const fetchApi = async ({
     url,
     method,
@@ -17,6 +15,12 @@ export const httpRequest = () => {
     contentType,
     authentication,
   }: FetchApiParams): Promise<AxiosResponse | Error> => {
+    //const csrfToken = document.querySelector('meta[name="csrf-token"]')!.getAttribute("content");
+    //axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+    console.log("auth", authentication);
+    const baseUrl: string =
+      Constants.BASE_URL + Constants.API + Constants.API_VERSION;
+
     const config: AxiosRequestConfig = {
       method,
       url: baseUrl + url,
@@ -25,8 +29,10 @@ export const httpRequest = () => {
       headers: {
         "Content-Type": contentType,
         Authorization: `Bearer ${authentication}`, // Template literal for better readability
+        Accept: "application/json", // Setting the Accept header
       },
       withCredentials: true, // Moved inside the config
+      withXSRFToken: true,
     };
 
     try {

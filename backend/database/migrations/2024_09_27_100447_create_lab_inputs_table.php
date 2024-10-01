@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('lab_inputs', function (Blueprint $table) {
             $table->id();
-            $table->integer("PO_number");
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string("PO_number");
             $table->string("batch_number");
-            $table->integer("protein_value");
-            $table->integer("lactose_value");
-            $table->integer("water_value");
+            $table->integer("protein_value")->nullable();
+            $table->integer("lactose_value")->nullable();
+            $table->integer("water_value")->nullable();
             $table->date("result_date");
             $table->integer("status")->default("1");
             $table->timestamps();
