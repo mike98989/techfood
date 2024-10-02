@@ -71,56 +71,60 @@ function App() {
           path="/auth/signup"
           element={
             <ContentLayout>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignUp />
             </ContentLayout>
           }
         />
       </Routes>
 
-      <ProtectedRoute isAuthenticated={user.data}>
-        <Routes>
-          <Route
-            index
-            element={
+      <Routes>
+        <Route
+          index
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <ECommerce />
               </DefaultLayout>
-            }
-          />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/labdata"
-            element={
-              <DefaultLayout>
-                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <LabData />
-              </DefaultLayout>
-            }
-          />
+        <Route
+          path="/labdata"
+          element={
+            <DefaultLayout>
+              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <LabData />
+            </DefaultLayout>
+          }
+        />
 
-          <Route
-            path="/protein_lactose_water"
-            element={
+        <Route
+          path="/protein_lactose_water"
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <ProteinLactosWater />
               </DefaultLayout>
-            }
-          />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/deviations_complaints"
-            element={
+        <Route
+          path="/deviations_complaints"
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <FormLayout />
               </DefaultLayout>
-            }
-          />
-        </Routes>
-      </ProtectedRoute>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </>
 
     // <DefaultLayout>

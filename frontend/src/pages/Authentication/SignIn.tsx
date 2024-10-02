@@ -5,9 +5,12 @@ import Logo from "../../images/logo/logo.svg";
 import LoginSvgImage from "../../components/Misc/LoginSvgImage";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import SpinnerObject from "../../components/Spinner/Spinner";
+import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 const SignIn: React.FC = () => {
   const { userLogin, formErrors } = ReusableMethods();
   const { setIsLoading, Spinner } = SpinnerObject();
+  const { MessageBox, setFormMessage } = formReturnMessage();
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -31,32 +34,16 @@ const SignIn: React.FC = () => {
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+            <div className="w-full p-8 sm:p-12.5 xl:p-10.5 justify-center flex flex-col">
+              <img
+                className="block sm:hidden w-40 mb-5 self-center"
+                src={LogoDark}
+                alt="Logo"
+              />
+              <h2 className="mb-3 text-lg font-bold text-black dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
                 Sign In to Techfood
               </h2>
-
-              {formErrors && (
-                <div
-                  className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                  role="alert"
-                >
-                  <svg
-                    className="flex-shrink-0 inline w-4 h-4 me-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                  </svg>
-                  <span className="sr-only">Info</span>
-                  <div>
-                    <span className="font-medium"></span> {formErrors}
-                  </div>
-                </div>
-              )}
-
+              <MessageBox />
               <form
                 id="login"
                 name="login"
@@ -71,6 +58,7 @@ const SignIn: React.FC = () => {
                     contentType: "multipart/form-data", //Content Type
                     authentication: "",
                     setIsLoading,
+                    setFormMessage,
                   });
                 }}
               >

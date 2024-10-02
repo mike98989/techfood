@@ -2,13 +2,15 @@ import { Package } from "../../types/package";
 import { httpRequest } from "../../methods/Requests";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
+import SpinnerObject from "../../components/Spinner/Spinner";
 const LabInputsTable = () => {
   const { fetchApi } = httpRequest();
   const [labInputs, setLabInputs] = useState([]);
   const user = useSelector((state: any) => state.user.value);
+  const { isLoading, setIsLoading, Spinner } = SpinnerObject();
 
   useEffect(() => {
+    setIsLoading(true);
     fetchApi({
       url: "labinputs", // End Point
       method: "GET", // Method
@@ -16,6 +18,7 @@ const LabInputsTable = () => {
       contentType: "application/json", //Content Type
       authentication: user.token,
     }).then((response: any) => {
+      setIsLoading(false);
       setLabInputs(response.data);
       //console.log(response.data);
     });
@@ -55,6 +58,7 @@ const LabInputsTable = () => {
           </thead>
           <tbody>
             {labInputs &&
+              labInputs.length > 0 &&
               labInputs.map((input: any, key) => (
                 <tr key={key}>
                   <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
@@ -163,6 +167,28 @@ const LabInputsTable = () => {
                   </td>
                 </tr>
               ))}
+
+            {!isLoading && labInputs.length == 0 && (
+              <tr>
+                <td
+                  className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
+                  colSpan={8}
+                >
+                  No record found! Please create record.
+                </td>
+              </tr>
+            )}
+
+            {isLoading && labInputs.length == 0 && (
+              <tr>
+                <td
+                  className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
+                  colSpan={8}
+                >
+                  <Spinner /> Loading...
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

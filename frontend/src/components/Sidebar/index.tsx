@@ -106,7 +106,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-thin text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -145,7 +145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/labdata"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-thin text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("calendar") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
@@ -184,7 +184,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-thin text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/forms" ||
                             pathname.includes("forms")) &&
                           "bg-graydark dark:bg-meta-4"
@@ -254,9 +254,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <NavLink
                               to="/protein_lactose_water"
-                              className={({ isActive }) =>
-                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                (isActive && "!text-white")
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }
                             >
                               Protein, Lactose & Water
@@ -264,10 +263,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                           <li>
                             <NavLink
-                              to="/deviations_complaints"
-                              className={({ isActive }) =>
-                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                (isActive && "!text-white")
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }
                             >
                               Deviations Complaints
@@ -275,13 +273,53 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                           <li>
                             <NavLink
-                              to="/lab/water"
-                              className={({ isActive }) =>
-                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                (isActive && "!text-white")
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }
                             >
                               Microbiological Samples Environment
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
+                              }
+                            >
+                              Staffing of production
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
+                              }
+                            >
+                              Drill samples in Slaughter
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
+                              }
+                            >
+                              CCP follow-up
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="#"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
+                              }
+                            >
+                              Daily Hygiene Rounds
                             </NavLink>
                           </li>
                         </ul>
@@ -299,7 +337,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-thin text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
