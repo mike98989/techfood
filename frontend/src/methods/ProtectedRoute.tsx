@@ -10,7 +10,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   isAuthenticated,
 }) => {
-  // If not authenticated, redirect to login
+  //If not authenticated, redirect to login
   if (!isAuthenticated) {
     return <Navigate to="/auth/signin" />;
   }

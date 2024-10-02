@@ -10,7 +10,7 @@ const SpinnerRender = () => {
           <svg
             aria-hidden="true"
             role="status"
-            className="inline w-7 h-7 me-3 text-white animate-spin"
+            className="inline w-5 h-5 me-3 text-white animate-spin"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

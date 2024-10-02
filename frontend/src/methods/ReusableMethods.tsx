@@ -9,48 +9,67 @@ export const ReusableMethods = () => {
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState("");
 
+  interface formDataType {
+    event: any;
+    action_url: string;
+    method: "GET" | "POST" | "PUT" | "DELETE"; // Specify allowed methods
+    formId: string | "";
+    formData: Object | null;
+    contentType: string;
+    authentication: string;
+    setIsLoading: Function;
+    setFormMessage: Function;
+  }
+
   // User Login Method
   const userLogin = ({
+    event,
     action_url,
     method,
     formId,
+    formData,
     contentType,
+    authentication,
     setIsLoading,
-  }: {
-    action_url: string;
-    method: "GET" | "POST" | "PUT" | "DELETE"; // Specify allowed methods
-    formId: string;
-    contentType: string;
-    setIsLoading: Function;
-  }) => {
+    setFormMessage,
+  }: formDataType) => {
+    event.preventDefault();
     setIsLoading(true);
     const formElement = document.getElementById(
       formId
     ) as HTMLFormElement | null;
-    const formData = formElement && new FormData(formElement);
+    const form = formElement && new FormData(formElement);
     const url = action_url;
     fetchApi({
       url, // URL end point
       method, // Method
-      formData, //Form Data
+      formData: form, //Form Data
       contentType, // Content Type
-      // Authentication
+      authentication, // Authentication
     })
       .then((response: any) => {
         setIsLoading(false);
         if (response.status == "1") {
           localStorage.setItem("user_data", JSON.stringify(response.user));
-          dispatch(setUser({ data: response.user, token: "" }));
+          localStorage.setItem("token", response.token);
+          dispatch(setUser({ data: response.user, token: response.token }));
           navigate("/"); // or any other route
         } else {
           const message = JSON.parse(response);
-          setFormErrors(message.message);
+          setFormMessage({
+            message: message.message,
+            status: "error",
+          });
         }
       })
       .catch((error) => {
         setIsLoading(false);
         const message = JSON.parse(error[0]);
-        setFormErrors(JSON.parse(message.message));
+        //setFormErrors(JSON.parse(message.message));
+        setFormMessage({
+          message: JSON.parse(message.message),
+          status: "error",
+        });
       });
   };
 
@@ -60,5 +79,52 @@ export const ReusableMethods = () => {
     navigate("/auth/signin");
   };
 
-  return { userLogin, userLogout, formErrors };
+  const formSubmit = ({
+    event,
+    action_url,
+    method,
+    formId,
+    formData,
+    contentType,
+    authentication,
+    setIsLoading,
+    setFormMessage,
+  }: formDataType) => {
+    event.preventDefault();
+    setIsLoading(true);
+    /// If the formdata is null, use the form id instead
+    if (!formData) {
+      const formElement = document.getElementById(
+        formId
+      ) as HTMLFormElement | null;
+      const form = formElement && new FormData(formElement);
+      formData = form;
+    }
+    fetchApi({
+      url: action_url, // URL end point
+      method, // Method
+      formData, //Form Data
+      contentType, // Content Type
+      authentication, // Authentication
+    })
+      .then((response: any) => {
+        setIsLoading(false);
+        console.log("response", response);
+        //setFormErrors(JSON.parse(response));
+        setFormMessage({
+          message: response.message,
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("error", error);
+        setFormMessage({
+          message: JSON.parse(error),
+          status: "error",
+        });
+      });
+  };
+
+  return { userLogin, userLogout, formErrors, formSubmit };
 };

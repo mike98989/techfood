@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,18 +17,21 @@ class LabInputsFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::inRandomOrder()->first();
         $date = fake()->dateTimeBetween('-1year','now');
         $date = explode("-",$date->format('Y-m-d'));
         $date = implode("",$date);
         $final_date = substr($date,2);
         $rand=rand(100,10000);
+        
         return [
+            'user_id'=>$user->id,
             'PO_number' => fake()->unique()->numberBetween('400','800'),
             'batch_number' => $final_date.":".$rand,
-            'protein_value' => fake()->numberBetween(30,90),
-            'lactose_value' => fake()->numberBetween(25,97),
-            'water_value' => fake()->numberBetween(25,97),
-            'result_date' => $date,
+            'protein_value' => fake()->optional->numberBetween(30,90),
+            'lactose_value' => fake()->optional->numberBetween(25,97),
+            'water_value' => fake()->optional->numberBetween(25,97),
+            'result_date' => $date, 
         ];
     }
 }

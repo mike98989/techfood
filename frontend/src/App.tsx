@@ -8,11 +8,13 @@ import SignUp from "./pages/Authentication/SignUp";
 // import Calendar from "./pages/Calendar";
 // import Chart from "./pages/Chart";
 import ECommerce from "./pages/Dashboard/ECommerce";
-// import FormElements from "./pages/Form/FormElements";
-// import FormLayout from "./pages/Form/FormLayout";
+import FormElements from "./pages/Form/FormElements";
+//import FormLayout from "./pages/Form/FormLayout";
 // import Profile from "./pages/Profile";
 // import Settings from "./pages/Settings";
 import LabData from "./pages/LabData";
+import ProteinLactosWater from "./pages/Form/Protein_lactos_water";
+
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -22,6 +24,7 @@ import ProtectedRoute from "./methods/ProtectedRoute";
 import { useDispatch } from "react-redux";
 import { setUser } from "./methods/reducers/user";
 import { useSelector } from "react-redux";
+import FormLayout from "./pages/Form/FormLayout";
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,11 +37,13 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    console.log("got heress");
     const userData = localStorage.getItem("user_data"); // Assuming you set this as a cookie
+    const userToken = localStorage.getItem("token"); // Assuming you set this as a cookie
     if (userData) {
       // Parse user data from JSON string
-      dispatch(setUser({ data: JSON.parse(userData) }));
+      dispatch(
+        setUser({ data: JSON.parse(userData), token: userToken?.trim() })
+      );
       // You might also want to set the token in your Axios headers
     }
   }, [dispatch]);
@@ -66,36 +71,60 @@ function App() {
           path="/auth/signup"
           element={
             <ContentLayout>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignUp />
             </ContentLayout>
           }
         />
       </Routes>
 
-      <ProtectedRoute isAuthenticated={user.data}>
-        <Routes>
-          <Route
-            index
-            element={
+      <Routes>
+        <Route
+          index
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <ECommerce />
               </DefaultLayout>
-            }
-          />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/labdata"
-            element={
+        <Route
+          path="/labdata"
+          element={
+            <DefaultLayout>
+              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <LabData />
+            </DefaultLayout>
+          }
+        />
+
+        <Route
+          path="/protein_lactose_water"
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <LabData />
+                <ProteinLactosWater />
               </DefaultLayout>
-            }
-          />
-        </Routes>
-      </ProtectedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/deviations_complaints"
+          element={
+            <ProtectedRoute isAuthenticated={user.data}>
+              <DefaultLayout>
+                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <FormLayout />
+              </DefaultLayout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </>
 
     // <DefaultLayout>

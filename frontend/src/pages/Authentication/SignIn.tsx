@@ -5,9 +5,12 @@ import Logo from "../../images/logo/logo.svg";
 import LoginSvgImage from "../../components/Misc/LoginSvgImage";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import SpinnerObject from "../../components/Spinner/Spinner";
+import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 const SignIn: React.FC = () => {
   const { userLogin, formErrors } = ReusableMethods();
   const { setIsLoading, Spinner } = SpinnerObject();
+  const { MessageBox, setFormMessage } = formReturnMessage();
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -31,43 +34,31 @@ const SignIn: React.FC = () => {
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+            <div className="w-full p-8 sm:p-12.5 xl:p-10.5 justify-center flex flex-col">
+              <img
+                className="block sm:hidden w-40 mb-5 self-center"
+                src={LogoDark}
+                alt="Logo"
+              />
+              <h2 className="mb-3 text-lg font-bold text-black dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
                 Sign In to Techfood
               </h2>
-
-              {formErrors && (
-                <div
-                  className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                  role="alert"
-                >
-                  <svg
-                    className="flex-shrink-0 inline w-4 h-4 me-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                  </svg>
-                  <span className="sr-only">Info</span>
-                  <div>
-                    <span className="font-medium"></span> {formErrors}
-                  </div>
-                </div>
-              )}
-
+              <MessageBox />
               <form
                 id="login"
                 name="login"
                 onSubmit={(event) => {
-                  event.preventDefault();
+                  //event.preventDefault();
                   userLogin({
+                    event,
                     action_url: "user_login", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
+                    formData: "", ///Form Data is empty because I used the form ID to grab the data instead
                     contentType: "multipart/form-data", //Content Type
+                    authentication: "",
                     setIsLoading,
+                    setFormMessage,
                   });
                 }}
               >
@@ -145,7 +136,7 @@ const SignIn: React.FC = () => {
                   <button
                     // onClick={() => setIsLoading(!isLoading)}
                     type="submit"
-                    className="w-full cursor-pointer rounded-lg border border-success bg-success p-4 text-white transition hover:bg-opacity-90"
+                    className="w-full cursor-pointer rounded-lg bg-cyan-700 p-4 text-white transition hover:bg-opacity-90"
                   >
                     <Spinner /> Sign in
                   </button>
@@ -154,7 +145,7 @@ const SignIn: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <Link to="/auth/signup" className="text-success">
+                    <Link to="/auth/signup" className="text-cyan-700">
                       Sign Up
                     </Link>
                   </p>
