@@ -1,16 +1,28 @@
-import React from 'react';
-import CardDataStats from '../../components/CardDataStats';
-import ChartOne from '../../components/Charts/ChartOne';
-import ChartThree from '../../components/Charts/ChartThree';
-import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
+import React, { useEffect } from "react";
+import CardDataStats from "../../components/CardDataStats";
+import ProteinLactoseWaterChart from "../../components/Charts/ProteinLactoseWaterChart";
+import ProteinLactoseWaterThreshold from "../../components/Charts/ProteinLactoseWaterThresholdChart";
 
-const ECommerce: React.FC = () => {
+//import ProteinLactoseWaterChart2 from "../../components/Charts/ProteinLactoseWaterChart2";
+import ChartThree from "../../components/Charts/ChartThree";
+import ChartTwo from "../../components/Charts/ChartTwo";
+import ChatCard from "../../components/Chat/ChatCard";
+import MapOne from "../../components/Maps/MapOne";
+import TableOne from "../../components/Tables/TableOne";
+import chartData from "../../methods/chartData";
+const Index: React.FC = () => {
+  const { proteinLactoseData } = chartData({ proteinLactoseChart: true });
+  const foodConstant = {
+    constants: 72.5,
+    approvedText: "Tillfredställande",
+    unApprovedText: "Åtgärder krävs",
+  };
+  // useEffect(() => {
+  //   proteinLactoseWater();
+  // }, []);
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
@@ -95,20 +107,25 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-      </div>
+      </div> */}
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <ChartThree />
+        <ProteinLactoseWaterChart chartData={proteinLactoseData} />
+        {/* <ProteinLactoseWaterChart2 /> */}
+        {/* <ChartTwo /> */}
+        <ProteinLactoseWaterThreshold
+          chartData={proteinLactoseData}
+          constant={foodConstant}
+        />
+        {/* <ChartThree />
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>
-        <ChatCard />
+        <ChatCard /> */}
       </div>
     </>
   );
 };
 
-export default ECommerce;
+export default Index;

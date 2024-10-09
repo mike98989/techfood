@@ -61,6 +61,17 @@ services:
       - app-network
     restart: unless-stopped
 
+  nginx:
+    build:
+      context: ./nginx # Set the context to the frontend directory
+      dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
 volumes:
   mysql_data:
 

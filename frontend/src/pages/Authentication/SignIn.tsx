@@ -23,8 +23,8 @@ const SignIn: React.FC = () => {
               </Link>
 
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+                <b>Streamline Your Lab:</b> Digitizing Food Results with
+                Precision!{" "}
               </p>
 
               <span className="mt-15 inline-block">
@@ -40,7 +40,7 @@ const SignIn: React.FC = () => {
                 src={LogoDark}
                 alt="Logo"
               />
-              <h2 className="mb-3 text-lg font-bold text-black dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
+              <h2 className="mb-3 text-lg font-bold text-cyan-800 dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
                 Sign In to Techfood
               </h2>
               <MessageBox />

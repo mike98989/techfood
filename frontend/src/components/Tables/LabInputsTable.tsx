@@ -3,24 +3,29 @@ import { httpRequest } from "../../methods/Requests";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import SpinnerObject from "../../components/Spinner/Spinner";
+import { ReusableMethods } from "../../methods/ReusableMethods";
+import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
+
 const LabInputsTable = () => {
   const { fetchApi } = httpRequest();
   const [labInputs, setLabInputs] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { isLoading, setIsLoading, Spinner } = SpinnerObject();
+  const { fetchRequest } = ReusableMethods();
+  //const { MessageBox, setFormMessage } = formReturnMessage();
 
   useEffect(() => {
     setIsLoading(true);
-    fetchApi({
-      url: "labinputs", // End Point
+    fetchRequest({
+      event: null,
+      action_url: "labinputs", // End Point
       method: "GET", // Method
+      formId: "",
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
-    }).then((response: any) => {
-      setIsLoading(false);
-      setLabInputs(response.data);
-      //console.log(response.data);
+      setIsLoading,
+      setFormMessage: setLabInputs,
     });
   }, []);
 
@@ -34,7 +39,7 @@ const LabInputsTable = () => {
                 #
               </th>
               <th className="py-2 px-2 font-medium text-black dark:text-white">
-                PO Number
+                PO
               </th>
               <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
                 Date

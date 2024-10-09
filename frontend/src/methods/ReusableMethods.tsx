@@ -3,11 +3,13 @@ import { httpRequest } from "./Requests";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser, clearUser } from "./reducers/user";
+
 export const ReusableMethods = () => {
   const dispatch = useDispatch();
   const { fetchApi } = httpRequest();
   const navigate = useNavigate();
-  const [formErrors, setFormErrors] = useState("");
+  //const [formErrors, setFormErrors] = useState("");
+  const [requestedData, setReqestedData] = useState([]);
 
   interface formDataType {
     event: any;
@@ -63,6 +65,8 @@ export const ReusableMethods = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
+        return;
         setIsLoading(false);
         const message = JSON.parse(error[0]);
         //setFormErrors(JSON.parse(message.message));
@@ -126,5 +130,58 @@ export const ReusableMethods = () => {
       });
   };
 
-  return { userLogin, userLogout, formErrors, formSubmit };
+  const fetchRequest = ({
+    event,
+    action_url,
+    method,
+    formId,
+    formData,
+    contentType,
+    authentication,
+    setIsLoading,
+    setFormMessage,
+  }: formDataType) => {
+    setIsLoading(true);
+    /// If the formdata is null, use the form id instead
+    if (!formData) {
+      const formElement = document.getElementById(
+        formId
+      ) as HTMLFormElement | null;
+      const form = formElement && new FormData(formElement);
+      formData = form;
+    }
+    fetchApi({
+      url: action_url, // URL end point
+      method, // Method
+      formData, //Form Data
+      contentType, // Content Type
+      authentication, // Authentication
+    })
+      .then((response: any) => {
+        setIsLoading(false);
+        console.log("response is here", response);
+        //setFormErrors(JSON.parse(response));
+        setFormMessage(response.data);
+        // setFormMessage({
+        //   message: response.message,
+        //   status: "success",
+        // });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("error", error);
+        setFormMessage({
+          message: JSON.parse(error),
+          status: "error",
+        });
+      });
+  };
+  return {
+    userLogin,
+    userLogout,
+    //formErrors,
+    formSubmit,
+    requestedData,
+    fetchRequest,
+  };
 };

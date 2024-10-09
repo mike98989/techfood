@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -15,8 +16,10 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
+        //\App\Http\Middleware\CorsMiddleware::class,
         // \App\Http\Middleware\TrustHosts::class,
-        \App\Http\Middleware\TrustProxies::class,
+        //\App\Http\Middleware\DynamicCors::class,
+        // \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -46,8 +49,10 @@ class Kernel extends HttpKernel
         // ],
 
         'api' => [
-            'throttle:api',
-                \Illuminate\Http\Middleware\HandleCors::class,
+                //\App\Http\Middleware\DynamicCors::class,
+                //\App\Http\Middleware\CorsMiddleware::class, // Register here
+                'throttle:api',
+                HandleCors::class,
                 EnsureFrontendRequestsAreStateful::class,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ],

@@ -17,6 +17,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.34",
+    "ag-charts-react": "^10.2.0",
     "apexcharts": "^3.41.0",
     "axios": "^1.7.7",
     "flatpickr": "^4.6.13",

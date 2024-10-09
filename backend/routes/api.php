@@ -20,6 +20,9 @@ use App\Http\Controllers\Api\LabInputsController;
 Route::prefix('v1')->group(function (): void {
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('labinputs', LabInputsController::class);
+    // Route::get('/labinputs', function () {
+    //     return response('CORS test successful');
+    // });
 });
 
 Route::middleware('guest')->group(function () {

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 export default function Protein() {
   const { setIsLoading, Spinner } = SpinnerObject();
-  const { formSubmit, formErrors } = ReusableMethods();
+  const { formSubmit } = ReusableMethods();
   const user = useSelector((state: any) => state.user.value);
   const { MessageBox, setFormMessage } = formReturnMessage();
 
@@ -34,8 +34,8 @@ export default function Protein() {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex border-b justify-between  border-stroke py-2 px-3 dark:border-strokedark">
             <h3 className="text-md left-content uppercase text-black dark:text-white items-start">
-              Digitalization and monitoring of analysis results for protein from
-              production
+              Digitization and follow-up of protein and water content analysis
+              results from production
             </h3>
           </div>
 
