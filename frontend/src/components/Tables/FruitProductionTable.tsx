@@ -6,7 +6,7 @@ import SpinnerObject from "../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 
-const LabInputsTable = () => {
+const FruitProductionTable = () => {
   const { fetchApi } = httpRequest();
   const [labInputs, setLabInputs] = useState([]);
   const user = useSelector((state: any) => state.user.value);
@@ -201,4 +201,4 @@ const LabInputsTable = () => {
   );
 };
 
-export default LabInputsTable;
+export default FruitProductionTable;

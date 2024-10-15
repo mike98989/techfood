@@ -23,8 +23,8 @@ const SignIn: React.FC = () => {
               </Link>
 
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+                <b>Streamline Your Lab:</b> Digitizing Food Results with
+                Precision!{" "}
               </p>
 
               <span className="mt-15 inline-block">
@@ -40,7 +40,7 @@ const SignIn: React.FC = () => {
                 src={LogoDark}
                 alt="Logo"
               />
-              <h2 className="mb-3 text-lg font-bold text-black dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
+              <h2 className="mb-3 text-lg font-bold text-cyan-800 dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
                 Sign In to Techfood
               </h2>
               <MessageBox />
@@ -51,11 +51,11 @@ const SignIn: React.FC = () => {
                   //event.preventDefault();
                   userLogin({
                     event,
-                    action_url: "user_login", // End Point
+                    action_url: "auth/signin", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     formData: "", ///Form Data is empty because I used the form ID to grab the data instead
-                    contentType: "multipart/form-data", //Content Type
+                    contentType: "application/json", //Content Type
                     authentication: "",
                     setIsLoading,
                     setFormMessage,

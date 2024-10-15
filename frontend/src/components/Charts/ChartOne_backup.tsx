@@ -1,5 +1,5 @@
 import { ApexOptions } from "apexcharts";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const options: ApexOptions = {
@@ -121,20 +121,8 @@ interface ChartOneState {
     data: number[];
   }[];
 }
-interface ChartOneProps {
-  chartData: any; // Make sure this matches the type of data you're passing
-}
 
-function processData(chartData) {
-  alert("got here");
-}
-
-const ChartOne: React.FC<ChartOneProps> = ({ chartData }) => {
-  useEffect(() => {
-    console.log(chartData.data);
-    chartData.data && processData(chartData);
-  }, [chartData]);
-
+const ChartOne: React.FC = () => {
   const [state, setState] = useState<ChartOneState>({
     series: [
       {

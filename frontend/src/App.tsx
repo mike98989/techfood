@@ -7,7 +7,7 @@ import SignIn from "./pages/Authentication/SignIn";
 import SignUp from "./pages/Authentication/SignUp";
 // import Calendar from "./pages/Calendar";
 // import Chart from "./pages/Chart";
-import ECommerce from "./pages/Dashboard/ECommerce";
+import Index from "./pages/Dashboard/Index";
 import FormElements from "./pages/Form/FormElements";
 //import FormLayout from "./pages/Form/FormLayout";
 // import Profile from "./pages/Profile";
@@ -85,7 +85,7 @@ function App() {
             <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
                 <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <ECommerce />
+                <Index />
               </DefaultLayout>
             </ProtectedRoute>
           }
@@ -114,7 +114,7 @@ function App() {
         />
 
         <Route
-          path="/deviations_complaints"
+          path="/fruit_production"
           element={
             <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>

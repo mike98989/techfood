@@ -17,7 +17,7 @@ export const httpRequest = () => {
   }: FetchApiParams): Promise<AxiosResponse | Error> => {
     //const csrfToken = document.querySelector('meta[name="csrf-token"]')!.getAttribute("content");
     //axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-    console.log("auth", authentication);
+
     const baseUrl: string =
       Constants.BASE_URL + Constants.API + Constants.API_VERSION;
 
@@ -27,18 +27,19 @@ export const httpRequest = () => {
       data: formData,
       responseType: "stream",
       headers: {
+        Accept: "application/json",
         "Content-Type": contentType,
         Authorization: `Bearer ${authentication}`, // Template literal for better readability
-        Accept: "application/json", // Setting the Accept header
+        //Accept: "application/json", // Setting the Accept header
       },
-      withCredentials: true, // Moved inside the config
-      withXSRFToken: true,
+      withCredentials: false, // Moved inside the config
+      //withXSRFToken: true,
     };
 
     try {
       const response = await axios(config);
       const data = JSON.parse(response.data);
-      console.log(data);
+      //console.log(data);
       return data;
     } catch (error: any) {
       if (error.response) {
@@ -51,8 +52,9 @@ export const httpRequest = () => {
         console.error("No response received:", error.request);
       } else {
         // Something else caused an error (network issues, bad request, etc.)
-        console.error("Error:", error.message);
+        console.error("Error:", error);
       }
+
       return error;
       //return handleError(error);
     }

@@ -20,14 +20,25 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:*','http://192.168.1.68:*'],
+    //'allowed_origins' => ['http://localhost:5173'],
+    // 'allowed_origins' => [
+    //     'https://1a9c-92-34-244-149.ngrok-free.app', // Your frontend URL
+    //     //'https://c650-92-34-244-149.ngrok-free.app' // This could also be necessary
+    // ],
 
     //'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
-    //'allowed_headers' => ['*'],
     'allowed_headers' => ['*'],
+    // 'allowed_headers' => ['
+    //     Content-Type',
+    //     'Authorization',
+    //     'X-Requested-With',
+    //     'Accept',
+    //     'Origin',
+    //     'X-CSRF-Token',
+    // ],
 
     'exposed_headers' => [],
 

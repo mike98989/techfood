@@ -19,8 +19,8 @@ class LabInputsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $data =  LabInputs::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
-        return response()->json(['data'=>$data],200);
+        $data =  LabInputs::where('user_id',$user->id)->orderBy('result_date', 'desc')->get();
+        return response()->json(['data'=>$data],201);
         
     }
 
