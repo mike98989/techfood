@@ -52,8 +52,9 @@ export const httpRequest = () => {
         console.error("No response received:", error.request);
       } else {
         // Something else caused an error (network issues, bad request, etc.)
-        console.error("Error:", error.message);
+        console.error("Error:", error);
       }
+
       return error;
       //return handleError(error);
     }

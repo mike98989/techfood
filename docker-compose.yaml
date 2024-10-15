@@ -1,15 +1,30 @@
 version: "3.8"
 
 services:
+  # backend:
+  #   build:
+  #     context: ./backend # Set the context to the frontend directory
+  #     dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
+  #   command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./backend:/var/www/backend
+  #   depends_on:
+  #     - mysql_host
+  #   networks:
+  #     - app-network
+
   backend:
     build:
-      context: ./backend # Set the context to the frontend directory
-      dockerfile: Dockerfile # Just specify the Dockerfile name since it's in the context
-    command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+      context: ./backend_node # Set the context to the frontend directory
+      dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8000:3000"
     volumes:
-      - ./backend:/var/www/backend
+      - ./backend_node:/backend/
+      - /backend/node_modules
+    command: npx nodemon index.js
     depends_on:
       - mysql_host
     networks:

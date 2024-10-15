@@ -114,7 +114,7 @@ function App() {
         />
 
         <Route
-          path="/deviations_complaints"
+          path="/fruit_production"
           element={
             <ProtectedRoute isAuthenticated={user.data}>
               <DefaultLayout>
