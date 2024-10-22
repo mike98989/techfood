@@ -9,13 +9,16 @@ import "flatpickr/dist/flatpickr.min.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import userReducer from "./methods/reducers/user";
+import LanguageReducer from "./methods/reducers/language";
+
 // import { Security, LoginCallback } from "@okta/okta-react";
 // import { oktaConfig } from "./okta-config/oktaConfig";
 // import { OktaAuth } from "@okta/okta-auth-js";
 import { Auth0Provider } from "@auth0/auth0-react";
+import "./i18n";
 
 const store = configureStore({
-  reducer: { user: userReducer },
+  reducer: { user: userReducer, language: LanguageReducer },
 });
 //const oktaAuth = new OktaAuth(oktaConfig);
 

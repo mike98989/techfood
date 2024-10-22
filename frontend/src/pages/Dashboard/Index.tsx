@@ -2,16 +2,24 @@ import React, { useEffect } from "react";
 import CardDataStats from "../../components/CardDataStats";
 import ProteinLactoseWaterChart from "../../components/Charts/ProteinLactoseWaterChart";
 import ProteinLactoseWaterThreshold from "../../components/Charts/ProteinLactoseWaterThresholdChart";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 //import ProteinLactoseWaterChart2 from "../../components/Charts/ProteinLactoseWaterChart2";
-import ChartThree from "../../components/Charts/ChartThree";
-import ChartTwo from "../../components/Charts/ChartTwo";
-import ChatCard from "../../components/Chat/ChatCard";
-import MapOne from "../../components/Maps/MapOne";
-import TableOne from "../../components/Tables/TableOne";
+import FoodPRoductionChart from "../../components/Charts/FoodProductionChart";
+// import ChartTwo from "../../components/Charts/ChartTwo";
+// import ChatCard from "../../components/Chat/ChatCard";
+// import MapOne from "../../components/Maps/MapOne";
+// import TableOne from "../../components/Tables/TableOne";
 import chartData from "../../methods/chartData";
 const Index: React.FC = () => {
-  const { proteinLactoseData } = chartData({ proteinLactoseChart: true });
+  const { proteinLactoseData, fruitProductionData } = chartData({
+    proteinLactoseChart: true,
+    fruitProductionChart: true,
+  });
+  const user = useSelector((state: any) => state.user.value);
+  const { t } = useTranslation();
+
   const foodConstant = {
     constants: 72.5,
     approvedText: "Tillfredställande",
@@ -108,8 +116,14 @@ const Index: React.FC = () => {
           </svg>
         </CardDataStats>
       </div> */}
+      <h2 className="mt-3 ml-3 text-md font-thin text-black dark:text-white md:text-left xs:text-center text-center">
+        {t("greeting") + " " + user.data.name}!
+      </h2>
+      <h2 className="ml-3 text-md font-thin text-black dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
+        {t("dashboard")}
+      </h2>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-12 gap-3 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5">
         <ProteinLactoseWaterChart chartData={proteinLactoseData} />
         {/* <ProteinLactoseWaterChart2 /> */}
         {/* <ChartTwo /> */}
@@ -117,7 +131,10 @@ const Index: React.FC = () => {
           chartData={proteinLactoseData}
           constant={foodConstant}
         />
-        {/* <ChartThree />
+        {fruitProductionData && (
+          <FoodPRoductionChart chartData={fruitProductionData} />
+        )}
+        {/* 
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
           <TableOne />

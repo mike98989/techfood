@@ -20,7 +20,7 @@ export const ReusableMethods = () => {
     contentType: string;
     authentication: string;
     setIsLoading: Function;
-    setFormMessage: Function;
+    setReturnData: Function;
   }
 
   // User Login Method
@@ -33,7 +33,7 @@ export const ReusableMethods = () => {
     contentType,
     authentication,
     setIsLoading,
-    setFormMessage,
+    setReturnData,
   }: formDataType) => {
     event.preventDefault();
     setIsLoading(true);
@@ -58,7 +58,7 @@ export const ReusableMethods = () => {
           navigate("/"); // or any other route
         } else {
           const message = JSON.parse(response);
-          setFormMessage({
+          setReturnData({
             message: message.message,
             status: "error",
           });
@@ -66,11 +66,10 @@ export const ReusableMethods = () => {
       })
       .catch((error) => {
         console.log(error);
-        return;
         setIsLoading(false);
         const message = JSON.parse(error[0]);
         //setFormErrors(JSON.parse(message.message));
-        setFormMessage({
+        setReturnData({
           message: JSON.parse(message.message),
           status: "error",
         });
@@ -92,10 +91,11 @@ export const ReusableMethods = () => {
     contentType,
     authentication,
     setIsLoading,
-    setFormMessage,
+    setReturnData,
   }: formDataType) => {
     event.preventDefault();
     setIsLoading(true);
+
     /// If the formdata is null, use the form id instead
     if (!formData) {
       const formElement = document.getElementById(
@@ -115,22 +115,21 @@ export const ReusableMethods = () => {
         setIsLoading(false);
         console.log("response", response);
         //setFormErrors(JSON.parse(response));
-        setFormMessage({
+        setReturnData({
           message: response.message,
           status: "success",
         });
       })
       .catch((error) => {
         setIsLoading(false);
-        console.error("error", error);
-        setFormMessage({
+        setReturnData({
           message: JSON.parse(error),
           status: "error",
         });
       });
   };
 
-  const fetchRequest = ({
+  const allRequest = ({
     event,
     action_url,
     method,
@@ -139,7 +138,7 @@ export const ReusableMethods = () => {
     contentType,
     authentication,
     setIsLoading,
-    setFormMessage,
+    setReturnData,
   }: formDataType) => {
     setIsLoading(true);
     /// If the formdata is null, use the form id instead
@@ -150,6 +149,7 @@ export const ReusableMethods = () => {
       const form = formElement && new FormData(formElement);
       formData = form;
     }
+
     fetchApi({
       url: action_url, // URL end point
       method, // Method
@@ -160,28 +160,24 @@ export const ReusableMethods = () => {
       .then((response: any) => {
         setIsLoading(false);
         console.log("response is here", response);
-        //setFormErrors(JSON.parse(response));
-        setFormMessage(response.data);
-        // setFormMessage({
-        //   message: response.message,
-        //   status: "success",
-        // });
+        setReturnData(response.data);
       })
       .catch((error) => {
         setIsLoading(false);
         console.error("error", error);
-        setFormMessage({
+        setReturnData({
           message: JSON.parse(error),
           status: "error",
         });
       });
   };
+
   return {
     userLogin,
     userLogout,
     //formErrors,
     formSubmit,
     requestedData,
-    fetchRequest,
+    allRequest,
   };
 };

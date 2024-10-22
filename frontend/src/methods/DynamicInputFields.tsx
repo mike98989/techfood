@@ -21,7 +21,7 @@ interface compute {
   countInValid: number;
   totalCount: number;
 }
-
+/// Dynamic input field for protein, lactose and water content
 export const DynamicInputFields = () => {
   //const [poNumbers, setPoNumbers] = useState([]);
   const [poNumbers, setPoNumbers] = useState<PONumber[]>([]);
@@ -228,5 +228,67 @@ export const DynamicInputFields = () => {
     handleInputChange,
     handleCompute,
     computeProteinChart,
+  };
+};
+
+///////Dynamic input field for fruit production
+export const DynamicInputFieldsFruitProduction = () => {
+  //const [poNumbers, setPoNumbers] = useState([]);
+  ////Set the first values to be an object with empty values
+  const [fruitProduction, setFruitProduction] = useState<any[]>([
+    {
+      date: "",
+      month: "",
+      section: "",
+      status: "",
+      cause: "",
+      deviation_type: "",
+    },
+  ]);
+
+  const handleAddFruitProduction = () => {
+    setFruitProduction((prev) => [
+      ...prev,
+      {
+        date: "",
+        month: "",
+        section: "",
+        status: "",
+        cause: "",
+        deviation_type: "",
+      },
+    ]);
+  };
+
+  const handleInputChange = ({
+    index,
+    field,
+    value,
+  }: {
+    index: number;
+    field: any;
+    value: string;
+  }) => {
+    setFruitProduction((prev) => {
+      const updatedValues = [...prev];
+      updatedValues[index][field] = value; // Update PO Number field
+
+      return updatedValues;
+    });
+  };
+
+  const handleRemoveRow = ({ index }: { index: number }) => {
+    setFruitProduction((prev) => {
+      const updatedValues = [...prev];
+      updatedValues.splice(index, 1);
+      return updatedValues;
+    });
+  };
+
+  return {
+    fruitProduction,
+    handleAddFruitProduction,
+    handleInputChange,
+    handleRemoveRow,
   };
 };

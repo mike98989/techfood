@@ -219,3 +219,9 @@ span.flatpickr-weekday,
 .submit_button {
   @apply w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90;
 }
+.custom-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Black with 50% opacity */
+  z-index: 5000; /* Ensure it is above other elements */
+}

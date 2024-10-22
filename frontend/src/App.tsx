@@ -10,11 +10,12 @@ import SignUp from "./pages/Authentication/SignUp";
 import Index from "./pages/Dashboard/Index";
 import FormElements from "./pages/Form/FormElements";
 //import FormLayout from "./pages/Form/FormLayout";
-// import Profile from "./pages/Profile";
-// import Settings from "./pages/Settings";
-import LabData from "./pages/LabData";
-import ProteinLactosWater from "./pages/Form/Protein_lactos_water";
-
+//import Profile from "./pages/Profile";
+//import Settings from "./pages/Settings";
+import ProteinLactoseWater from "./pages/ProteinLactoseWater";
+import FruitProduction from "./pages/FruitProduction";
+import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
+import NewFruitProduction from "./pages/Form/NewFruitProduction";
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -25,12 +26,16 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./methods/reducers/user";
 import { useSelector } from "react-redux";
 import FormLayout from "./pages/Form/FormLayout";
+import { useTranslation } from "react-i18next";
+//import LanguageDropDown from "./components/Dropdowns/LanguageDropDown";
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const user = useSelector((state: any) => state.user.value);
+  const { t, i18n } = useTranslation();
+  const language = useSelector((state: any) => state.language.value);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,8 +54,9 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
+    i18n.changeLanguage(language.language);
     setTimeout(() => setLoading(false), 1000);
-  }, []);
+  }, [language.language]);
 
   return loading ? (
     <Loader />
@@ -76,51 +82,86 @@ function App() {
             </ContentLayout>
           }
         />
-      </Routes>
 
-      <Routes>
+        {/* Protected routes */}
         <Route
-          index
+          path="/*"
           element={
             <ProtectedRoute isAuthenticated={user.data}>
-              <DefaultLayout>
-                <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Index />
-              </DefaultLayout>
-            </ProtectedRoute>
-          }
-        />
+              <Routes>
+                <Route
+                  path=""
+                  element={
+                    <DefaultLayout>
+                      <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                      <Index />
+                    </DefaultLayout>
+                  }
+                />
 
-        <Route
-          path="/labdata"
-          element={
-            <DefaultLayout>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <LabData />
-            </DefaultLayout>
-          }
-        />
+                {/* <Route
+                  path="labdata"
+                  element={
+                    <DefaultLayout>
+                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                      <LabData />
+                    </DefaultLayout>
+                  }
+                />
+                <Route
+                  path="protein_lactose_water"
+                  element={
+                    <DefaultLayout>
+                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                      <ProteinLactosWater />
+                    </DefaultLayout>
+                  }
+                /> */}
 
-        <Route
-          path="/protein_lactose_water"
-          element={
-            <ProtectedRoute isAuthenticated={user.data}>
-              <DefaultLayout>
-                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <ProteinLactosWater />
-              </DefaultLayout>
-            </ProtectedRoute>
-          }
-        />
+                {/* Protein Lactose And Water Content */}
+                <Route path="protein_lactose_water">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <ProteinLactoseWater />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <NewProteinLactosWater />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
 
-        <Route
-          path="/fruit_production"
-          element={
-            <ProtectedRoute isAuthenticated={user.data}>
-              <DefaultLayout>
-                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <FormLayout />
-              </DefaultLayout>
+                {/* Fruit Production */}
+                <Route path="fruit_production">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <FruitProduction />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <NewFruitProduction />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+              </Routes>
             </ProtectedRoute>
           }
         />

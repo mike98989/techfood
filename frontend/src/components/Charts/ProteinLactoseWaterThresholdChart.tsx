@@ -8,73 +8,76 @@ interface ChartProps {
   constant: any;
 }
 
-const computeChart = (data: any, constant: any) => {
-  const resultMap = new Map();
-  const sortedArray = [];
+const computeChart = (inputdata: any, constant: any) => {
+  if (inputdata) {
+    const data = inputdata.sort(
+      (a: any, b: any) =>
+        new Date(a.result_date).getTime() - new Date(b.result_date).getTime()
+    );
+    const resultMap = new Map();
+    const months: any = [];
+    const goodValues: any = [];
+    const badValues: any = [];
 
-  const months: any = [];
-  const goodValues: any = [];
-  const badValues: any = [];
+    const currentYear = new Date().getFullYear(); // Get the current year
+    for (let i = 0; i < data.length; i++) {
+      //// Check the date
+      const dateToCheck = new Date(data[i].result_date);
+      /////// If the date is this year
+      if (dateToCheck.getFullYear() === currentYear) {
+        //const month = dateToCheck.getMonth() + 1; //// Get the month
+        const month = dateToCheck.toLocaleString("default", { month: "long" });
+        if (!resultMap.has(month)) {
+          resultMap.set(month, { good: 0, bad: 0 });
+        }
+        const dateEntry = resultMap.get(month);
 
-  const currentYear = new Date().getFullYear(); // Get the current year
-  for (let i = 0; i < data.length; i++) {
-    //// Check the date
-    const dateToCheck = new Date(data[i].result_date);
-    /////// If the date is this year
-    if (dateToCheck.getFullYear() === currentYear) {
-      //const month = dateToCheck.getMonth() + 1; //// Get the month
-      const month = dateToCheck.toLocaleString("default", { month: "long" });
-      if (!resultMap.has(month)) {
-        resultMap.set(month, { good: 0, bad: 0 });
+        /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
+        if (data[i].protein_value > constant.constants) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
+        }
+
+        /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
+        if (data[i].lactose_value > constant.constants) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
+        }
+
+        /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
+        if (data[i].water_value > constant.constants) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
+        } //// Sort the map in ascending order
       }
-      const dateEntry = resultMap.get(month);
-
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].protein_value > constant.constants) {
-        dateEntry.good += 1;
-      } else {
-        dateEntry.bad += 1;
-      }
-
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].lactose_value > constant.constants) {
-        dateEntry.good += 1;
-      } else {
-        dateEntry.bad += 1;
-      }
-
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].water_value > constant.constants) {
-        dateEntry.good += 1;
-      } else {
-        dateEntry.bad += 1;
-      } //// Sort the map in ascending order
     }
+
+    // Convert the Map to an array of objects
+    const resultArray = Array.from(resultMap, ([month, { good, bad }]) => ({
+      month,
+      good,
+      bad,
+    }));
+
+    // Using forEach to loop through the Map
+    resultArray.forEach((value) => {
+      months.push(value.month);
+      goodValues.push(value.good);
+      badValues.push(value.bad);
+    });
+
+    // Set processed value for chat
+    let processedData: any[] = [];
+    processedData = [
+      { name: constant.approvedText, data: goodValues },
+      { name: constant.unApprovedText, data: badValues },
+    ];
+    //setProteinChartValues(resultArray);
+    return [processedData, months];
   }
-
-  console.log("resultss", resultMap);
-  // Convert the Map to an array of objects
-  const resultArray = Array.from(resultMap, ([month, { good, bad }]) => ({
-    month,
-    good,
-    bad,
-  }));
-
-  // Using forEach to loop through the Map
-  resultArray.forEach((value) => {
-    months.push(value.month);
-    goodValues.push(value.good);
-    badValues.push(value.bad);
-  });
-
-  // Set processed value for chat
-  let processedData: any[] = [];
-  processedData = [
-    { name: constant.approvedText, data: goodValues },
-    { name: constant.unApprovedText, data: badValues },
-  ];
-  //setProteinChartValues(resultArray);
-  return [processedData, months];
 };
 
 const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
@@ -83,9 +86,7 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
 }) => {
   useEffect(() => {
     let value: any[] = [];
-    chartData.data &&
-      ((value = computeChart(chartData.data, constant)),
-      console.log("valuesss", value));
+    chartData.data && (value = computeChart(chartData.data, constant));
     value[0] && setState({ series: value[0] });
     value[1] && setMonths(value[1]);
   }, [chartData]);
@@ -97,6 +98,8 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
     chart: {
       id: "threshold-bar-chart",
       type: "bar",
+      stacked: true,
+
       zoom: {
         enabled: true,
       },
@@ -111,7 +114,7 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
       },
     },
 
-    colors: ["#006400", "#FF0000", "#F7DC6F", "#D4AC0D"], // Array of colors
+    colors: ["#006400", "#f84c0b", "#F7DC6F", "#D4AC0D"], // Array of colors
   };
 
   const handleReset = () => {
