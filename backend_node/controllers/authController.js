@@ -36,10 +36,10 @@ const signin = async (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
+            expiresIn: '3h',
         });
 
-        res.json({ user: user, token: token, status: '1' });
+        res.status(200).json({ user: user, token: token, status: '1' });
     } catch (error) {
         res.status(500).json({ message: 'Error signing in', error });
     }

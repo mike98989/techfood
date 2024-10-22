@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // Adjust the path to your database configuration
+const FruitProduction = require('./FruitProduction'); // Import the Post model
 
 class User extends Model {
     // Static method to find a user by email
@@ -51,5 +52,16 @@ User.init({
     timestamps: false, // Set to false because we're using existing timestamp columns
 });
 
+// Define the relationship
+User.hasMany(FruitProduction, {
+    foreignKey: 'user_id', // Specify the foreign key in the FruitProduction table
+    as: 'fruitProductions', // Alias for easier access
+});
+
+// Define the relationship
+FruitProduction.belongsTo(User, {
+    foreignKey: 'user_id', // Specify the foreign key in the FruitProduction table
+    as: 'user', // Alias for easier access
+});
 // Export the model
 module.exports = User;
