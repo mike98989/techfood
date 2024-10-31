@@ -2,6 +2,7 @@ import { ApexOptions } from "apexcharts";
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
@@ -93,6 +94,7 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
 
   const [months, setMonths] = useState([]);
   const [state, setState] = useState({ series: [] });
+  const { t } = useTranslation();
 
   const options: ApexOptions = {
     chart: {
@@ -126,13 +128,27 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+      <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
+        <div className="flex w-full flex-wrap gap-3 sm:gap-5">
+          <div className="flex w-full">
+            <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
+              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
+            </span>
+            <div className="w-full">
+              <p className=" text-cyan-900 font-thin">
+                {t("protein_lactose_water")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ReactApexChart
             options={options}
             series={state.series}
             type="bar"
-            height={350}
+            height={320}
           />
         </div>
       </div>

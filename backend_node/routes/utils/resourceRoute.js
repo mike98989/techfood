@@ -1,7 +1,7 @@
 // utils/resourceRoute.js
 const express = require('express');
 
-function resourceRoute(path, controller) {
+function resourceRoute(controller) {
     const customRouter = express.Router();
 
     // Automatically bind routes based on HTTP methods
@@ -10,7 +10,7 @@ function resourceRoute(path, controller) {
     customRouter.put('/:id', controller.update);
     customRouter.delete('/:id', controller.destroy);
 
-    return { path, customRouter };
+    return customRouter;
 }
 
 module.exports = resourceRoute;

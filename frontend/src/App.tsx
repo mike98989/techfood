@@ -9,13 +9,15 @@ import SignUp from "./pages/Authentication/SignUp";
 // import Chart from "./pages/Chart";
 import Index from "./pages/Dashboard/Index";
 import FormElements from "./pages/Form/FormElements";
-//import FormLayout from "./pages/Form/FormLayout";
 //import Profile from "./pages/Profile";
 //import Settings from "./pages/Settings";
 import ProteinLactoseWater from "./pages/ProteinLactoseWater";
 import FruitProduction from "./pages/FruitProduction";
 import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
+import DeviationComplaints from "./pages/DeviationComplaints";
+import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
+
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -157,6 +159,28 @@ function App() {
                       <DefaultLayout>
                         <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                         <NewFruitProduction />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* Deviation Complaints */}
+                <Route path="deviation_complaints">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <DeviationComplaints />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <NewDeviationComplaint />
                       </DefaultLayout>
                     }
                   ></Route>

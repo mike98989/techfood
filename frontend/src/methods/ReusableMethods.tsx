@@ -113,8 +113,7 @@ export const ReusableMethods = () => {
     })
       .then((response: any) => {
         setIsLoading(false);
-        console.log("response", response);
-        //setFormErrors(JSON.parse(response));
+        //console.log("response", response);
         setReturnData({
           message: response.message,
           status: "success",
@@ -159,7 +158,7 @@ export const ReusableMethods = () => {
     })
       .then((response: any) => {
         setIsLoading(false);
-        console.log("response is here", response);
+        //console.log("response is here", response);
         setReturnData(response.data);
       })
       .catch((error) => {

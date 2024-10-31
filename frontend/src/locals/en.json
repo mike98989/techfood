@@ -27,5 +27,6 @@
   "water_value": "Water Value",
   "actions": "Actions",
   "heading_protein_lactose_water": "Digitization and follow-up of protein and water content analysis results from production",
-  "heading_fruit_production": "Digitization of fruit production"
+  "heading_fruit_production": "Digitization of fruit production",
+  "heading_deviation_complaints": "Digitization and follow-up of deviations complaints"
 }

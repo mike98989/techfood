@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
@@ -45,6 +46,7 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
     setMonths(value[1]);
   }, [chartData]);
   const [months, setMonths] = useState([]);
+  const { t } = useTranslation();
   const [state, setState] = useState({
     series: [],
   });
@@ -108,7 +110,7 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
             </span>
             <div className="w-full">
               <p className=" text-cyan-900 font-thin">
-                Protein, Lactose & Water
+                {t("protein_lactose_water")}
               </p>
             </div>
           </div>

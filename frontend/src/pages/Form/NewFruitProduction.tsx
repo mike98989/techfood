@@ -12,9 +12,11 @@ export default function Protein() {
   const user = useSelector((state: any) => state.user.value);
   const { MessageBox, setFormMessage } = formReturnMessage();
   const { allRequest } = ReusableMethods();
-  const [sections, setSections] = useState([]);
-  const [causes, setCauses] = useState([]);
-  const [derivationTypes, setDerivationTypes] = useState([]);
+  // const [sections, setSections] = useState([]);
+  // const [causes, setCauses] = useState([]);
+  // const [derivationTypes, setDerivationTypes] = useState([]);
+  const [returnDataArray, setReturnDataArray] = useState([]);
+
   const { t } = useTranslation();
   const pageTitle = t("fruit_production");
   const {
@@ -39,9 +41,10 @@ export default function Protein() {
         setReturnData: returnStateObject,
       });
     };
-    fetchData("fruits", setSections);
-    fetchData("causes", setCauses);
-    fetchData("deviation_types", setDerivationTypes);
+    // fetchData("fruits", setSections);
+    // fetchData("causes", setCauses);
+    // fetchData("deviation_types", setDerivationTypes);
+    fetchData("fruit_production_form_related_data", setReturnDataArray);
   }, []);
 
   return (
@@ -95,6 +98,7 @@ export default function Protein() {
                   className="w-full border-whiten border-b py-2 px-2"
                   key={fruitProductionIndex}
                 >
+                  <Spinner />
                   <div>
                     <div className="flex flex-row pt-2">
                       {/* Date Value */}
@@ -151,7 +155,7 @@ export default function Protein() {
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           value={production.section}
                           required
-                          name="section[]"
+                          name="section"
                           onChange={(e) =>
                             handleInputChange({
                               index: fruitProductionIndex,
@@ -161,11 +165,14 @@ export default function Protein() {
                           }
                         >
                           <option value="">--Select--</option>
-                          {sections.map((value: any, key) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          ))}
+                          {returnDataArray.fruits &&
+                            returnDataArray.fruits.original.data.map(
+                              (value: any, key: any) => (
+                                <option key={key} value={value.name}>
+                                  {value.name}
+                                </option>
+                              )
+                            )}
                         </select>
                       </div>
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
@@ -186,11 +193,14 @@ export default function Protein() {
                           }
                         >
                           <option value="">--Select--</option>
-                          {causes.map((value: any, key) => (
-                            <option key={key} value={value.cause}>
-                              {value.cause}
-                            </option>
-                          ))}
+                          {returnDataArray.causes &&
+                            returnDataArray.causes.original.data.map(
+                              (value: any, key: any) => (
+                                <option key={key} value={value.cause}>
+                                  {value.cause}
+                                </option>
+                              )
+                            )}
                         </select>
                       </div>
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
@@ -212,11 +222,14 @@ export default function Protein() {
                           }
                         >
                           <option value="">--Select--</option>
-                          {derivationTypes.map((value: any, key) => (
-                            <option key={key} value={value.type}>
-                              {value.type}
-                            </option>
-                          ))}
+                          {returnDataArray.deviation_types &&
+                            returnDataArray.deviation_types.original.data.map(
+                              (value: any, key) => (
+                                <option key={key} value={value.type}>
+                                  {value.type}
+                                </option>
+                              )
+                            )}
                         </select>
                       </div>
 
@@ -239,8 +252,14 @@ export default function Protein() {
                           }
                         >
                           <option value="">--Select--</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
+                          {returnDataArray.statuses &&
+                            returnDataArray.statuses.original.data.map(
+                              (value: any, key: any) => (
+                                <option key={key} value={value.id}>
+                                  {value.id}:{value.name}
+                                </option>
+                              )
+                            )}
                         </select>
                       </div>
 
@@ -292,7 +311,7 @@ export default function Protein() {
                 </div>
               ))}
 
-              {fruitProduction.length > 0 && (
+              {fruitProduction.length > 0 && returnDataArray.fruits > 0 && (
                 <div className="flex flex-row justify-center">
                   <button
                     type="submit"

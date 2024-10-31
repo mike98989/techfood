@@ -111,7 +111,20 @@ const ProteinLactoseWater = () => {
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <div className="flex items-center space-x-3.5">
-                        <button className="hover:text-primary">
+                        <button
+                          onClick={() => {
+                            setOpenModal(true),
+                              setModalQueryData({
+                                modalType: "form",
+                                modalSize: "lg",
+                                modalData: {
+                                  form: "../../pages/Form/Edit/EditProteinLactoseWater",
+                                  data: input,
+                                },
+                              });
+                          }}
+                          className="hover:text-primary"
+                        >
                           <svg
                             className="w-[24px] h-[24px] text-gray-800 dark:text-white hover:text-primary"
                             aria-hidden="true"

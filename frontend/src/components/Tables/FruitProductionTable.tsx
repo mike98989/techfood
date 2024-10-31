@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import SpinnerObject from "../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
+import Badge from "../Badges/Badge";
 import AlertModal from "..//Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 
@@ -99,7 +100,10 @@ const FruitProductionTable = () => {
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.status}
+                        <Badge
+                          value={input.status_type.name}
+                          type={input.status_type.id}
+                        />
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">

@@ -38,41 +38,48 @@ const DeviationComplaintsWater = () => {
     <>
       <ModalUIComponent />
 
-      {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 font-medium text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 font-thin text-sm text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
-                  PO
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Header
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
                   {t("date")}
                 </th>
-                <th className="min-w-[150px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("batch_number")}
+
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Deviation Type/Code
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("protein_value")}
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Product
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("lactose_value")}
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Article Number
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("water_value")}
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Batch Number
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Location
+                </th>
+                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                  Line
+                </th>
+                <th className="py-2 px-2 font-medium text-black text-sm dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {proteinLactosWaterData &&
-                proteinLactosWaterData.length > 0 &&
-                proteinLactosWaterData.map((input: any, key) => (
+              {deviationComplaintsData &&
+                deviationComplaintsData.length > 0 &&
+                deviationComplaintsData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}
@@ -80,38 +87,63 @@ const DeviationComplaintsWater = () => {
 
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
-                        {input.PO_number}
+                        {input.reference_number + " " + input.title}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.result_date}
+                        {input.occurance_date.split("T")[0]}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-sm text-black dark:text-white">
+                        {input.deviation_type} / {input.deviation_code}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-sm text-black dark:text-white">
+                        {input.product}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.batch_number}
+                        {input.article_no}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.protein_value}
+                        {input.batch_no}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.lactose_value}
+                        {input.location}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.water_value}
+                        {input.line}
                       </p>
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <div className="flex items-center space-x-3.5">
-                        <button className="hover:text-primary">
+                        <button
+                          onClick={() => {
+                            setOpenModal(true),
+                              setModalQueryData({
+                                modalType: "form",
+                                modalSize: "lg",
+                                modalData: {
+                                  form: "../../pages/Form/Edit/EditDeviationComplaint",
+                                  data: input,
+                                },
+                              });
+                          }}
+                          className="hover:text-primary"
+                        >
                           <svg
                             className="w-[24px] h-[24px] text-gray-800 dark:text-white hover:text-primary"
                             aria-hidden="true"
@@ -139,17 +171,13 @@ const DeviationComplaintsWater = () => {
                                 modalSize: "sm",
                                 modalData: {
                                   index: key,
-                                  endPoint: "labinputs/" + input.id,
+                                  endPoint: "deviationcomplaints/" + input.id,
                                   action: "DELETE",
                                   token: user.token,
                                   title:
-                                    input.PO_number +
-                                    ", " +
-                                    input.result_date +
-                                    ", " +
-                                    input.batch_number,
-                                  data: proteinLactosWaterData,
-                                  setData: setProteinLactosWaterData,
+                                    input.reference_number + ", " + input.title,
+                                  data: deviationComplaintsData,
+                                  setData: setDeviationComplaintsData,
                                 },
                               });
                           }}
@@ -185,7 +213,7 @@ const DeviationComplaintsWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && proteinLactosWaterData.length == 0 && (
+              {!isLoading && deviationComplaintsData.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -196,7 +224,7 @@ const DeviationComplaintsWater = () => {
                 </tr>
               )}
 
-              {isLoading && proteinLactosWaterData.length == 0 && (
+              {isLoading && deviationComplaintsData.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -209,7 +237,7 @@ const DeviationComplaintsWater = () => {
             </tbody>
           </table>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
@@ -124,7 +125,7 @@ const FoodPRoductionChart: React.FC<ChartProps> = ({ chartData }) => {
     value.series && setState({ series: value.series });
     value.months && setMonths(value.months);
   }, [chartData]);
-
+  const { t } = useTranslation();
   const [months, setMonths] = useState([]);
   const [chartDataValus, setChartDataValues] = useState<any[]>([]);
   const [state, setState] = useState({
@@ -188,7 +189,7 @@ const FoodPRoductionChart: React.FC<ChartProps> = ({ chartData }) => {
             <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
           </span>
           <div className="w-full">
-            <p className=" text-cyan-900 font-thin">Fruit Production</p>
+            <p className=" text-cyan-900 font-thin">{t("fruit_production")}</p>
           </div>
         </div>
       </div>

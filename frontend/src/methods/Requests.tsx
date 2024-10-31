@@ -40,9 +40,8 @@ export const httpRequest = () => {
 
     try {
       const response = await axios(config);
-      console.log(response);
+      //console.log(response);
       const data = JSON.parse(response.data);
-
       return data;
     } catch (error: any) {
       if (error.response) {

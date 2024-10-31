@@ -20,7 +20,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    //'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => ['http://localhost'],
     // 'allowed_origins' => [
     //     'https://1a9c-92-34-244-149.ngrok-free.app', // Your frontend URL
     //     //'https://c650-92-34-244-149.ngrok-free.app' // This could also be necessary
