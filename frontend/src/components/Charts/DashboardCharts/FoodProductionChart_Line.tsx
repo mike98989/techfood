@@ -7,56 +7,6 @@ interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
 }
 
-const computeChart = (inputdata: any) => {
-  if (inputdata) {
-    const data = inputdata.sort(
-      (a: any, b: any) =>
-        new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-    const resultMap = new Map();
-    const months: any = [];
-    const causes: any = [];
-
-    const currentYear = new Date().getFullYear(); // Get the current year
-    for (let i = 0; i < data.length; i++) {
-      //// Check the date
-      const dateToCheck = new Date(data[i].date);
-      /////// If the date is this year
-      if (dateToCheck.getFullYear() === currentYear) {
-        //const month = dateToCheck.getMonth() + 1; //// Get the month
-        const month = dateToCheck.toLocaleString("default", { month: "long" });
-        if (!resultMap.has(month)) {
-          resultMap.set(month, {});
-        }
-
-        if (resultMap.get(month).hasOwnProperty(data[i].cause)) {
-          resultMap.get(month)[data[i].cause]++;
-        } else {
-          resultMap.get(month)[data[i].cause] = 0;
-        }
-      }
-    }
-
-    const valuesArray = Array.from(resultMap.values());
-    const courses = [];
-    for (let i = 0; i < valuesArray.length; i++) {
-      console.log(valuesArray[i]);
-    }
-
-    //console.log(resultMap);
-    // Convert the Map to an array of objects
-
-    // Set processed value for chat
-    // let processedData: any[] = [];
-    // processedData = [
-    //   { name: constant.approvedText, data: goodValues },
-    //   { name: constant.unApprovedText, data: badValues },
-    // ];
-    //setProteinChartValues(resultArray);
-    //return [resultMap];
-  }
-};
-
 type Entry = {
   id: number;
   user_id: number;

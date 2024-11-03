@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\LabInputsController;
+use App\Http\Controllers\Api\WordPressAuthController;
 use App\Http\Controllers\Api\FruitProductionController;
 use App\Http\Controllers\Api\DeviationComplaintController;
 //use App\Http\Controllers\Api\FruitProductionController;
@@ -31,11 +33,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //////User Signout
     Route::post('/auth/signout', [AuthController::class, 'signout'])->name('user.logout');
+
+    /////// Get All chart data
+    Route::get("get_all_chart_data",[DashboardController::class, 'processAllChartData'])->name('dashboard.get_all_chart_data');
 });
 
 Route::middleware('guest')->group(function () {
     Route::post('/auth/signin', [AuthController::class, 'signin'])->name('user.login');
     Route::post('/auth/signup', [UserController::class, 'store'])->name('user.store');
+    Route::post('/auth/wordpress_signin', [WordPressAuthController::class, 'signin'])->name('user.wordpress_login');
     /////// Get Fruits for Fruit Production
     Route::get("fruits",[FruitProductionController::class, 'getFruits'])->name('fruit_production.get_fruits');
 
@@ -65,6 +71,23 @@ Route::middleware('guest')->group(function () {
 
     // /////// Get All fruit production forms related data
     Route::get("fruit_production_form_related_data",[FruitProductionController::class, 'processAllRelatedTableData'])->name('fruit_production_status.get_related_form_data');
+
+    
+    Route::get('generate', function (){
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        echo 'ok';
+    });
+
+    Route::get('/clear', function() {
+
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('config:cache');
+        Artisan::call('view:clear');
+     
+        return "Cleared!";
+     
+     });
     
 });
 

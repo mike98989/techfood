@@ -1,22 +1,16 @@
 import React, { useEffect } from "react";
 import CardDataStats from "../../components/CardDataStats";
-import ProteinLactoseWaterChart from "../../components/Charts/ProteinLactoseWaterChart";
-import ProteinLactoseWaterThreshold from "../../components/Charts/ProteinLactoseWaterThresholdChart";
+
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-//import ProteinLactoseWaterChart2 from "../../components/Charts/ProteinLactoseWaterChart2";
-import FoodProductionChart from "../../components/Charts/FoodProductionChart";
-import FoodProductionLineChart from "../../components/Charts/FoodProductionChart_Line";
-import DeviationComplaintsPie from "../../components/Charts/DeviationComplaintsChart_Pie";
-
-//import DeviationComplaintChart from "../../components/Charts/DeviationComplaintsChart";
-
-// import ChartTwo from "../../components/Charts/ChartTwo";
-// import ChatCard from "../../components/Chat/ChatCard";
-// import MapOne from "../../components/Maps/MapOne";
-// import TableOne from "../../components/Tables/TableOne";
+import FoodProductionChart from "../../components/Charts/DashboardCharts/FoodProductionChart";
+import FoodProductionLineChart from "../../components/Charts/DashboardCharts/FoodProductionChart_Line";
+import DeviationComplaintsPie from "../../components/Charts/DashboardCharts/DeviationComplaintsChart_Pie";
+import ProteinLactoseWaterChart from "../../components/Charts/DashboardCharts/ProteinLactoseWaterChart";
+import ProteinLactoseWaterThreshold from "../../components/Charts/DashboardCharts/ProteinLactoseWaterThresholdChart";
 import chartData from "../../methods/chartData";
+
 const Index: React.FC = () => {
   const { proteinLactoseData, fruitProductionData, deviationComplaintsData } =
     chartData({

@@ -27,7 +27,7 @@ const computeChart = (inputdata: any, constant: any) => {
       /////// If the date is this year
       if (dateToCheck.getFullYear() === currentYear) {
         //const month = dateToCheck.getMonth() + 1; //// Get the month
-        const month = dateToCheck.toLocaleString("default", { month: "long" });
+        const month = dateToCheck.toLocaleString("default", { month: "short" });
         if (!resultMap.has(month)) {
           resultMap.set(month, { good: 0, bad: 0 });
         }

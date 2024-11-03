@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
                   //event.preventDefault();
                   userLogin({
                     event,
-                    action_url: "auth/signin", // End Point
+                    action_url: "auth/wordpress_signin", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     formData: "", ///Form Data is empty because I used the form ID to grab the data instead
@@ -64,14 +64,14 @@ const SignIn: React.FC = () => {
               >
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
+                    Username
                   </label>
                   <div className="relative">
                     <input
-                      type="email"
-                      name="email"
+                      type="text"
+                      name="username"
                       required
-                      placeholder="Enter your email"
+                      placeholder="Enter your username"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
 
@@ -104,7 +104,7 @@ const SignIn: React.FC = () => {
                       type="password"
                       name="password"
                       required
-                      placeholder="6+ Characters, 1 Capital letter"
+                      placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
 
@@ -142,14 +142,14 @@ const SignIn: React.FC = () => {
                   </button>
                 </div>
 
-                <div className="mt-6 text-center">
+                {/* <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
                     <Link to="/auth/signup" className="text-cyan-700">
                       Sign Up
                     </Link>
                   </p>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

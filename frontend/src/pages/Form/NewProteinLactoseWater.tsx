@@ -38,7 +38,7 @@ export default function NewProteinLactoseWater() {
         links={[
           {
             title: pageTitle,
-            link: "./protein_lactose_water",
+            link: "/",
           },
           { title: "New", link: null },
         ]}

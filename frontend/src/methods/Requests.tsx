@@ -50,6 +50,7 @@ export const httpRequest = () => {
           window.location.href =
             Constants.PROTOCOL + Constants.FRONT_END_BASE_URL + "auth/signin";
         }
+
         // The server responded with a status other than 2xx
         // console.error("Error status:", error.response.status);
         // console.error("Error data:", error.response.data);

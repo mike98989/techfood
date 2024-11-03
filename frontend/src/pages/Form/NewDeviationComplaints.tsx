@@ -46,7 +46,7 @@ const FormLayout = () => {
     <>
       <Breadcrumb
         links={[
-          { title: pageTitle, link: "./deviation_complaints" },
+          { title: pageTitle, link: "/" },
           { title: "New", link: null },
         ]}
         showNewButton={false}

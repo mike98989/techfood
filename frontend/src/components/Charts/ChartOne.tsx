@@ -125,15 +125,15 @@ interface ChartOneProps {
   chartData: any; // Make sure this matches the type of data you're passing
 }
 
-function processData(chartData) {
-  alert("got here");
-}
+// function processData(chartData) {
+//   alert("got here");
+// }
 
-const ChartOne: React.FC<ChartOneProps> = ({ chartData }) => {
-  useEffect(() => {
-    console.log(chartData.data);
-    chartData.data && processData(chartData);
-  }, [chartData]);
+const ChartOne: React.FC = () => {
+  // useEffect(() => {
+  //   console.log(chartData.data);
+  //   chartData.data && processData(chartData);
+  // }, [chartData]);
 
   const [state, setState] = useState<ChartOneState>({
     series: [
@@ -145,6 +145,11 @@ const ChartOne: React.FC<ChartOneProps> = ({ chartData }) => {
       {
         name: "Product Two",
         data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
+      },
+
+      {
+        name: "Product Three",
+        data: [33, 45, 12, 30, 39, 67, 55, 14, 66, 65, 89, 44],
       },
     ],
   });

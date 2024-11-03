@@ -17,6 +17,9 @@ import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
 import DeviationComplaints from "./pages/DeviationComplaints";
 import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
+import ProteinLactoseMainChart from "./pages/Charts/ProteinLactoseWaterChartPage";
+import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
+import DeviationComplaintMainChart from "./pages/Charts/DeviationComplaintChartPage";
 
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
@@ -69,13 +72,13 @@ function App() {
           path="/auth/signin"
           element={
             <ContentLayout>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | Techfood Portal - Digital lab computations" />
               <SignIn />
             </ContentLayout>
           }
         />
 
-        <Route
+        {/* <Route
           path="/auth/signup"
           element={
             <ContentLayout>
@@ -83,7 +86,7 @@ function App() {
               <SignUp />
             </ContentLayout>
           }
-        />
+        /> */}
 
         {/* Protected routes */}
         <Route
@@ -95,38 +98,18 @@ function App() {
                   path=""
                   element={
                     <DefaultLayout>
-                      <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                      <PageTitle title="Techfood Portal - Digital lab computations" />
                       <Index />
                     </DefaultLayout>
                   }
                 />
-
-                {/* <Route
-                  path="labdata"
-                  element={
-                    <DefaultLayout>
-                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                      <LabData />
-                    </DefaultLayout>
-                  }
-                />
-                <Route
-                  path="protein_lactose_water"
-                  element={
-                    <DefaultLayout>
-                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                      <ProteinLactosWater />
-                    </DefaultLayout>
-                  }
-                /> */}
-
                 {/* Protein Lactose And Water Content */}
                 <Route path="protein_lactose_water">
                   <Route
                     path=""
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <ProteinLactoseWater />
                       </DefaultLayout>
                     }
@@ -135,8 +118,18 @@ function App() {
                     path="new"
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <NewProteinLactosWater />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <ProteinLactoseMainChart />
                       </DefaultLayout>
                     }
                   ></Route>
@@ -148,7 +141,7 @@ function App() {
                     path=""
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <FruitProduction />
                       </DefaultLayout>
                     }
@@ -157,8 +150,18 @@ function App() {
                     path="new"
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <NewFruitProduction />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <FruitProductionMainChart />
                       </DefaultLayout>
                     }
                   ></Route>
@@ -170,7 +173,7 @@ function App() {
                     path=""
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <DeviationComplaints />
                       </DefaultLayout>
                     }
@@ -179,8 +182,17 @@ function App() {
                     path="new"
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <NewDeviationComplaint />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <DeviationComplaintMainChart />
                       </DefaultLayout>
                     }
                   ></Route>

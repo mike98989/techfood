@@ -49,7 +49,8 @@ export const ReusableMethods = () => {
       contentType, // Content Type
       authentication, // Authentication
     })
-      .then((response: any) => {
+      .then((response_value: any) => {
+        const response = JSON.parse(response_value);
         setIsLoading(false);
         if (response.status == "1") {
           localStorage.setItem("user_data", JSON.stringify(response.user));
@@ -57,15 +58,16 @@ export const ReusableMethods = () => {
           dispatch(setUser({ data: response.user, token: response.token }));
           navigate("/"); // or any other route
         } else {
-          const message = JSON.parse(response);
           setReturnData({
-            message: message.message,
+            message: action_url.includes("wordpress_signin")
+              ? response.error
+              : response.message,
             status: "error",
           });
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error is", error);
         setIsLoading(false);
         const message = JSON.parse(error[0]);
         //setFormErrors(JSON.parse(message.message));
@@ -171,6 +173,29 @@ export const ReusableMethods = () => {
       });
   };
 
+  //////Check and return boolean if date is in range;
+  const isDateInRange = ({
+    dateToCheck,
+    startDate,
+    endDate,
+  }: {
+    dateToCheck: string;
+    startDate: string;
+    endDate: string;
+  }) => {
+    const date = new Date(dateToCheck).getTime();
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+
+    console.log("Begins", start, "ends", end, "dateToCheck", date);
+    return date >= start && date <= end;
+  };
+
+  const getUrlArray = () => {
+    const urlArray = window.location.pathname.split("/");
+    return urlArray;
+  };
+
   return {
     userLogin,
     userLogout,
@@ -178,5 +203,7 @@ export const ReusableMethods = () => {
     formSubmit,
     requestedData,
     allRequest,
+    isDateInRange,
+    getUrlArray,
   };
 };

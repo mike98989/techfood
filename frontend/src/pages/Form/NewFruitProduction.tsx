@@ -41,9 +41,6 @@ export default function Protein() {
         setReturnData: returnStateObject,
       });
     };
-    // fetchData("fruits", setSections);
-    // fetchData("causes", setCauses);
-    // fetchData("deviation_types", setDerivationTypes);
     fetchData("fruit_production_form_related_data", setReturnDataArray);
   }, []);
 
@@ -51,7 +48,7 @@ export default function Protein() {
     <>
       <Breadcrumb
         links={[
-          { title: pageTitle, link: "./fruit_production" },
+          { title: pageTitle, link: "/" },
           { title: "New", link: null },
         ]}
         showNewButton={false}

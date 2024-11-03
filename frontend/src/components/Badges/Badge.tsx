@@ -26,13 +26,13 @@ const Badge = (props: any) => {
           {props.value}
         </span>
       )}
-      {props.type == "indigo" && (
-        <span className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
+      {props.type == "5" && (
+        <span className="bg-indigo-300 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
           {props.value}
         </span>
       )}
-      {props.type == "purple" && (
-        <span className="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+      {props.type == "4" && (
+        <span className="bg-purple-300 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
           {props.value}
         </span>
       )}
