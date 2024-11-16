@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface messageType {
   message: string;
@@ -6,6 +7,8 @@ interface messageType {
 }
 const formReturnMessage = () => {
   const [formMessage, setFormMessage] = useState<messageType>();
+  const { t } = useTranslation();
+
   const MessageBox = () => {
     return (
       <>
@@ -24,9 +27,11 @@ const formReturnMessage = () => {
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
             <span className="sr-only">Info</span>
-            <div>
+            {/* <div>
               <span className="font-medium"></span> {formMessage.message}
-            </div>
+            </div> */}
+
+            <div dangerouslySetInnerHTML={{ __html: formMessage.message }} />
           </div>
         )}
 
@@ -54,9 +59,7 @@ const formReturnMessage = () => {
             </svg>
 
             <span className="sr-only">Info</span>
-            <div>
-              <span className="font-medium">Ok!</span> {formMessage.message}
-            </div>
+            <div>{t(formMessage.message)}</div>
           </div>
         )}
       </>

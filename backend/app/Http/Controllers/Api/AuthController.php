@@ -11,8 +11,9 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function signin(Request $request)
     {
+        $request['email'] = $request['username'];
         // Validate the incoming request
         $request->validate([
             'email' => 'required|email',
@@ -20,6 +21,7 @@ class AuthController extends Controller
         ]);
 
         // Find the user by email
+
         $user = User::where('email', $request->email)->first();
 
         // Check if user exists and password is correct
@@ -27,6 +29,11 @@ class AuthController extends Controller
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
+        }
+
+        // Revoke any current user token
+        if ($user->tokens()) {
+            $user->tokens()->delete(); // Deletes all tokens for the user
         }
 
         // Create a token for the user
@@ -48,11 +55,11 @@ class AuthController extends Controller
         ],200)->withCookie($cookieToken);
     }
 
-    public function logout(Request $request)
+    public function signout(Request $request)
     {
         // Revoke the token
-        $request->user()->currentAccessToken()->delete();
-        
-        return response()->json(['message' => 'Logged out successfully']);
+        //$request->user()->currentAccessToken()->delete(); /// Revoke only current access
+        $request->user()->tokens()->delete(); // Deletes all tokens for the user
+        return response()->json(['message' => 'Logged out successfully from all devices']);
     }
 }

@@ -9,13 +9,19 @@ import SignUp from "./pages/Authentication/SignUp";
 // import Chart from "./pages/Chart";
 import Index from "./pages/Dashboard/Index";
 import FormElements from "./pages/Form/FormElements";
-//import FormLayout from "./pages/Form/FormLayout";
 //import Profile from "./pages/Profile";
 //import Settings from "./pages/Settings";
 import ProteinLactoseWater from "./pages/ProteinLactoseWater";
 import FruitProduction from "./pages/FruitProduction";
+import DrillSamples from "./pages/DrillSamples";
 import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
+import DeviationComplaints from "./pages/DeviationComplaints";
+import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
+import ProteinLactoseMainChart from "./pages/Charts/ProteinLactoseWaterChartPage";
+import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
+import DeviationComplaintMainChart from "./pages/Charts/DeviationComplaintChartPage";
+
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -27,6 +33,8 @@ import { setUser } from "./methods/reducers/user";
 import { useSelector } from "react-redux";
 import FormLayout from "./pages/Form/FormLayout";
 import { useTranslation } from "react-i18next";
+import { httpRequest } from "./methods/Requests";
+
 //import LanguageDropDown from "./components/Dropdowns/LanguageDropDown";
 
 function App() {
@@ -36,6 +44,7 @@ function App() {
   const user = useSelector((state: any) => state.user.value);
   const { t, i18n } = useTranslation();
   const language = useSelector((state: any) => state.language.value);
+  const { fetchApi } = httpRequest();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,6 +62,44 @@ function App() {
     }
   }, [dispatch]);
 
+  //////////Fetch Translations from DB
+  useEffect(() => {
+    // Fetch the translations from your API
+    const fetchTranslations = async () => {
+      fetchApi({
+        url: "translations", // URL end point
+        method: "GET", // Method
+        formData: null, //Form Data
+        contentType: "application/json", // Content Type
+        authentication: "", // Authentication
+      }).then((response_value: any) => {
+        const response = JSON.parse(response_value);
+        //try {
+        // const response = await fetch("translations"); // Adjust to your API endpoint
+        const trimmedString = response.data[0].translation.trim(); // "Your JSON response with spaces"
+        const noLineBreaksString = trimmedString.replace(/[\r\n]+/g, "");
+        const cleanedString = noLineBreaksString.replace(/'/g, '"');
+
+        //const translations = JSON.parse(JSON.stringify(noLineBreaksString));
+        const translationKeys: any = {};
+        try {
+          const jsonObject = JSON.parse(cleanedString);
+          // Extract keys for each language
+          // Add languages to i18n resources
+          Object.keys(jsonObject).forEach((lang) => {
+            i18n.addResourceBundle(lang, "translation", jsonObject[lang]);
+          });
+        } catch (error) {
+          console.error("Failed to parse JSON:", error);
+        }
+
+        // Optionally change the language to what was fetched
+        i18n.changeLanguage(i18n.language);
+      });
+    };
+    fetchTranslations();
+  }, []);
+
   useEffect(() => {
     i18n.changeLanguage(language.language);
     setTimeout(() => setLoading(false), 1000);
@@ -67,13 +114,13 @@ function App() {
           path="/auth/signin"
           element={
             <ContentLayout>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | Techfood Portal - Digital lab computations" />
               <SignIn />
             </ContentLayout>
           }
         />
 
-        <Route
+        {/* <Route
           path="/auth/signup"
           element={
             <ContentLayout>
@@ -81,7 +128,7 @@ function App() {
               <SignUp />
             </ContentLayout>
           }
-        />
+        /> */}
 
         {/* Protected routes */}
         <Route
@@ -93,38 +140,18 @@ function App() {
                   path=""
                   element={
                     <DefaultLayout>
-                      <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                      <PageTitle title="Techfood Portal - Digital lab computations" />
                       <Index />
                     </DefaultLayout>
                   }
                 />
-
-                {/* <Route
-                  path="labdata"
-                  element={
-                    <DefaultLayout>
-                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                      <LabData />
-                    </DefaultLayout>
-                  }
-                />
-                <Route
-                  path="protein_lactose_water"
-                  element={
-                    <DefaultLayout>
-                      <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                      <ProteinLactosWater />
-                    </DefaultLayout>
-                  }
-                /> */}
-
                 {/* Protein Lactose And Water Content */}
                 <Route path="protein_lactose_water">
                   <Route
                     path=""
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <ProteinLactoseWater />
                       </DefaultLayout>
                     }
@@ -133,8 +160,18 @@ function App() {
                     path="new"
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <NewProteinLactosWater />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <ProteinLactoseMainChart />
                       </DefaultLayout>
                     }
                   ></Route>
@@ -146,7 +183,7 @@ function App() {
                     path=""
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <FruitProduction />
                       </DefaultLayout>
                     }
@@ -155,11 +192,84 @@ function App() {
                     path="new"
                     element={
                       <DefaultLayout>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
                         <NewFruitProduction />
                       </DefaultLayout>
                     }
                   ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <FruitProductionMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* Deviation Complaints */}
+                <Route path="deviation_complaints">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <DeviationComplaints />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewDeviationComplaint />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <DeviationComplaintMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* Fruit Production */}
+                <Route path="drill_samples">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <DrillSamples />
+                      </DefaultLayout>
+                    }
+                  />
+                  {/* <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewDrillSample />
+                      </DefaultLayout>
+                    }
+                  ></Route> */}
+
+                  {/* <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <DrillSampleMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route> */}
                 </Route>
               </Routes>
             </ProtectedRoute>

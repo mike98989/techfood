@@ -40,9 +40,8 @@ export const httpRequest = () => {
 
     try {
       const response = await axios(config);
-      console.log(response);
-      const data = JSON.parse(response.data);
-
+      //console.log("Reqeuest res", response.data);
+      const data = response.data;
       return data;
     } catch (error: any) {
       if (error.response) {
@@ -51,6 +50,7 @@ export const httpRequest = () => {
           window.location.href =
             Constants.PROTOCOL + Constants.FRONT_END_BASE_URL + "auth/signin";
         }
+
         // The server responded with a status other than 2xx
         // console.error("Error status:", error.response.status);
         // console.error("Error data:", error.response.data);

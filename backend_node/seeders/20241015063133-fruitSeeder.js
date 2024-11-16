@@ -13,11 +13,9 @@ module.exports = {
       "Watermelon",
       "Grape",
     ];
-    // Define the number of rows you want to insert
-    const numberOfRows = 8;
 
     // Generate fruits based on the numberOfRows
-    for (let i = 0; i < numberOfRows; i++) {
+    for (let i = 0; i < fruit_options.length; i++) {
       fruits.push({
         name: fruit_options[i],
         created_at: new Date(),

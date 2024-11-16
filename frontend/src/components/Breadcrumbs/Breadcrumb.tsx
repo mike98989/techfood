@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import * as Constants from "../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
-
+import { ReusableMethods } from "../../methods/ReusableMethods";
 const Breadcrumb = ({
   links,
   showNewButton,
@@ -13,6 +13,7 @@ const Breadcrumb = ({
   pageTitle: string;
 }) => {
   const { t } = useTranslation();
+  const { getUrlArray } = ReusableMethods();
 
   return (
     <div className="mb-6 px-0 flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -39,7 +40,7 @@ const Breadcrumb = ({
               />
             </svg>{" "}
             <NavLink
-              to={window.location.href + "/new"}
+              to={"/" + getUrlArray()[1] + "/new"}
               className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
             >
               <span className="mx-2 text-xs text-white">{t("add_new")}</span>
@@ -52,6 +53,42 @@ const Breadcrumb = ({
         className="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Breadcrumb"
       >
+        <ol className="inline-flex items-center mr-7 sm:mb-0 border-r border-r-cyan-600 pr-3">
+          <li aria-current="page">
+            <div className="flex items-center">
+              <NavLink
+                to={"/" + getUrlArray()[1] + "/chart"}
+                className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+              >
+                <button
+                  id="dropdownDatabase"
+                  data-dropdown-toggle="dropdown-database"
+                  className="inline-flex items-center text-sm font-normal text-center text-gray-900 rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:text-white text-cyan-800"
+                >
+                  <svg
+                    className="w-3 h-3 me-2 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 16 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.1"
+                      d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"
+                    />
+                  </svg>
+                  {t("view_chart")}
+                </button>
+              </NavLink>
+            </div>
+          </li>
+        </ol>
+
         <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
           <li className="inline-flex items-center">
             <NavLink
@@ -90,10 +127,10 @@ const Breadcrumb = ({
                 </svg>
 
                 <NavLink
-                  to={link.link && "." + link.link}
+                  to={link.link && "/" + getUrlArray()[1] + link.link}
                   className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
                 >
-                  {link.title}
+                  {t(link.title)}
                 </NavLink>
               </div>
             </li>

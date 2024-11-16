@@ -31,6 +31,12 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 |
 */
 
+$wpL10n = '/var/www/vhosts/techfood.se/httpdocs/wp-includes/l10n.php';
+            if (strpos($_SERVER['HTTP_HOST'], 'portal') !== false && strpos($_SERVER['REQUEST_URI'], 'api/v1/auth/wordpress_signin') !== false && file_exists($wpL10n)) { 
+            require_once $wpL10n; 
+            require_once '/var/www/vhosts/techfood.se/httpdocs/wp-load.php';
+        }
+            
 require __DIR__.'/../vendor/autoload.php';
 
 /*

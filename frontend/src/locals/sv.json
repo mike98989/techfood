@@ -1,10 +1,19 @@
 {
   "greeting": "Välkommen tillbaka",
+  "sign_in_title": "Logga in på Techfood",
+  "username": "Användarnamn",
+  "password": "Lösenord",
+  "signin": "Logga in",
+  "username_placeholder": "Ange ditt användarnamn",
+  "password_placeholder": "Ange ditt lösenord",
+  "catch_phrase": "Strömlinjeforma ditt laboratorium:",
+  "catch_sentence": "Digitalisera livsmedelsresultat med precision!",
   "add_new": "Lägga till ny",
   "language": "Språk",
   "dashboard": "Instrumentbräda",
   "my_records": "mina Rekord",
   "protein_lactose_water": "Proteinlaktos och vatten",
+  "protein_lactose_water_chart": "Protein laktos och vatten diagram",
   "fruit_production": "Fruktproduktion",
   "deviation_complaints": "Avvikelseklagomål",
   "microbiological_sample": "Mikrobiologiska prover miljö",
@@ -27,5 +36,17 @@
   "water_value": "Vattenvärde",
   "actions": "Handlingar",
   "heading_protein_lactose_water": "Digitalisering och uppföljning av protein- och vatteninnehållsanalysresultat från produktionen",
-  "heading_fruit_production": "Digitalisering av fruktproduktion"
+  "heading_fruit_production": "Digitalisering av fruktproduktion",
+  "heading_deviation_complaints": "Digitalisering och uppföljning av avvikelseklagomål",
+  "english": "Engelska",
+  "swedish": "Svenska",
+  "french": "franska",
+  "spanish": "Spanska",
+  "portuguese": "Portugisiska",
+  "food_production_deviation_key": {
+    "physical": "Fysisk",
+    "microbiological": "Mikrobiologiska",
+    "allergens": "Allergener",
+    "chemical": "Kemisk"
+  }
 }

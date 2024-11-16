@@ -19,7 +19,7 @@ class LabInputsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $data =  LabInputs::where('user_id',$user->id)->orderBy('result_date', 'desc')->get();
+        $data =  LabInputs::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
         return response()->json(['data'=>$data],201);
         
     }
@@ -42,9 +42,9 @@ class LabInputsController extends Controller
             '*.poNumber' => 'required|string',
             '*.batches' => 'required|array',
             '*.batches.*.batchNumber' => 'required|string',
-            '*.batches.*.proteinValue' => 'nullable|string',
-            '*.batches.*.lactoseValue' => 'nullable|string',
-            '*.batches.*.waterValue' => 'nullable|string',
+            '*.batches.*.proteinValue' => 'nullable|integer',
+            '*.batches.*.lactoseValue' => 'nullable|integer',
+            '*.batches.*.waterValue' => 'nullable|integer',
             '*.batches.*.derivedDate' => 'required|date',
         ]);
         $user = $request->user();
@@ -67,7 +67,7 @@ class LabInputsController extends Controller
         }
     });
 
-        return response()->json(["message"=>"Lab data saved successfully","status"=>'1'],200);
+        return response()->json(["message"=>"success_save_protein_lactose_water","status"=>'1'],200);
     }
 
     /**
@@ -89,16 +89,31 @@ class LabInputsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LabInputs $labInputs)
+    public function update(Request $request, LabInputs $labinput)
     {
-        //
+        $validatedData = $request->validate([
+            'PO_number' => 'required|string',
+            'batch_number' => 'required|string',
+            'protein_value' => 'nullable|integer',
+            'lactose_value' => 'nullable|integer',
+            'water_value' => 'nullable|integer',
+            'result_date'=>'required|date',
+        ]);
+        $user = $request->user();
+        $validatedData['user_id'] = $user->id;
+        
+        $labinput->update($validatedData);
+
+        return response()->json(["message"=>"Recordss updated successfully","status"=>'1'],201);
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LabInputs $labInputs)
+    public function destroy(LabInputs $labinput)
     {
-        //
+        $labinput->delete();
+        return response()->json(["message"=>"Resource deleted successfully","status"=>'1'],201);
     }
 }

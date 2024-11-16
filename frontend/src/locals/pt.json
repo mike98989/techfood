@@ -1,10 +1,19 @@
 {
   "greeting": "Bem-vindo de volta",
+  "sign_in_title": "Entrar no Techfood",
+  "username": "Nome de usuário",
+  "password": "Senha",
+  "signin": "Entrar",
+  "username_placeholder": "Digite seu nome de usuário",
+  "password_placeholder": "Digite sua senha",
+  "catch_phrase": "Otimize seu laboratório:",
+  "catch_sentence": "Digitalizando resultados alimentares com precisão!",
   "add_new": "Adicionar Novo",
   "language": "Idioma",
-  "dashboard": "Painel de Controle",
+  "dashboard": "Painel de Controlo",
   "my_records": "Meus Registros",
   "protein_lactose_water": "Proteína Lactose & Água",
+  "protein_lactose_water_chart": "Gráficos de proteína, lactose e água",
   "fruit_production": "Produção de Frutas",
   "deviation_complaints": "Queixas de Desvio",
   "microbiological_sample": "Amostras Microbiológicas do Ambiente",
@@ -27,5 +36,11 @@
   "water_value": "Valor de Água",
   "actions": "Ações",
   "heading_protein_lactose_water": "Digitalização e acompanhamento dos resultados de análise de conteúdo de proteínas e água da produção",
-  "heading_fruit_production": "Digitalização da produção de frutas"
+  "heading_fruit_production": "Digitalização da produção de frutas",
+  "heading_deviation_complaints": "Digitalização e acompanhamento de reclamações de desvios",
+  "english": "Inglês",
+  "swedish": "Sueco",
+  "french": "Francês",
+  "spanish": "Espanhol",
+  "portuguese": "Português"
 }

@@ -1,30 +1,31 @@
 import React, { useEffect } from "react";
 import CardDataStats from "../../components/CardDataStats";
-import ProteinLactoseWaterChart from "../../components/Charts/ProteinLactoseWaterChart";
-import ProteinLactoseWaterThreshold from "../../components/Charts/ProteinLactoseWaterThresholdChart";
+
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-//import ProteinLactoseWaterChart2 from "../../components/Charts/ProteinLactoseWaterChart2";
-import FoodPRoductionChart from "../../components/Charts/FoodProductionChart";
-// import ChartTwo from "../../components/Charts/ChartTwo";
-// import ChatCard from "../../components/Chat/ChatCard";
-// import MapOne from "../../components/Maps/MapOne";
-// import TableOne from "../../components/Tables/TableOne";
+import FoodProductionChart from "../../components/Charts/DashboardCharts/FoodProductionChart";
+import FoodProductionLineChart from "../../components/Charts/DashboardCharts/FoodProductionChart_Line";
+import DeviationComplaintsPie from "../../components/Charts/DashboardCharts/DeviationComplaintsChart_Pie";
+import ProteinLactoseWaterChart from "../../components/Charts/DashboardCharts/ProteinLactoseWaterChart";
+import ProteinLactoseWaterThreshold from "../../components/Charts/DashboardCharts/ProteinLactoseWaterThresholdChart";
 import chartData from "../../methods/chartData";
+
 const Index: React.FC = () => {
-  const { proteinLactoseData, fruitProductionData } = chartData({
-    proteinLactoseChart: true,
-    fruitProductionChart: true,
-  });
+  const { proteinLactoseData, fruitProductionData, deviationComplaintsData } =
+    chartData({
+      proteinLactoseChart: true,
+      fruitProductionChart: true,
+      deviationComplaintsDataChart: true,
+    });
   const user = useSelector((state: any) => state.user.value);
   const { t } = useTranslation();
 
-  const foodConstant = {
-    constants: 72.5,
-    approvedText: "Tillfredställande",
-    unApprovedText: "Åtgärder krävs",
-  };
+  // const foodConstant = {
+  //   constants: 72.5,
+  //   approvedText: "satisfactory",
+  //   unApprovedText: "actions_required",
+  // };
   // useEffect(() => {
   //   proteinLactoseWater();
   // }, []);
@@ -123,23 +124,42 @@ const Index: React.FC = () => {
         {t("dashboard")}
       </h2>
 
-      <div className="mt-4 grid grid-cols-12 gap-3 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5">
-        <ProteinLactoseWaterChart chartData={proteinLactoseData} />
-        {/* <ProteinLactoseWaterChart2 /> */}
-        {/* <ChartTwo /> */}
-        <ProteinLactoseWaterThreshold
-          chartData={proteinLactoseData}
-          constant={foodConstant}
-        />
-        {fruitProductionData && (
-          <FoodPRoductionChart chartData={fruitProductionData} />
-        )}
-        {/* 
+      {/* <div className="mt-4 grid grid-cols-8 gap-2 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5"> */}
+      <div className="w-full">
+        <div className="w-full md:flex md:flex-row mb-2">
+          <div className="w-full md:w-3/5 mr-3 mb-2">
+            <ProteinLactoseWaterChart chartData={proteinLactoseData} />
+          </div>
+          {/* <ProteinLactoseWaterChart2 /> */}
+          {/* <ChartTwo /> */}
+          <div className="w-full md:w-3/5">
+            <ProteinLactoseWaterThreshold chartData={proteinLactoseData} />
+          </div>
+        </div>
+        <div className="w-full md:flex md:flex-row">
+          {fruitProductionData && (
+            <>
+              <div className="w-full md:w-2/6 mr-3 mb-2">
+                <FoodProductionChart chartData={fruitProductionData} />
+              </div>
+              {/* <div className="w-full md:w-2/6 mr-3 mb-2">
+                <FoodProductionLineChart chartData={fruitProductionData} />
+              </div> */}
+            </>
+          )}
+          <div className="w-full md:w-4/6">
+            <DeviationComplaintsPie chartData={deviationComplaintsData} />
+          </div>
+          {/* {deviationComplaintsData && (
+          <DeviationComplaintChart chartData={deviationComplaintsData} />
+        )} */}
+          {/* 
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>
         <ChatCard /> */}
+        </div>
       </div>
     </>
   );

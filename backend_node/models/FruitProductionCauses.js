@@ -22,7 +22,7 @@ FruitProductionCauses.init({
 }, {
   sequelize,
   modelName: 'FruitProductionCauses',
-  tableName: 'fruits_production_causes', // Specify the exact table name in the database
+  tableName: 'fruit_production_causes', // Specify the exact table name in the database
   timestamps: false, // Set to false because we're using existing timestamp columns
 });
 

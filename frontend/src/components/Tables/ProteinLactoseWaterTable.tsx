@@ -70,14 +70,12 @@ const ProteinLactoseWater = () => {
               </tr>
             </thead>
             <tbody>
-              {proteinLactosWaterData &&
-                proteinLactosWaterData.length > 0 &&
+              {proteinLactosWaterData?.length > 0 &&
                 proteinLactosWaterData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}
                     </td>
-
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
                         {input.PO_number}
@@ -111,7 +109,20 @@ const ProteinLactoseWater = () => {
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <div className="flex items-center space-x-3.5">
-                        <button className="hover:text-primary">
+                        <button
+                          onClick={() => {
+                            setOpenModal(true),
+                              setModalQueryData({
+                                modalType: "form",
+                                modalSize: "lg",
+                                modalData: {
+                                  form: "../../pages/Form/Edit/EditProteinLactoseWater",
+                                  data: input,
+                                },
+                              });
+                          }}
+                          className="hover:text-primary"
+                        >
                           <svg
                             className="w-[24px] h-[24px] text-gray-800 dark:text-white hover:text-primary"
                             aria-hidden="true"
@@ -185,18 +196,18 @@ const ProteinLactoseWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && proteinLactosWaterData.length == 0 && (
+              {!isLoading && proteinLactosWaterData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
                     colSpan={8}
                   >
-                    No record found! Please create record.
+                    {t("no_record_found")}
                   </td>
                 </tr>
               )}
 
-              {isLoading && proteinLactosWaterData.length == 0 && (
+              {isLoading && proteinLactosWaterData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"

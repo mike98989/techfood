@@ -25,12 +25,12 @@ class LabInputsFactory extends Factory
         $rand=rand(100,10000);
         
         return [
-            'user_id'=>$user->id,
+            'user_id'=>1,//$user->id,
             'PO_number' => fake()->unique()->numberBetween('400','800'),
             'batch_number' => $final_date.":".$rand,
             'protein_value' => fake()->optional->numberBetween(30,90),
-            'lactose_value' => fake()->optional->numberBetween(25,97),
-            'water_value' => fake()->optional->numberBetween(25,97),
+            'lactose_value' => fake()->optional->numberBetween(8,22),
+            'water_value' => fake()->optional->numberBetween(3,15),
             'result_date' => $date, 
         ];
     }

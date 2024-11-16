@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
+import { constant } from "../../Utils/Constants";
 
 export default function NewProteinLactoseWater() {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -23,14 +24,13 @@ export default function NewProteinLactoseWater() {
     handleRemoveBatch,
     handleInputChange,
     handleCompute,
-    computeProteinChart,
   } = DynamicInputFields();
   //const { countValid, countInValid, totalCount } = proteinChartValues;
-  const proteinConstant = {
-    constants: 72.5,
-    approvedText: "Tillfredställande",
-    unApprovedText: "Åtgärder krävs",
-  };
+  // const proteinConstant = {
+  //   constants: 72.5,
+  //   approvedText: "Tillfredställande",
+  //   unApprovedText: "Åtgärder krävs",
+  // };
 
   return (
     <>
@@ -38,7 +38,7 @@ export default function NewProteinLactoseWater() {
         links={[
           {
             title: pageTitle,
-            link: "./protein_lactose_water",
+            link: "/",
           },
           { title: "New", link: null },
         ]}
@@ -54,60 +54,185 @@ export default function NewProteinLactoseWater() {
           </div>
 
           <div
-            className="flex p-4 mb-4 text-sm text-green-800 rounded-xs bg-cyan-50 dark:bg-black dark:text-whiten"
+            className="lg:flex flex-row p-4 mb-4 text-sm text-green-800 rounded-xs bg-cyan-50 dark:bg-black dark:text-whiten"
             role="alert"
           >
-            <svg
-              className="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span className="sr-only">Danger</span>
-            <div>
-              <span className="font-medium">
-                Protein: Gränsvärde = {proteinConstant.constants}
-              </span>
-              <ul className="mt-1.5 list-none list-inside">
-                <li className="flex flex-row">
-                  <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                  {proteinConstant.approvedText} |
-                  <span className="ml-1">Total</span> =
-                  {computeValues.countValid}{" "}
-                  <span className="ml-1">Percent</span> =
-                  {computeValues.countValid
-                    ? Math.round(
-                        ((computeValues.countValid * 1) /
-                          computeValues.totalCount) *
-                          1 *
-                          100
-                      )
-                    : 0}
-                  %
-                </li>
-                <li className="flex flex-row">
-                  <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                  {proteinConstant.unApprovedText} |{" "}
-                  <span className="ml-1">Total</span> =
-                  {computeValues.countInValid}
-                  <span className="ml-1">Percent</span> =
-                  {computeValues.countInValid
-                    ? Math.round(
-                        ((computeValues.countInValid * 1) /
-                          computeValues.totalCount) *
-                          1 *
-                          100
-                      )
-                    : 0}
-                  %
-                </li>
-                <li className="font-bold">
-                  Total = {computeValues.totalCount}
-                </li>
-              </ul>
+            <div className="lg:w-1/3 flex">
+              <svg
+                className="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Danger</span>
+              <div>
+                <span className="font-medium">
+                  {t("protein") +
+                    " " +
+                    t("limit") +
+                    ": " +
+                    constant.proteinConstantLimit}
+                </span>
+
+                <ul className="mt-1.5 list-none list-inside">
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
+                    {t(constant.approvedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countProteinValid}{" "}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countProteinValid
+                      ? Math.round(
+                          ((computeValues.countProteinValid * 1) /
+                            computeValues.totalProteinCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
+                    {t(constant.unApprovedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countProteinInvalid}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countProteinInvalid
+                      ? Math.round(
+                          ((computeValues.countProteinInvalid * 1) /
+                            computeValues.totalProteinCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="font-bold">
+                    Total = {computeValues.totalProteinCount}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="lg:w-1/3 flex">
+              <svg
+                className="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Danger</span>
+              <div>
+                <span className="font-medium">
+                  {t("lactose") +
+                    " " +
+                    t("limit") +
+                    ": " +
+                    constant.lactoseConstantLimit}
+                </span>
+
+                <ul className="mt-1.5 list-none list-inside">
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
+                    {t(constant.approvedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countLactoseValid}{" "}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countLactoseValid
+                      ? Math.round(
+                          ((computeValues.countLactoseValid * 1) /
+                            computeValues.totalLactoseCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
+                    {t(constant.unApprovedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countLactoseInvalid}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countLactoseInvalid
+                      ? Math.round(
+                          ((computeValues.countLactoseInvalid * 1) /
+                            computeValues.totalLactoseCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="font-bold">
+                    Total = {computeValues.totalLactoseCount}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="lg:w-1/3 flex">
+              <svg
+                className="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Danger</span>
+              <div>
+                <span className="font-medium">
+                  {t("water") +
+                    " " +
+                    t("limit") +
+                    ": " +
+                    constant.waterConstantLimit}
+                </span>
+
+                <ul className="mt-1.5 list-none list-inside">
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
+                    {t(constant.approvedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countWaterValid}{" "}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countWaterValid
+                      ? Math.round(
+                          ((computeValues.countWaterValid * 1) /
+                            computeValues.totalWaterCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="flex flex-row">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
+                    {t(constant.unApprovedText)} |
+                    <span className="ml-1">Total</span> =
+                    {computeValues.countWaterInvalid}
+                    <span className="ml-1">Percent</span> =
+                    {computeValues.countWaterInvalid
+                      ? Math.round(
+                          ((computeValues.countWaterInvalid * 1) /
+                            computeValues.totalWaterCount) *
+                            1 *
+                            100
+                        )
+                      : 0}
+                    %
+                  </li>
+                  <li className="font-bold">
+                    Total = {computeValues.totalWaterCount}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div className="">
@@ -117,7 +242,7 @@ export default function NewProteinLactoseWater() {
                 className="px-3 py-2 text-xs font-medium text-center text-white bg-cyan-900 rounded-lg  dark:bg-black"
                 onClick={handleAddPoNumber}
               >
-                Add PO
+                {t("add_new")} PO
               </button>
             </div>
             <MessageBox />
@@ -145,7 +270,7 @@ export default function NewProteinLactoseWater() {
                 >
                   <div className="md:mb-0 mr-1">
                     <label className="block text-black dark:text-white text-xs">
-                      PO Number
+                      PO {t("number")}
                     </label>
 
                     <input
@@ -171,7 +296,7 @@ export default function NewProteinLactoseWater() {
                       <div className="flex flex-row pt-2">
                         {/* Date Value */}
                         <svg
-                          className="w-4 h-4 text-black"
+                          className="w-5 h-5 text-black"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -187,7 +312,7 @@ export default function NewProteinLactoseWater() {
                             d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
                           />
                         </svg>
-                        <span className="text-xs text-black">
+                        <span className="text-xs text-black mt-1">
                           {batch.derivedDate}
                         </span>
                         <span className="pl-2 text-xs text-graydark flex flex-row">
@@ -195,44 +320,44 @@ export default function NewProteinLactoseWater() {
                           {batch.proteinValue != "" && (
                             <>
                               {parseInt(batch.proteinValue) * 1 >
-                              proteinConstant.constants * 1 ? (
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-1 mt-1"></div>
+                              constant.proteinConstantLimit * 1 ? (
+                                <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1"></div>
                               ) : (
-                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-1 mt-1"></div>
+                                <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1"></div>
                               )}
-                              Protein
+                              <span className="mt-1">{t("protein")}</span>
                             </>
                           )}
                           {/* Lactose Value */}
                           {batch.lactoseValue != "" && (
                             <>
                               {parseInt(batch.lactoseValue) * 1 >
-                              proteinConstant.constants * 1 ? (
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
+                              constant.lactoseConstantLimit * 1 ? (
+                                <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                               ) : (
-                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
+                                <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
                               )}
-                              Lactose
+                              <span className="mt-1">{t("lactose")}</span>
                             </>
                           )}
                           {/* Water Value */}
                           {batch.waterValue != "" && (
                             <>
                               {parseInt(batch.waterValue) * 1 >
-                              proteinConstant.constants * 1 ? (
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
+                              constant.waterConstantLimit * 1 ? (
+                                <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                               ) : (
-                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
+                                <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
                               )}
-                              Water
+                              <span className="mt-1">{t("water")}</span>
                             </>
                           )}
                         </span>
                       </div>
-                      <div className="flex flex-row md:flex-row md:flex-wrap pt-2">
-                        <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
+                      <div className="flex md:flex-row md:flex-wrap pt-2">
+                        <div className="flex-1 md:w-1/2 md:mb-0 mr-1">
                           <label className="text-black dark:text-white text-xs flex flex-row">
-                            Batch{" "}
+                            {t("batch_number")}
                           </label>
                           <input
                             type="number"
@@ -248,22 +373,22 @@ export default function NewProteinLactoseWater() {
                                 value: e.target.value,
                               })
                             }
-                            placeholder="Batch"
+                            placeholder={t("batch_number")}
                             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           />
                         </div>
 
                         {/* <!-- Row 2 for inputs 3, 4, and 5 --> */}
-                        <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
+                        <div className="flex-1 w-1/2 md:mb-0 mr-1">
                           <label className="block text-black dark:text-white text-xs">
-                            Protein
+                            {t("protein")}
                           </label>
                           <input
                             type="number"
                             id="small-input"
                             name="protein_value[]"
                             value={batch.proteinValue}
-                            //onBlur={() => handleCompute(proteinConstant)}
+                            onBlur={() => handleCompute()}
                             onChange={(e) => {
                               handleInputChange({
                                 poIndex: poIndex,
@@ -271,22 +396,22 @@ export default function NewProteinLactoseWater() {
                                 field: "proteinValue",
                                 value: e.target.value,
                               });
-                              handleCompute(proteinConstant);
+                              //handleCompute();
                             }}
-                            placeholder="Protein"
+                            placeholder={t("protein")}
                             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           />
                         </div>
-                        <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
+                        <div className="flex-1 md:w-1/2 md:mb-0 mr-1">
                           <label className="block text-black dark:text-white text-xs">
-                            Lactose
+                            {t("lactose")}
                           </label>
                           <input
                             type="number"
                             id="small-input"
                             name="_value[]"
                             value={batch.lactoseValue}
-                            //onBlur={() => handleCompute(proteinConstant)}
+                            onBlur={() => handleCompute()}
                             onChange={(e) => {
                               handleInputChange({
                                 poIndex: poIndex,
@@ -294,22 +419,22 @@ export default function NewProteinLactoseWater() {
                                 field: "lactoseValue",
                                 value: e.target.value,
                               });
-                              handleCompute(proteinConstant);
+                              //handleCompute();
                             }}
-                            placeholder="Lactose"
+                            placeholder={t("lactose")}
                             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           />
                         </div>
-                        <div className="flex-1 md:w-1/5 md:mb-0">
+                        <div className="flex-1 md:w-1/2 md:mb-0">
                           <label className="block text-black dark:text-white text-xs">
-                            Water
+                            {t("water")}
                           </label>
                           <input
                             type="number"
                             id="small-input"
                             name="water_value[]"
                             value={batch.waterValue}
-                            //onBlur={() => handleCompute(proteinConstant)}
+                            onBlur={() => handleCompute()}
                             onChange={(e) => {
                               handleInputChange({
                                 poIndex: poIndex,
@@ -317,9 +442,9 @@ export default function NewProteinLactoseWater() {
                                 field: "waterValue",
                                 value: e.target.value,
                               });
-                              handleCompute(proteinConstant);
+                              //handleCompute();
                             }}
-                            placeholder="Water"
+                            placeholder={t("water")}
                             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           />
                         </div>
@@ -381,97 +506,13 @@ export default function NewProteinLactoseWater() {
                     className="text-white bg-gradient-to-br from-cyan-600 to-cyan-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mt-2"
                   >
                     <Spinner />
-                    Submit
+                    {t("save")}
                   </button>
                 </div>
               )}
             </form>
           </div>
         </div>
-
-        {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="2/5">
-            <div className="relative overflow-x-auto">
-              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-800 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" colSpan={3} className="px-2 py-3">
-                      Protein: Gränsvärde = {proteinConstant.constants}
-                    </th>
-                  </tr>
-                </thead>
-
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-4 py-3">
-                      Status
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Antal
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      %
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="bg-gray-200 border-gray-500">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {proteinConstant.approvedText}
-                    </th>
-                    <td className="px-6 py-4">
-                      {proteinComputeValues.countValid}
-                    </td>
-                    <td className="px-6 py-4">
-                      {proteinComputeValues.countValid
-                        ? Math.round(
-                            ((proteinComputeValues.countValid * 1) /
-                              proteinComputeValues.totalCount) *
-                              1 *
-                              100
-                          )
-                        : 0}
-                      %
-                    </td>
-                  </tr>
-                  <tr className="bg-gray-600">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {proteinConstant.unApprovedText}
-                    </th>
-                    <td className="px-6 py-4">
-                      {proteinComputeValues.countInValid}
-                    </td>
-                    <td className="px-6 py-4">
-                      {proteinComputeValues.countInValid
-                        ? Math.round(
-                            ((proteinComputeValues.countInValid * 1) /
-                              proteinComputeValues.totalCount) *
-                              1 *
-                              100
-                          )
-                        : 0}
-                      %
-                    </td>
-                  </tr>
-                </tbody>
-                <thead className="text-xs text-gray-700 uppercase bg-gray-300">
-                  <tr>
-                    <th scope="col" className="px-6 py-3"></th>
-                    <th colSpan={2} className="px-6 py-3">
-                      Total = {proteinComputeValues.totalCount}
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   );

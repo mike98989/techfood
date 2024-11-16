@@ -2,15 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import SpinnerObject from "../../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
+import formReturnMessage from "../../../components/Forms/FormAlerts/formReturnMessage";
+import { httpRequest } from "../../../methods/Requests";
+import { useTranslation } from "react-i18next";
 
-const EditFrutProduction = (props) => {
+const EditFrutProduction = (props: any) => {
   const { setIsLoading, Spinner } = SpinnerObject();
   const user = useSelector((state: any) => state.user.value);
-  const [sections, setSections] = useState([]);
-  const [causes, setCauses] = useState([]);
-  const [derivationTypes, setDerivationTypes] = useState([]);
   const { allRequest } = ReusableMethods();
   const [value, setValue] = useState(props.componentData);
+  const [returnDataArray, setReturnDataArray] = useState([]);
+  const { formSubmit } = ReusableMethods();
+  const { MessageBox, setFormMessage } = formReturnMessage();
+  const [openModal, setOpenModal] = useState(false);
+  const { fetchApi } = httpRequest();
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    date: "",
+    section_id: "",
+    status: "",
+    cause_id: "",
+    deviation_type_id: "",
+  });
 
   useEffect(() => {
     const fetchData = async (endpoint: string, returnStateObject: any) => {
@@ -27,13 +40,24 @@ const EditFrutProduction = (props) => {
         setReturnData: returnStateObject,
       });
     };
-    fetchData("fruits", setSections);
-    fetchData("causes", setCauses);
-    fetchData("deviation_types", setDerivationTypes);
+    fetchData("fruit_production_form_related_data", setReturnDataArray);
+
+    ////// Set Default form data
+    setFormData({
+      date: new Date(value.date).toISOString().split("T")[0], // Format date for input
+      section_id: value.section_id,
+      status: value.status,
+      cause_id: value.cause_id,
+      deviation_type_id: value.deviation_type_id,
+    });
   }, []);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
@@ -41,122 +65,174 @@ const EditFrutProduction = (props) => {
       <div className="flex">
         {/* <!-- Contact Form --> */}
         <div className="w-full">
-          <div className="border-b border-stroke py-2 px-2 dark:border-strokedark">
+          <div className="border-b border-stroke py-2 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Update Data
+              {t("update")} {t("fruit_production")} {t("values")}
             </h3>
           </div>
-          <form action="#" method="POST">
+          <MessageBox />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setIsLoading(true);
+              fetchApi({
+                url: "fruitproduction/" + value.id, // End Point
+                method: "PUT", // Method
+                formData: formData,
+                contentType: "application/json", //Content Type
+                authentication: user.token,
+              })
+                .then((response_value: any) => {
+                  const response = JSON.parse(response_value);
+                  setIsLoading(false);
+                  if (response.status == "1") {
+                    //setOpenModal(false);
+                    setFormData({
+                      date: "", // Format date for input
+                      section: "",
+                      status: "",
+                      cause: "",
+                      deviation_type: "",
+                    });
+                    setFormMessage({
+                      message: response.message,
+                      status: "success",
+                    });
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 1500);
+                    // modalQueryData.modalData.setData((data: any) =>
+                    //   data.filter(
+                    //     (value: any, i: any) =>
+                    //       i !== modalQueryData.modalData.index
+                    //   )
+                    // );
+                  }
+                })
+                .catch((error) => {
+                  setIsLoading(false);
+                  setFormMessage({
+                    message: JSON.parse(error),
+                    status: "error",
+                  });
+                });
+            }}
+            action="#"
+            id="editFruitProdution"
+            method="POST"
+          >
+            <Spinner />
             <div className="mb-4.5 flex flex-row gap-6 xl:flex-row">
               <div className="w-1/2 xl:w-1/2">
                 <div className="w-full">
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Date
+                    {t("date")}
                   </label>
                   <input
                     type="date"
-                    name="result_date"
-                    defaultValue={value.result_date}
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    //onChange={(e) => setFormattedDate(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full">
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Section
+                    {t("section")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    defaultValue={value.section}
+                    value={formData.section_id}
                     required
-                    name="section[]"
-                    //   onChange={(e) =>
-                    //     handleInputChange({
-                    //       index: fruitProductionIndex,
-                    //       field: "section",
-                    //       value: e.target.value,
-                    //     })
-                    //   }
+                    name="section_id"
+                    onChange={handleChange}
                   >
                     <option value="">--Select--</option>
-                    {sections.map((value: any, key) => (
-                      <option key={key} value={value.name}>
-                        {value.name}
-                      </option>
-                    ))}
+                    {returnDataArray.fruits?.original.data.map(
+                      (value: any, key) => (
+                        <option key={key} value={value.id}>
+                          {t(value.name_key)}
+                        </option>
+                      )
+                    )}
                   </select>
 
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Status
+                    {t("status")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    defaultValue={props.componentData.status}
+                    value={formData.status}
+                    onChange={handleChange}
                     required
-                    name="status[]"
+                    name="status"
                   >
                     <option value="">--Select--</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    {returnDataArray.statuses &&
+                      returnDataArray.statuses.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                   </select>
                 </div>
               </div>
-              <div className="w-1/2 xl:w-1/2">
-                <div className="w-full xl:w-1/2">
+              <div className="w-1/2">
+                <div className="w-full">
                   <label className="mb-1 text-sm text-black dark:text-white">
-                    Cause
+                    {t("cause")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    defaultValue={props.componentData.cause}
                     required
-                    name="cause[]"
-                    //   onChange={(e) =>
-                    //     handleInputChange({
-                    //       index: fruitProductionIndex,
-                    //       field: "cause",
-                    //       value: e.target.value,
-                    //     })
-                    //   }
+                    value={formData.cause_id}
+                    name="cause_id"
+                    onChange={handleChange}
                   >
                     <option value="">--Select--</option>
-                    {causes.map((value: any, key) => (
-                      <option key={key} value={value.cause}>
-                        {value.cause}
-                      </option>
-                    ))}
+                    {returnDataArray.causes &&
+                      returnDataArray.causes.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                   </select>
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full">
                   <label className="mb-1 text-sm text-black dark:text-white">
-                    Deviation Type
+                    {t("deviation_type")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    defaultValue={props.componentData.deviation_type}
+                    value={formData.deviation_type_id}
+                    onChange={handleChange}
                     required
-                    name="deviation_type[]"
-                    //   onChange={(e) =>
-                    //     handleInputChange({
-                    //       index: fruitProductionIndex,
-                    //       field: "deviation_type",
-                    //       value: e.target.value,
-                    //     })
-                    //   }
+                    name="deviation_type_id"
                   >
                     <option value="">--Select--</option>
-                    {derivationTypes.map((value: any, key) => (
-                      <option key={key} value={value.type}>
-                        {value.type}
-                      </option>
-                    ))}
+                    {returnDataArray.deviation_types?.original.data.map(
+                      (value: any, key: any) => (
+                        <option key={key} value={value.id}>
+                          {t(value.name_key)}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
               </div>
             </div>
-            <button className="flex w-full justify-center rounded-xl  bg-cyan-800 p-2 font-medium text-gray hover:bg-opacity-90">
-              Save Data
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-xl  bg-cyan-800 p-2 font-medium text-gray hover:bg-opacity-90"
+            >
+              {t("save")}
             </button>
           </form>
         </div>

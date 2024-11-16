@@ -21,6 +21,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
+  const [activeMenu, setActiveMenu] = useState(
+    localStorage.getItem("activeMenu") || "/"
+  );
+
+  const handleMenuClick = (path) => {
+    setActiveMenu(path);
+    localStorage.setItem("activeMenu", path);
+  };
 
   // close on click outside
   useEffect(() => {
@@ -56,6 +64,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       document.querySelector("body")?.classList.remove("sidebar-expanded");
     }
   }, [sidebarExpanded]);
+
+  ///////When the Menu/location is clicked
+  useEffect(() => {
+    const path = location.pathname.split("/");
+    //alert(path[1]);
+    setActiveMenu(path[1]);
+    localStorage.setItem("activeMenu", path[1]);
+  }, [location]);
 
   return (
     <aside
@@ -221,9 +237,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <NavLink
                               to="/protein_lactose_water"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              className={`
+                                ${activeMenu === "protein_lactose_water" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
                             >
                               {t("protein_lactose_water")}
                             </NavLink>
@@ -231,19 +248,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <NavLink
                               to="/fruit_production"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              className={`
+                                ${activeMenu === "fruit_production" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
                             >
                               {t("fruit_production")}
                             </NavLink>
                           </li>
                           <li>
                             <NavLink
-                              to="#"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              to="/deviation_complaints"
+                              className={`
+                                ${activeMenu === "deviation_complaints" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
                             >
                               {t("deviation_complaints")}
                             </NavLink>
@@ -271,10 +290,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                           <li>
                             <NavLink
-                              to="#"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              to="/drill_samples"
+                              className={`
+                                ${activeMenu === "protein_lactose_water" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
                             >
                               {t("drill_samples_in_slaughter")}
                             </NavLink>

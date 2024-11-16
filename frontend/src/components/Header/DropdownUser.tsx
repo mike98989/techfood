@@ -4,11 +4,13 @@ import ClickOutside from "../ClickOutside";
 import UserOne from "../../images/user/user-default.png";
 import { useSelector } from "react-redux";
 import { ReusableMethods } from "../../methods/ReusableMethods";
+import { useTranslation } from "react-i18next";
+
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector((state: any) => state.user.value);
-  const { userLogin, userLogout, formErrors } = ReusableMethods();
-
+  const { userLogin, userLogout } = ReusableMethods();
+  const { t } = useTranslation();
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -52,7 +54,7 @@ const DropdownUser = () => {
           <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
             <li>
               <Link
-                to="/profile"
+                to="#"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -72,13 +74,13 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                My Profile
+                {t("my_profile")}
               </Link>
             </li>
 
             <li>
               <Link
-                to="/settings"
+                to="#"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -98,7 +100,7 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                Account Settings
+                {t("account_settings")}
               </Link>
             </li>
           </ul>
@@ -125,7 +127,7 @@ const DropdownUser = () => {
                 fill=""
               />
             </svg>
-            Log Out
+            {t("signout")}
           </button>
         </div>
       )}

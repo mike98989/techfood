@@ -21,11 +21,15 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected static $counter = 1; // Counter for auto-incrementing username
     public function definition(): array
     {
+        
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'parent_id' => rand(1,30),
+            //'email' => fake()->unique()->safeEmail(),
+            'email' => 'student' . (self::$counter++) . '.uppsala@example.com', // Auto-incrementing email
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
