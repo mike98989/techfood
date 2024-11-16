@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class DeviationComplaintDangers extends Model
 {
     use HasFactory;
-    protected $table="dangers";
+    //protected $table="dangers";
 }

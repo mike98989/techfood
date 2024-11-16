@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date("date");
-            $table->string('section');
-            $table->string('cause');
-            $table->string('deviation_type');
+            $table->integer('section_id');
+            $table->integer('cause_id');
+            $table->integer('deviation_type_id');
             $table->integer('status')->default('1');
             $table->timestamps();
         });

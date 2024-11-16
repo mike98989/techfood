@@ -47,7 +47,7 @@ const FormLayout = () => {
       <Breadcrumb
         links={[
           { title: pageTitle, link: "/" },
-          { title: "New", link: null },
+          { title: "new", link: null },
         ]}
         showNewButton={false}
         pageTitle={pageTitle}
@@ -65,7 +65,7 @@ const FormLayout = () => {
 
             <form
               id="deviation_complaint"
-              onSubmit={(e) =>
+              onSubmit={(e) => {
                 formSubmit({
                   event: e,
                   action_url: "deviationcomplaints",
@@ -76,8 +76,8 @@ const FormLayout = () => {
                   authentication: user.token,
                   setIsLoading,
                   setReturnData: setFormMessage,
-                })
-              }
+                });
+              }}
               method="POST"
             >
               <div className="p-6.5">
@@ -85,7 +85,7 @@ const FormLayout = () => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Reference Number
+                      {t("reference_number")}
                     </label>
                     <input
                       type="text"
@@ -97,7 +97,7 @@ const FormLayout = () => {
 
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Title
+                      {t("title")}
                     </label>
                     <input
                       type="text"
@@ -109,7 +109,7 @@ const FormLayout = () => {
 
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Occurance Date
+                      {t("occurance_date")}
                     </label>
                     <input
                       type="date"
@@ -122,136 +122,92 @@ const FormLayout = () => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Type of Deviation
+                      {t("deviation_type")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="deviation_type"
-                      //   onChange={(e) =>
-                      //     handleInputChange({
-                      //       index: fruitProductionIndex,
-                      //       field: "section",
-                      //       value: e.target.value,
-                      //     })
-                      //   }
+                      name="deviation_type_id"
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.deviation_types &&
-                        returnDataArray.deviation_types.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.deviation_types?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
 
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Deviation Code
+                      {t("deviation_code")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="deviation_code"
+                      name="deviation_code_id"
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.deviation_codes &&
-                        returnDataArray.deviation_codes.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.deviation_codes?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
 
-                  {/* <div className="w-full xl:w-1/4">
-                    <label className="mb-1 block text-black dark:text-white">
-                      Type of Hazard
-                    </label>
-                    <select
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      //value={production.section}
-                      required
-                      name="danger[]"
-                      //   onChange={(e) =>
-                      //     handleInputChange({
-                      //       index: fruitProductionIndex,
-                      //       field: "section",
-                      //       value: e.target.value,
-                      //     })
-                      //   }
-                    >
-                      <option value="">--Select--</option>
-                      {hazardType.map((value: any, key) => (
-                        <option key={key} value={value.name}>
-                          {value.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
-
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Risk Categories
+                      {t("risk_category")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="risk_category"
+                      name="risk_category_id"
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.risk_categories &&
-                        returnDataArray.risk_categories.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.risk_categories?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {value.name}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                 </div>
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row text-sm">
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white">
-                      Product Type
+                      {t("product_type")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="product"
-                      //   onChange={(e) =>
-                      //     handleInputChange({
-                      //       index: fruitProductionIndex,
-                      //       field: "section",
-                      //       value: e.target.value,
-                      //     })
-                      //   }
+                      name="product_id"
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.product_types &&
-                        returnDataArray.product_types.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.product_types?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
 
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Article Number
+                      {t("article")} {t("number")}
                     </label>
                     <input
                       type="text"
@@ -261,20 +217,9 @@ const FormLayout = () => {
                     />
                   </div>
 
-                  {/* <div className="w-full xl:w-1/4">
-                    <label className="mb-1 block text-black dark:text-white">
-                      Invantory Value
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Item number"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    />
-                  </div> */}
-
                   <div className="w-full xl:w-2/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Batch Number
+                      {t("batch_number")}
                     </label>
                     <input
                       type="text"
@@ -288,13 +233,13 @@ const FormLayout = () => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-3/6">
                     <label className="mb-1 block text-black dark:text-white">
-                      Section
+                      {t("section")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="section"
+                      name="section_id"
                       //   onChange={(e) =>
                       //     handleInputChange({
                       //       index: fruitProductionIndex,
@@ -303,37 +248,35 @@ const FormLayout = () => {
                       //     })
                       //   }
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.sections &&
-                        returnDataArray.sections.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.sections?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
 
                   <div className="w-full xl:w-3/6">
                     <label className="mb-1 block text-black dark:text-white text-sm">
-                      Location/Line
+                      {t("location")}/{t("line")}
                     </label>
                     <select
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                       //value={production.section}
                       required
-                      name="location"
+                      name="location_id"
                     >
-                      <option value="">--Select--</option>
-                      {returnDataArray.line_types &&
-                        returnDataArray.line_types.original.data.map(
-                          (value: any, key: any) => (
-                            <option key={key} value={value.name}>
-                              {value.name}
-                            </option>
-                          )
-                        )}
+                      <option value="">--{t("select")}--</option>
+                      {returnDataArray.line_types?.original.data.map(
+                        (value: any, key: any) => (
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                 </div>
@@ -341,23 +284,23 @@ const FormLayout = () => {
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-3/6">
                     <label className="mb-2.5 block text-black dark:text-white text-sm">
-                      Description of deviation
+                      {t("deviation_description")}
                     </label>
                     <textarea
                       rows={2}
                       name="deviation_description"
-                      placeholder="Type of deviation"
+                      placeholder={t("deviation_description")}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     ></textarea>
                   </div>
 
                   <div className="w-full xl:w-3/6">
                     <label className="mb-2.5 block text-black dark:text-white text-sm">
-                      Suggested correction/Action
+                      {t("suggested_correction") + "/" + t("actions")}
                     </label>
                     <textarea
                       rows={2}
-                      placeholder="Suggested Correction"
+                      placeholder={t("suggested_correction")}
                       name="suggested_correction"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     ></textarea>
@@ -371,7 +314,7 @@ const FormLayout = () => {
                       className="text-white bg-gradient-to-br from-cyan-600 to-cyan-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mt-2"
                     >
                       <Spinner />
-                      Submit
+                      {t("save")}
                     </button>
                   )}
                 </div>

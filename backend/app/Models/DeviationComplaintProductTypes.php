@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class DeviationComplaintProductTypes extends Model
 {
     use HasFactory;
-    protected $table="type_of_products";
+    //protected $table="type_of_products";
 }

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
-export default function Protein() {
+export default function FruitProduction() {
   const { setIsLoading, Spinner } = SpinnerObject();
   const { formSubmit } = ReusableMethods();
   const user = useSelector((state: any) => state.user.value);
@@ -49,7 +49,7 @@ export default function Protein() {
       <Breadcrumb
         links={[
           { title: pageTitle, link: "/" },
-          { title: "New", link: null },
+          { title: "new", link: null },
         ]}
         showNewButton={false}
         pageTitle={pageTitle}
@@ -66,7 +66,7 @@ export default function Protein() {
               className="px-3 py-2 text-xs font-medium text-center text-white bg-cyan-900 rounded-lg  dark:bg-black"
               onClick={handleAddFruitProduction}
             >
-              Add Row
+              {t("add_row")}
             </button>
           </div>
 
@@ -123,7 +123,7 @@ export default function Protein() {
                     <div className="flex flex-row md:flex-row md:flex-wrap pt-2">
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
                         <label className="text-black dark:text-white text-xs flex flex-row">
-                          Date{" "}
+                          {t("date")}
                         </label>
                         <input
                           type="date"
@@ -146,93 +146,90 @@ export default function Protein() {
                       {/* <!-- Row 2 for inputs 3, 4, and 5 --> */}
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
                         <label className="block text-black dark:text-white text-xs">
-                          Section
+                          {t("section")}
                         </label>
                         <select
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          value={production.section}
+                          value={production.section_id}
                           required
-                          name="section"
+                          name="section_id[]"
                           onChange={(e) =>
                             handleInputChange({
                               index: fruitProductionIndex,
-                              field: "section",
+                              field: "section_id",
                               value: e.target.value,
                             })
                           }
                         >
-                          <option value="">--Select--</option>
-                          {returnDataArray.fruits &&
-                            returnDataArray.fruits.original.data.map(
-                              (value: any, key: any) => (
-                                <option key={key} value={value.name}>
-                                  {value.name}
-                                </option>
-                              )
-                            )}
+                          <option value="">--{t("select")}--</option>
+                          {returnDataArray.fruits?.original.data.map(
+                            (value: any, key: any) => (
+                              <option key={key} value={value.id}>
+                                {t(value.name_key)}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
                         <label className="block text-black dark:text-white text-xs">
-                          Cause
+                          {t("cause")}
                         </label>
                         <select
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          value={production.cause}
+                          value={production.cause_id}
                           required
-                          name="cause[]"
+                          name="cause_id[]"
                           onChange={(e) =>
                             handleInputChange({
                               index: fruitProductionIndex,
-                              field: "cause",
+                              field: "cause_id",
                               value: e.target.value,
                             })
                           }
                         >
-                          <option value="">--Select--</option>
-                          {returnDataArray.causes &&
-                            returnDataArray.causes.original.data.map(
-                              (value: any, key: any) => (
-                                <option key={key} value={value.cause}>
-                                  {value.cause}
-                                </option>
-                              )
-                            )}
+                          <option value="">--{t("select")}--</option>
+                          {returnDataArray.causes?.original.data.map(
+                            (value: any, key: any) => (
+                              <option key={key} value={value.id}>
+                                {t(value.name_key)}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
                       <div className="flex-1 md:w-1/5 md:mb-0 mr-1">
                         <label className="block text-black dark:text-white text-xs">
-                          Deviation Type
+                          {t("deviation_type")}
                         </label>
 
                         <select
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           value={production.deviation_type}
                           required
-                          name="deviation_type[]"
+                          name="deviation_type_id[]"
                           onChange={(e) =>
                             handleInputChange({
                               index: fruitProductionIndex,
-                              field: "deviation_type",
+                              field: "deviation_type_id",
                               value: e.target.value,
                             })
                           }
                         >
-                          <option value="">--Select--</option>
-                          {returnDataArray.deviation_types &&
-                            returnDataArray.deviation_types.original.data.map(
-                              (value: any, key) => (
-                                <option key={key} value={value.type}>
-                                  {value.type}
-                                </option>
-                              )
-                            )}
+                          <option value="">--{t("select")}--</option>
+                          {returnDataArray.deviation_types?.original.data.map(
+                            (value: any, key) => (
+                              <option key={key} value={value.id}>
+                                {t(value.name_key)}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
 
                       <div className="flex-1 md:w-1/5 md:mb-0">
                         <label className="block text-black dark:text-white text-xs">
-                          Status
+                          {t("status")}
                         </label>
 
                         <select
@@ -248,15 +245,14 @@ export default function Protein() {
                             })
                           }
                         >
-                          <option value="">--Select--</option>
-                          {returnDataArray.statuses &&
-                            returnDataArray.statuses.original.data.map(
-                              (value: any, key: any) => (
-                                <option key={key} value={value.id}>
-                                  {value.id}:{value.name}
-                                </option>
-                              )
-                            )}
+                          <option value="">--{t("select")}--</option>
+                          {returnDataArray.statuses?.original.data.map(
+                            (value: any, key: any) => (
+                              <option key={key} value={value.id}>
+                                {value.id}: {t(value.name_key)}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
 
@@ -308,14 +304,14 @@ export default function Protein() {
                 </div>
               ))}
 
-              {fruitProduction.length > 0 && returnDataArray.fruits > 0 && (
+              {fruitProduction.length > 0 && (
                 <div className="flex flex-row justify-center">
                   <button
                     type="submit"
                     className="text-white bg-gradient-to-br from-cyan-600 to-cyan-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mt-2"
                   >
                     <Spinner />
-                    Submit
+                    {t("save")}
                   </button>
                 </div>
               )}

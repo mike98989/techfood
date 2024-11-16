@@ -70,8 +70,7 @@ const FruitProductionTable = () => {
               </tr>
             </thead>
             <tbody>
-              {fruitProductionData &&
-                fruitProductionData.length > 0 &&
+              {fruitProductionData?.length > 0 &&
                 fruitProductionData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
@@ -90,25 +89,26 @@ const FruitProductionTable = () => {
                     </td> */}
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.section}
+                        {t(input.section.name_key)}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.cause}
+                        {/* {input.cause} */}
+                        {t(input.cause.name_key)}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
                         <Badge
-                          value={input.status_type.name}
-                          type={input.status_type.id}
+                          value={t(input.status_type?.name_key)}
+                          type={input.status_type?.id}
                         />
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.deviation_type}
+                        {t(input.deviation.name_key)}
                       </p>
                     </td>
 
@@ -161,9 +161,9 @@ const FruitProductionTable = () => {
                                   title:
                                     input.date.split("T")[0] +
                                     ", " +
-                                    input.section +
+                                    t(input.section.name_key) +
                                     ", " +
-                                    input.cause,
+                                    t(input.cause.name_key),
                                   data: fruitProductionData,
                                   setData: setFruitProductionData,
                                 },
@@ -201,18 +201,18 @@ const FruitProductionTable = () => {
                   </tr>
                 ))}
 
-              {!isLoading && fruitProductionData.length == 0 && (
+              {!isLoading && fruitProductionData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
                     colSpan={8}
                   >
-                    No record found! Please create record.
+                    {t("no_record_found")}
                   </td>
                 </tr>
               )}
 
-              {isLoading && fruitProductionData.length == 0 && (
+              {isLoading && fruitProductionData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"

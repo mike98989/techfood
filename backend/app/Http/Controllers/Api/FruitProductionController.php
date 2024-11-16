@@ -15,7 +15,7 @@ class FruitProductionController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $data =  FruitProduction::where('user_id',$user->id)->orderBy('created_at', 'desc')->with('status_type')->get();
+        $data =  FruitProduction::where('user_id',$user->id)->orderBy('created_at', 'desc')->with('status_type')->with('section')->with('cause')->with('deviation')->get();
         return response()->json(['data'=>$data],200);
     }
 
@@ -28,7 +28,7 @@ class FruitProductionController extends Controller
 
     public function getCauses()
     {
-        $data =  FruitProductionCauses::where('status','1')->orderBy('cause', 'asc')->get();
+        $data =  FruitProductionCauses::where('status','1')->orderBy('name', 'asc')->get();
         return response()->json(['data'=>$data],200);
     }
 
@@ -40,7 +40,7 @@ class FruitProductionController extends Controller
 
     public function getDeviationTypes()
     {
-        $data =  FruitProductionDeviationTypes::where('status','1')->orderBy('type', 'asc')->get();;
+        $data =  FruitProductionDeviationTypes::where('status','1')->orderBy('name', 'asc')->get();;
         return response()->json(['data'=>$data],200);
     }
 
@@ -48,10 +48,10 @@ class FruitProductionController extends Controller
     {
         $validatedData = $request->validate([
             '*.date' => 'required|string',
-            '*.section' => 'required|string',
-            '*.status' => 'required|string',
-            '*.cause' => 'required|string',
-            '*.deviation_type' => 'required|string',
+            '*.section_id' => 'required|integer',
+            '*.status' => 'required|integer',
+            '*.cause_id' => 'required|integer',
+            '*.deviation_type_id' => 'required|integer',
         ]);
         $user = $request->user();
         // Use a transaction to handle multiple inserts
@@ -61,17 +61,17 @@ class FruitProductionController extends Controller
         }
   
 
-        return response()->json(["message"=>"Data saved successfully","status"=>'1'],200);
+        return response()->json(["message"=>"success_save_response","status"=>'1'],200);
     }
 
     public function update(Request $request, FruitProduction $fruitproduction)
     {
         $validatedData = $request->validate([
             'date' => 'required|string',
-            'section' => 'required|string',
-            'status' => 'required|string',
-            'cause' => 'required|string',
-            'deviation_type' => 'required|string',
+            'section_id' => 'required|integer',
+            'status' => 'required|integer',
+            'cause_id' => 'required|integer',
+            'deviation_type_id' => 'required|integer',
         ]);
         $user = $request->user();
         $validatedData['user_id'] = $user->id;
@@ -83,13 +83,13 @@ class FruitProductionController extends Controller
 
         $fruitproduction->update($validatedData);
 
-        return response()->json(["message"=>"Records updated successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_save_response","status"=>'1'],201);
     }
 
     public function destroy(FruitProduction $fruitproduction)
     {
         $fruitproduction->delete();
-        return response()->json(["message"=>"Resource deleted successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_delete_response","status"=>'1'],201);
     }
 
     public function processAllRelatedTableData()

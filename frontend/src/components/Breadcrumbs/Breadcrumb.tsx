@@ -63,7 +63,7 @@ const Breadcrumb = ({
                 <button
                   id="dropdownDatabase"
                   data-dropdown-toggle="dropdown-database"
-                  className="inline-flex items-center text-sm font-normal text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 dark:text-white text-cyan-800 dark:focus:ring-gray-700"
+                  className="inline-flex items-center text-sm font-normal text-center text-gray-900 rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:text-white text-cyan-800"
                 >
                   <svg
                     className="w-3 h-3 me-2 text-gray-800 dark:text-white"
@@ -82,7 +82,7 @@ const Breadcrumb = ({
                       d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"
                     />
                   </svg>
-                  View Chart
+                  {t("view_chart")}
                 </button>
               </NavLink>
             </div>
@@ -130,7 +130,7 @@ const Breadcrumb = ({
                   to={link.link && "/" + getUrlArray()[1] + link.link}
                   className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
                 >
-                  {link.title}
+                  {t(link.title)}
                 </NavLink>
               </div>
             </li>

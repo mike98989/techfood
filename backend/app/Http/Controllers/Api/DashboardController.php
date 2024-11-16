@@ -24,6 +24,7 @@ class DashboardController extends Controller
                 'fruitproduction' => $fruit_production=='true' ? $fruitProductionController->index($request):null,
                 'proteinlactosewater' => $protein_lactose_water=='true' ? $proteinLactosWaterController->index($request):null,
         ];
+
         return response()->json(['data'=>$data],200);
     }
 }

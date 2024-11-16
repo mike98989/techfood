@@ -63,7 +63,8 @@ const EditProteinLactoseWater = (props: any) => {
                 contentType: "application/json", //Content Type
                 authentication: user.token,
               })
-                .then((response: any) => {
+                .then((response_value: any) => {
+                  const response = JSON.parse(response_value);
                   setIsLoading(false);
                   if (response.status == "1") {
                     //setOpenModal(false);
@@ -106,7 +107,7 @@ const EditProteinLactoseWater = (props: any) => {
                   <input
                     type="text"
                     name="PO_number"
-                    value={formData.PO_number}
+                    defaultValue={formData.PO_number}
                     onChange={handleChange}
                     //onChange={(e) => setFormattedDate(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -119,7 +120,7 @@ const EditProteinLactoseWater = (props: any) => {
                   <input
                     type="date"
                     name="result_date"
-                    value={formData.result_date}
+                    defaultValue={formData.result_date}
                     onChange={handleChange}
                     //onChange={(e) => setFormattedDate(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -134,7 +135,7 @@ const EditProteinLactoseWater = (props: any) => {
                     type="number"
                     min="0"
                     name="protein_value"
-                    value={formData.protein_value}
+                    defaultValue={formData.protein_value}
                     onChange={handleChange}
                     //onChange={(e) => setFormattedDate(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -150,7 +151,7 @@ const EditProteinLactoseWater = (props: any) => {
                     <input
                       type="text"
                       name="batch_number"
-                      value={formData.batch_number}
+                      defaultValue={formData.batch_number}
                       onChange={handleChange}
                       //onChange={(e) => setFormattedDate(e.target.value)}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -163,7 +164,7 @@ const EditProteinLactoseWater = (props: any) => {
                     type="number"
                     min="0"
                     name="lactose_value"
-                    value={formData.lactose_value}
+                    defaultValue={formData.lactose_value}
                     onChange={handleChange}
                     //onChange={(e) => setFormattedDate(e.target.value)}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -178,7 +179,7 @@ const EditProteinLactoseWater = (props: any) => {
                     type="number"
                     min="0"
                     name="water_value"
-                    value={formData.water_value}
+                    defaultValue={formData.water_value}
                     onChange={handleChange}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />

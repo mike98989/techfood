@@ -8,9 +8,9 @@ import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 
-const ProteinLactoseWater = () => {
+const DrillSamples = () => {
   const { fetchApi } = httpRequest();
-  const [proteinLactosWaterData, setProteinLactosWaterData] = useState([]);
+  const [drillSamplesData, setDrillSamplesData] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { isLoading, setIsLoading, Spinner } = SpinnerObject();
   const { allRequest } = ReusableMethods();
@@ -23,14 +23,14 @@ const ProteinLactoseWater = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "labinputs", // End Point
+      action_url: "drillsamples", // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
       setIsLoading,
-      setReturnData: setProteinLactosWaterData,
+      setReturnData: setDrillSamplesData,
     });
   }, []);
 
@@ -47,22 +47,25 @@ const ProteinLactoseWater = () => {
                   #
                 </th>
                 <th className="py-2 px-2 font-medium text-black dark:text-white">
-                  PO
+                  {t("week")}
                 </th>
                 <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("date")}
+                  {t("slaughter_house")}
                 </th>
                 <th className="min-w-[150px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("batch_number")}
+                  {t("product")}
                 </th>
                 <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("protein_value")}
+                  {t("piece_date")}
                 </th>
                 <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("lactose_value")}
+                  {t("kind_of_animal")}
                 </th>
                 <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("water_value")}
+                  {t("aerobic")}
+                </th>
+                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                  {t("e_coli")}
                 </th>
                 <th className="py-2 px-2 font-medium text-black dark:text-white">
                   {t("actions")}
@@ -70,40 +73,45 @@ const ProteinLactoseWater = () => {
               </tr>
             </thead>
             <tbody>
-              {proteinLactosWaterData?.length > 0 &&
-                proteinLactosWaterData.map((input: any, key) => (
+              {drillSamplesData?.length > 0 &&
+                drillSamplesData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}
                     </td>
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
-                        {input.PO_number}
+                        {input.week}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.result_date}
+                        {input.slaughter_house}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.batch_number}
+                        {input.product}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.protein_value}
+                        {input.piece_date}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.lactose_value}
+                        {input.kind_of_animal}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.water_value}
+                        {input.aerobic}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-sm text-black dark:text-white">
+                        {input.e_coli}
                       </p>
                     </td>
 
@@ -159,8 +167,8 @@ const ProteinLactoseWater = () => {
                                     input.result_date +
                                     ", " +
                                     input.batch_number,
-                                  data: proteinLactosWaterData,
-                                  setData: setProteinLactosWaterData,
+                                  data: drillSamplesData,
+                                  setData: setDrillSamplesData,
                                 },
                               });
                           }}
@@ -196,7 +204,7 @@ const ProteinLactoseWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && proteinLactosWaterData?.length == 0 && (
+              {!isLoading && drillSamplesData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -207,7 +215,7 @@ const ProteinLactoseWater = () => {
                 </tr>
               )}
 
-              {isLoading && proteinLactosWaterData?.length == 0 && (
+              {isLoading && drillSamplesData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -225,4 +233,4 @@ const ProteinLactoseWater = () => {
   );
 };
 
-export default ProteinLactoseWater;
+export default DrillSamples;

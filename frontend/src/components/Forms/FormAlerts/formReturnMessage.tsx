@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface messageType {
   message: string;
@@ -6,6 +7,8 @@ interface messageType {
 }
 const formReturnMessage = () => {
   const [formMessage, setFormMessage] = useState<messageType>();
+  const { t } = useTranslation();
+
   const MessageBox = () => {
     return (
       <>
@@ -56,9 +59,7 @@ const formReturnMessage = () => {
             </svg>
 
             <span className="sr-only">Info</span>
-            <div>
-              <span className="font-medium">Ok!</span> {formMessage.message}
-            </div>
+            <div>{t(formMessage.message)}</div>
           </div>
         )}
       </>

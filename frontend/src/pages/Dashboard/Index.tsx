@@ -21,11 +21,11 @@ const Index: React.FC = () => {
   const user = useSelector((state: any) => state.user.value);
   const { t } = useTranslation();
 
-  const foodConstant = {
-    constants: 72.5,
-    approvedText: "Tillfredställande",
-    unApprovedText: "Åtgärder krävs",
-  };
+  // const foodConstant = {
+  //   constants: 72.5,
+  //   approvedText: "satisfactory",
+  //   unApprovedText: "actions_required",
+  // };
   // useEffect(() => {
   //   proteinLactoseWater();
   // }, []);
@@ -126,31 +126,28 @@ const Index: React.FC = () => {
 
       {/* <div className="mt-4 grid grid-cols-8 gap-2 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5"> */}
       <div className="w-full">
-        <div className="w-full flex flex-row mb-2">
-          <div className="w-3/5 mr-3">
+        <div className="w-full md:flex md:flex-row mb-2">
+          <div className="w-full md:w-3/5 mr-3 mb-2">
             <ProteinLactoseWaterChart chartData={proteinLactoseData} />
           </div>
           {/* <ProteinLactoseWaterChart2 /> */}
           {/* <ChartTwo /> */}
-          <div className="w-2/5">
-            <ProteinLactoseWaterThreshold
-              chartData={proteinLactoseData}
-              constant={foodConstant}
-            />
+          <div className="w-full md:w-3/5">
+            <ProteinLactoseWaterThreshold chartData={proteinLactoseData} />
           </div>
         </div>
-        <div className="w-full flex flex-row">
+        <div className="w-full md:flex md:flex-row">
           {fruitProductionData && (
             <>
-              <div className="w-2/6 mr-3">
+              <div className="w-full md:w-2/6 mr-3 mb-2">
                 <FoodProductionChart chartData={fruitProductionData} />
               </div>
-              <div className="w-2/6 mr-3">
+              {/* <div className="w-full md:w-2/6 mr-3 mb-2">
                 <FoodProductionLineChart chartData={fruitProductionData} />
-              </div>
+              </div> */}
             </>
           )}
-          <div className="w-2/6">
+          <div className="w-full md:w-4/6">
             <DeviationComplaintsPie chartData={deviationComplaintsData} />
           </div>
           {/* {deviationComplaintsData && (

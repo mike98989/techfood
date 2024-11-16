@@ -20,7 +20,7 @@ const Chart: React.FC = () => {
       <Breadcrumb
         links={[
           { title: pageTitle, link: "/" },
-          { title: "Chart", link: null },
+          { title: t("chart"), link: null },
         ]}
         showNewButton={true}
         pageTitle={pageTitle}

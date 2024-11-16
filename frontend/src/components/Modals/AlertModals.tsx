@@ -4,6 +4,7 @@ import SpinnerObject from "../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import { httpRequest } from "../../methods/Requests";
 import DynamicComponentLoader from "../Misc/DynamicComponent";
+import { useTranslation } from "react-i18next";
 
 interface modalQueryDataType {
   modalType: string;
@@ -24,6 +25,7 @@ const AlertModal = () => {
   const { allRequest } = ReusableMethods();
   const [returnData, setReturnData] = useState([]);
   const { fetchApi } = httpRequest();
+  const { t } = useTranslation();
 
   const ModalUIComponent = () => {
     return (
@@ -46,8 +48,8 @@ const AlertModal = () => {
             {modalQueryData.modalType == "delete" && (
               <div className="text-center">
                 <h3 className="mb-5 text-md italic font-normal text-gray-500 dark:text-gray-400">
-                  Are you sure you want to delete this record{" "}
-                  {modalQueryData.modalData.title + " "}?{" "}
+                  {t("delete_question")}{" "}
+                  {" " + JSON.stringify(modalQueryData.modalData.title) + " "}?{" "}
                 </h3>
 
                 <div className="flex justify-center gap-4">
@@ -61,7 +63,8 @@ const AlertModal = () => {
                         formData: null,
                         contentType: "application/json", //Content Type
                         authentication: modalQueryData.modalData.token,
-                      }).then((response: any) => {
+                      }).then((response_value: any) => {
+                        const response = JSON.parse(response_value);
                         setIsLoading(false);
                         if (response.status == "1") {
                           setOpenModal(false);
@@ -75,10 +78,10 @@ const AlertModal = () => {
                       });
                     }}
                   >
-                    <Spinner /> {"Yes, I'm sure"}
+                    <Spinner /> {t("yes_confirm")}
                   </Button>
                   <Button color="gray" onClick={() => setOpenModal(false)}>
-                    No, cancel
+                    {t("no_confirm")}
                   </Button>
                 </div>
               </div>

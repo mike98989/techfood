@@ -11,8 +11,8 @@ type Entry = {
   id: number;
   user_id: number;
   date: string;
-  cause: string;
-  section: string;
+  cause_id: string;
+  section_id: string;
   status: number;
 };
 
@@ -22,7 +22,8 @@ type SeriesData = {
 };
 
 const formatDataForChart = (
-  dataArray: Entry[]
+  dataArray: Entry[],
+  t: any
 ): { series: SeriesData[]; months: string[] } => {
   const data = dataArray.sort(
     (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -30,58 +31,60 @@ const formatDataForChart = (
   // console.log(data);
   const result: Record<string, Record<string, number>> = {};
   const monthsSet: Set<string> = new Set();
+  const currentYear = new Date().getFullYear();
+  const filtered = data.filter((data) => {
+    const neededDate = new Date(data.date);
+    return data && neededDate.getFullYear() == currentYear;
+  });
 
   // Loop through the data to collect occurrences and unique months
-  data.forEach((entry) => {
+  filtered.forEach((entry) => {
     const date = new Date(entry.date);
-    let yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-    //const dateToCheck = new Date(yearMonth);
-    //yearMonth = dateToCheck.toLocaleString("default", { month: "long" });
-    // Track unique months
-    monthsSet.add(yearMonth);
+    const month = date.toLocaleString("default", { month: "short" }); // "Nov" for November
+
+    monthsSet.add(month);
 
     // Initialize structure for each cause
-    if (!result[entry.cause]) {
-      result[entry.cause] = {};
+    if (!result[entry.cause.name_key]) {
+      result[entry.cause.name_key] = {};
     }
 
     // Increment the count for the cause in the specific month
-    if (!result[entry.cause][yearMonth]) {
-      result[entry.cause][yearMonth] = 0;
+    if (!result[entry.cause.name_key][month]) {
+      result[entry.cause.name_key][month] = 0;
     }
 
-    result[entry.cause][yearMonth]++;
+    result[entry.cause.name_key][month]++;
   });
 
   // Convert the Set of months to an array and sort it in ascending order
-  const sortedMonths: string[] = Array.from(monthsSet).sort();
+  const sortedMonths: string[] = Array.from(monthsSet);
   // Prepare the series array for the chart
   const series: any[] = Object.keys(result).map((cause) => {
     return {
-      name: cause,
+      name: t(cause),
       data: sortedMonths.map((month) => result[cause][month] || 0), // Fill in counts for each month
     };
   });
 
-  console.log("Series", series);
   return { series, months: sortedMonths };
 };
 
 const FoodPRoductionChart: React.FC<ChartProps> = ({ chartData }) => {
   const { t } = useTranslation();
-  useEffect(() => {
-    let value: any = [];
-    chartData.data && (value = formatDataForChart(chartData.data));
-    //setChartDataValues(value);
-    value.series && setState({ series: value.series });
-    value.months && setMonths(value.months);
-  }, [chartData]);
-
   const [months, setMonths] = useState([]);
   const [chartDataValus, setChartDataValues] = useState<any[]>([]);
   const [state, setState] = useState({
     series: [],
   });
+
+  useEffect(() => {
+    let value: any = [];
+    chartData.data && (value = formatDataForChart(chartData.data, t));
+    //setChartDataValues(value);
+    value.series && setState({ series: value.series });
+    value.months && setMonths(value.months);
+  }, [chartData]);
 
   const chartOptions = {
     chart: {
@@ -128,7 +131,9 @@ const FoodPRoductionChart: React.FC<ChartProps> = ({ chartData }) => {
             <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
           </span>
           <div className="w-full">
-            <p className=" text-cyan-900 font-thin">{t("fruit_production")}</p>
+            <p className=" text-cyan-900 dark:text-white font-thin">
+              {t("fruit_production")}
+            </p>
           </div>
         </div>
       </div>

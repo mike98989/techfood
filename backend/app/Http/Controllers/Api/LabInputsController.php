@@ -67,7 +67,7 @@ class LabInputsController extends Controller
         }
     });
 
-        return response()->json(["message"=>"Protein, Lactos, water data saved successfully","status"=>'1'],200);
+        return response()->json(["message"=>"success_save_protein_lactose_water","status"=>'1'],200);
     }
 
     /**

@@ -2,50 +2,61 @@ import { ApexOptions } from "apexcharts";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
+import { constant } from "../../../Utils/Constants";
+import Badge from "../../Badges/Badge";
 
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
 }
 
-const processData = (data: any[]) => {
-  let proteinValue: any[] = [];
-  let lactoseValue: any[] = [];
-  let waterValue: any[] = [];
-  let months: any[] = [];
-  for (let i = 0; i < data.length; i++) {
-    let year_month = data[i].result_date;
-    year_month = year_month.substring(0, 7);
-    //// If the month is not in the month array, then add a month
-    //!months.includes(year_month) && (months = [...months, year_month]);
+const processData = (dataArray: any[], t: any) => {
+  if (dataArray) {
+    //////Sort the Data first
+    const data = dataArray.sort(
+      (a: any, b: any) =>
+        new Date(a.result_date).getTime() - new Date(b.result_date).getTime()
+    );
+    let proteinValue: any[] = [];
+    let lactoseValue: any[] = [];
+    let waterValue: any[] = [];
+    let months: any[] = [];
+    for (let i = 0; i < data.length; i++) {
+      let year_month = data[i].result_date;
+      //year_month = year_month.substring(0, 7);
+      //// If the month is not in the month array, then add a month
+      !months.includes(year_month) && (months = [...months, year_month]);
 
-    data[i].protein_value != null &&
-      (proteinValue = [...proteinValue, data[i].protein_value]);
-    data[i].lactose_value != null &&
-      (lactoseValue = [...lactoseValue, data[i].lactose_value]);
-    data[i].water_value != null &&
-      (waterValue = [...waterValue, data[i].water_value]);
+      data[i].protein_value != null &&
+        (proteinValue = [...proteinValue, data[i].protein_value]);
+      data[i].lactose_value != null &&
+        (lactoseValue = [...lactoseValue, data[i].lactose_value]);
+      data[i].water_value != null &&
+        (waterValue = [...waterValue, data[i].water_value]);
+    }
+    let processedData: any[] = [];
+    processedData = [
+      { name: t("protein"), data: proteinValue },
+      { name: t("lactose"), data: lactoseValue },
+      { name: t("water"), data: waterValue },
+    ];
+    //   processedData.protein = proteinValue;
+    //   processedData.lactose = lactoseValue;
+    //   processedData.water = waterValue;
+
+    return [processedData, months];
   }
-  let processedData: any[] = [];
-  processedData = [
-    { name: "protein", data: proteinValue },
-    { name: "lactose", data: lactoseValue },
-    { name: "water", data: waterValue },
-  ];
-  //   processedData.protein = proteinValue;
-  //   processedData.lactose = lactoseValue;
-  //   processedData.water = waterValue;
-
-  return [processedData];
 };
 
 const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
+  const [months, setMonths] = useState([]);
   useEffect(() => {
     let value: any[] = [];
-    chartData.data && (value = processData(chartData.data));
+    chartData.data && (value = processData(chartData.data, t));
     value[0] && (setState({ series: value[0] }), setMonths(value[1]));
+    //console.log("Months", value[1]);
     setMonths(value[1]);
   }, [chartData]);
-  const [months, setMonths] = useState([]);
+
   const { t } = useTranslation();
   const [state, setState] = useState({
     series: [],
@@ -68,24 +79,77 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
       width: 2, // Reducing the line thickness to 2px
     },
 
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"], // alternating colors
-        opacity: 0.5,
-      },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.proteinConstantLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("protein") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.proteinConstantLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+        {
+          y: constant.lactoseConstantLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("lactose") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.lactoseConstantLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+        {
+          y: constant.waterConstantLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.3, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("water") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.waterConstantLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     xaxis: {
-      //   categories: [
-      //     "Jan",
-      //     "Feb",
-      //     "Mar",
-      //     "Apr",
-      //     "May",
-      //     "Jun",
-      //     "Jul",
-      //     "Aug",
-      //     "Sep",
-      //   ], // X-axis labels
       categories: months,
       labels: {
         show: false, // Hides the X-axis labels
@@ -93,12 +157,12 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
     },
   };
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+  // const handleReset = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //   }));
+  // };
+  // handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-4">
@@ -109,7 +173,7 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
             </span>
             <div className="w-full">
-              <p className=" text-cyan-900 font-thin">
+              <p className=" text-cyan-900 dark:text-white font-thin">
                 {t("protein_lactose_water")}
               </p>
             </div>
@@ -119,12 +183,18 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
 
       <div>
         <div id="chartOne" className="-ml-5">
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="line"
-            height={300}
-          />
+          {chartData && chartData.data?.length > 0 ? (
+            <ReactApexChart
+              options={options}
+              series={state.series}
+              type="line"
+              height={300}
+            />
+          ) : (
+            <div className="flex justify-center pt-3">
+              <Badge type="danger" value={t("no_record_found")} />
+            </div>
+          )}
         </div>
       </div>
     </div>

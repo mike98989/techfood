@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\GenericController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -39,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('guest')->group(function () {
+
+    Route::get('/translations', [GenericController::class, 'index'])->name('translations');
     Route::post('/auth/signin', [AuthController::class, 'signin'])->name('user.login');
     Route::post('/auth/signup', [UserController::class, 'store'])->name('user.store');
     Route::post('/auth/wordpress_signin', [WordPressAuthController::class, 'signin'])->name('user.wordpress_login');
@@ -78,7 +81,22 @@ Route::middleware('guest')->group(function () {
         echo 'ok';
     });
 
-    Route::get('/clear', function() {
+    Route::get('migrate', function (){
+        \Illuminate\Support\Facades\Artisan::call('migrate');
+        echo 'migrated';
+    });
+
+    Route::get('fresh-migrate-seed', function (){
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed');
+        echo 'migrated and seeded';
+    });
+    
+    Route::get('seed', function (){
+        \Illuminate\Support\Facades\Artisan::call('db:seed');
+        echo 'db seeded';
+    });
+
+    Route::get('clear', function() {
 
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
@@ -86,6 +104,14 @@ Route::middleware('guest')->group(function () {
         Artisan::call('view:clear');
      
         return "Cleared!";
+     
+     });
+
+
+     Route::get('/seed', function() {
+
+        Artisan::call('db:seed');     
+        return "Seeded!";
      
      });
     

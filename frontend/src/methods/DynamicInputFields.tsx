@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { httpRequest } from "./Requests";
+import { constant } from "../Utils/Constants";
 
 const { fetchApi } = httpRequest();
 
@@ -19,6 +20,15 @@ interface PONumber {
 interface compute {
   countValid: number;
   countInValid: number;
+  countProteinValid: number;
+  countProteinInvalid: number;
+  countLactoseValid: number;
+  countLactoseInvalid: number;
+  countWaterValid: number;
+  countWaterInvalid: number;
+  totalProteinCount: number;
+  totalLactoseCount: number;
+  totalWaterCount: number;
   totalCount: number;
 }
 /// Dynamic input field for protein, lactose and water content
@@ -28,6 +38,15 @@ export const DynamicInputFields = () => {
   const [computeValues, setComputValues] = useState<compute>({
     countValid: 0,
     countInValid: 0,
+    countProteinValid: 0,
+    countProteinInvalid: 0,
+    countLactoseValid: 0,
+    countLactoseInvalid: 0,
+    countWaterValid: 0,
+    countWaterInvalid: 0,
+    totalProteinCount: 0,
+    totalLactoseCount: 0,
+    totalWaterCount: 0,
     totalCount: 0,
   });
   const [proteinChartValues, setProteinChartValues] = useState({});
@@ -107,6 +126,7 @@ export const DynamicInputFields = () => {
       } else {
         updatedPoNumbers[poIndex][field] = value; // Update PO Number field
       }
+      console.log("updated", updatedPoNumbers);
       return updatedPoNumbers;
     });
   };
@@ -129,36 +149,58 @@ export const DynamicInputFields = () => {
   //   setComputValues(resultCount);
   // };
 
-  const handleCompute = (constant: any) => {
-    const resultCount = { countValid: 0, countInValid: 0, totalCount: 0 };
+  const handleCompute = () => {
+    const resultCount = {
+      countValid: 0,
+      countInValid: 0,
+      countProteinValid: 0,
+      countProteinInvalid: 0,
+      countLactoseValid: 0,
+      countLactoseInvalid: 0,
+      countWaterValid: 0,
+      countWaterInvalid: 0,
+      totalProteinCount: 0,
+      totalLactoseCount: 0,
+      totalWaterCount: 0,
+      totalCount: 0,
+    };
     const inputedValues = poNumbers;
     inputedValues.map((po, poIndex) => {
       po.batches.map((batch, index) => {
         //// Protein
         if (batch.proteinValue != "") {
           resultCount.totalCount++;
-          if (parseInt(batch.proteinValue) > constant.constants) {
+          resultCount.totalProteinCount++;
+          if (parseInt(batch.proteinValue) > constant.proteinConstantLimit) {
             resultCount.countValid++;
+            resultCount.countProteinValid++;
           } else {
             resultCount.countInValid++;
+            resultCount.countProteinInvalid++;
           }
         }
         //// Lactose
         if (batch.lactoseValue != "") {
           resultCount.totalCount++;
-          if (parseInt(batch.lactoseValue) > constant.constants) {
+          resultCount.totalLactoseCount++;
+          if (parseInt(batch.lactoseValue) > constant.lactoseConstantLimit) {
             resultCount.countValid++;
+            resultCount.countLactoseValid++;
           } else {
             resultCount.countInValid++;
+            resultCount.countLactoseInvalid++;
           }
         }
         //// Water
         if (batch.waterValue != "") {
           resultCount.totalCount++;
-          if (parseInt(batch.waterValue) > constant.constants) {
+          resultCount.totalWaterCount++;
+          if (parseInt(batch.waterValue) > constant.waterConstantLimit) {
             resultCount.countValid++;
+            resultCount.countWaterValid++;
           } else {
             resultCount.countInValid++;
+            resultCount.countWaterInvalid++;
           }
         }
       });
@@ -187,7 +229,7 @@ export const DynamicInputFields = () => {
     return formatted;
   };
 
-  const computeProteinChart = (constant: any) => {
+  const computeProteinChart = () => {
     const resultMap = new Map();
     // Iterate through the parent array `data` and its nested `batches`
     poNumbers.forEach(({ batches }) => {
@@ -197,7 +239,7 @@ export const DynamicInputFields = () => {
         }
         const dateEntry = resultMap.get(derivedDate);
 
-        if (proteinValue > constant.constants) {
+        if (proteinValue > constant.proteinConstantLimit) {
           dateEntry.good += 1;
         } else {
           dateEntry.bad += 1;
@@ -239,10 +281,10 @@ export const DynamicInputFieldsFruitProduction = () => {
     {
       date: "",
       month: "",
-      section: "",
+      section_id: "",
       status: "",
-      cause: "",
-      deviation_type: "",
+      cause_id: "",
+      deviation_type_id: "",
     },
   ]);
 
@@ -252,10 +294,10 @@ export const DynamicInputFieldsFruitProduction = () => {
       {
         date: "",
         month: "",
-        section: "",
+        section_id: "",
         status: "",
-        cause: "",
-        deviation_type: "",
+        cause_id: "",
+        deviation_type_id: "",
       },
     ]);
   };

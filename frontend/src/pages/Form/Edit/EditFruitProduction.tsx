@@ -4,6 +4,7 @@ import SpinnerObject from "../../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import formReturnMessage from "../../../components/Forms/FormAlerts/formReturnMessage";
 import { httpRequest } from "../../../methods/Requests";
+import { useTranslation } from "react-i18next";
 
 const EditFrutProduction = (props: any) => {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -15,12 +16,13 @@ const EditFrutProduction = (props: any) => {
   const { MessageBox, setFormMessage } = formReturnMessage();
   const [openModal, setOpenModal] = useState(false);
   const { fetchApi } = httpRequest();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     date: "",
-    section: "",
+    section_id: "",
     status: "",
-    cause: "",
-    deviation_type: "",
+    cause_id: "",
+    deviation_type_id: "",
   });
 
   useEffect(() => {
@@ -43,10 +45,10 @@ const EditFrutProduction = (props: any) => {
     ////// Set Default form data
     setFormData({
       date: new Date(value.date).toISOString().split("T")[0], // Format date for input
-      section: value.section,
+      section_id: value.section_id,
       status: value.status,
-      cause: value.cause,
-      deviation_type: value.deviation_type,
+      cause_id: value.cause_id,
+      deviation_type_id: value.deviation_type_id,
     });
   }, []);
 
@@ -65,7 +67,7 @@ const EditFrutProduction = (props: any) => {
         <div className="w-full">
           <div className="border-b border-stroke py-2 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Update Fruit Production Values
+              {t("update")} {t("fruit_production")} {t("values")}
             </h3>
           </div>
           <MessageBox />
@@ -80,7 +82,8 @@ const EditFrutProduction = (props: any) => {
                 contentType: "application/json", //Content Type
                 authentication: user.token,
               })
-                .then((response: any) => {
+                .then((response_value: any) => {
+                  const response = JSON.parse(response_value);
                   setIsLoading(false);
                   if (response.status == "1") {
                     //setOpenModal(false);
@@ -123,7 +126,7 @@ const EditFrutProduction = (props: any) => {
               <div className="w-1/2 xl:w-1/2">
                 <div className="w-full">
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Date
+                    {t("date")}
                   </label>
                   <input
                     type="date"
@@ -137,28 +140,27 @@ const EditFrutProduction = (props: any) => {
 
                 <div className="w-full">
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Section
+                    {t("section")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    value={value.section}
+                    value={formData.section_id}
                     required
-                    name="section"
+                    name="section_id"
                     onChange={handleChange}
                   >
                     <option value="">--Select--</option>
-                    {returnDataArray.fruits &&
-                      returnDataArray.fruits.original.data.map(
-                        (value: any, key) => (
-                          <option key={key} value={value.name}>
-                            {value.name}
-                          </option>
-                        )
-                      )}
+                    {returnDataArray.fruits?.original.data.map(
+                      (value: any, key) => (
+                        <option key={key} value={value.id}>
+                          {t(value.name_key)}
+                        </option>
+                      )
+                    )}
                   </select>
 
                   <label className="mb-1 text-sm block text-black dark:text-white">
-                    Status
+                    {t("status")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -172,7 +174,7 @@ const EditFrutProduction = (props: any) => {
                       returnDataArray.statuses.original.data.map(
                         (value: any, key: any) => (
                           <option key={key} value={value.id}>
-                            {value.name}
+                            {t(value.name_key)}
                           </option>
                         )
                       )}
@@ -182,21 +184,21 @@ const EditFrutProduction = (props: any) => {
               <div className="w-1/2">
                 <div className="w-full">
                   <label className="mb-1 text-sm text-black dark:text-white">
-                    Cause
+                    {t("cause")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     required
-                    value={formData.cause}
-                    name="cause"
+                    value={formData.cause_id}
+                    name="cause_id"
                     onChange={handleChange}
                   >
                     <option value="">--Select--</option>
                     {returnDataArray.causes &&
                       returnDataArray.causes.original.data.map(
                         (value: any, key: any) => (
-                          <option key={key} value={value.cause}>
-                            {value.cause}
+                          <option key={key} value={value.id}>
+                            {t(value.name_key)}
                           </option>
                         )
                       )}
@@ -205,24 +207,23 @@ const EditFrutProduction = (props: any) => {
 
                 <div className="w-full">
                   <label className="mb-1 text-sm text-black dark:text-white">
-                    Deviation Type
+                    {t("deviation_type")}
                   </label>
                   <select
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    value={formData.deviation_type}
+                    value={formData.deviation_type_id}
                     onChange={handleChange}
                     required
-                    name="deviation_type"
+                    name="deviation_type_id"
                   >
                     <option value="">--Select--</option>
-                    {returnDataArray.deviation_types &&
-                      returnDataArray.deviation_types.original.data.map(
-                        (value: any, key: any) => (
-                          <option key={key} value={value.type}>
-                            {value.type}
-                          </option>
-                        )
-                      )}
+                    {returnDataArray.deviation_types?.original.data.map(
+                      (value: any, key: any) => (
+                        <option key={key} value={value.id}>
+                          {t(value.name_key)}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
               </div>
@@ -231,7 +232,7 @@ const EditFrutProduction = (props: any) => {
               type="submit"
               className="flex w-full justify-center rounded-xl  bg-cyan-800 p-2 font-medium text-gray hover:bg-opacity-90"
             >
-              Save Data
+              {t("save")}
             </button>
           </form>
         </div>

@@ -51,6 +51,7 @@ export const ReusableMethods = () => {
     })
       .then((response_value: any) => {
         const response = JSON.parse(response_value);
+        //console.log("response is", response);
         setIsLoading(false);
         if (response.status == "1") {
           localStorage.setItem("user_data", JSON.stringify(response.user));
@@ -58,23 +59,26 @@ export const ReusableMethods = () => {
           dispatch(setUser({ data: response.user, token: response.token }));
           navigate("/"); // or any other route
         } else {
+          const error_value = action_url.includes("wordpress_signin")
+            ? response.error
+            : response.message;
           setReturnData({
-            message: action_url.includes("wordpress_signin")
-              ? response.error
-              : response.message,
+            message: error_value,
             status: "error",
           });
         }
       })
       .catch((error) => {
-        console.log("error is", error);
-        setIsLoading(false);
-        const message = JSON.parse(error[0]);
-        //setFormErrors(JSON.parse(message.message));
-        setReturnData({
-          message: JSON.parse(message.message),
-          status: "error",
-        });
+        if (error) {
+          console.log("error is", error);
+          setIsLoading(false);
+          const message = JSON.parse(error[0]);
+          //setFormErrors(JSON.parse(message.message));
+          setReturnData({
+            message: JSON.parse(message.message),
+            status: "error",
+          });
+        }
       });
   };
 
@@ -113,13 +117,18 @@ export const ReusableMethods = () => {
       contentType, // Content Type
       authentication, // Authentication
     })
-      .then((response: any) => {
+      .then((response_value: any) => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        const response = JSON.parse(response_value);
         setIsLoading(false);
         //console.log("response", response);
         setReturnData({
           message: response.message,
           status: "success",
         });
+        if (response.status == "1") {
+          document.getElementById(formId)?.reset();
+        }
       })
       .catch((error) => {
         setIsLoading(false);
@@ -158,9 +167,10 @@ export const ReusableMethods = () => {
       contentType, // Content Type
       authentication, // Authentication
     })
-      .then((response: any) => {
+      .then((response_data: any) => {
         setIsLoading(false);
-        //console.log("response is here", response);
+        const response = JSON.parse(response_data);
+        //console.log("response is here o", response.data);
         setReturnData(response.data);
       })
       .catch((error) => {

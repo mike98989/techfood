@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fruit_production_causes', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->string("name_key");
             $table->integer("status")->default('1');
             $table->timestamps();
         });

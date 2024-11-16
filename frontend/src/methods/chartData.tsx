@@ -27,7 +27,8 @@ const chartData = ({
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
-    }).then((response: any) => {
+    }).then((response_value: any) => {
+      const response = JSON.parse(response_value);
       fruitProductionChart &&
         setFruitProductionData(response.data.fruitproduction.original);
       proteinLactoseChart &&

@@ -13,6 +13,7 @@ class AuthController extends Controller
 {
     public function signin(Request $request)
     {
+        $request['email'] = $request['username'];
         // Validate the incoming request
         $request->validate([
             'email' => 'required|email',
@@ -20,6 +21,7 @@ class AuthController extends Controller
         ]);
 
         // Find the user by email
+
         $user = User::where('email', $request->email)->first();
 
         // Check if user exists and password is correct

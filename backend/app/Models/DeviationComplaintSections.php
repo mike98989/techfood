@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class DeviationComplaintSections extends Model
 {
     use HasFactory;
-    protected $table="deviation_sections";
+    //protected $table="deviation_complaint_sections";
+
+    // protected static function newFactory()
+    // {
+    //     return \Database\Factories\DeviationComplaintSectionsFactory::new();
+    // }
 }

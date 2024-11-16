@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class DeviationComplaintRiskCategories extends Model
 {
     use HasFactory;
-    protected $table="risk_categories";
+    //protected $table="risk_categories";
 }

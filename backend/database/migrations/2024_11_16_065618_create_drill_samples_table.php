@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('deviation_complaint_sections', function (Blueprint $table) {
+        Schema::create('drill_samples', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("name_key");
-            $table->integer("status")->default('1');
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('deviation_complaint_sections');
+        Schema::dropIfExists('drill_samples');
     }
 };

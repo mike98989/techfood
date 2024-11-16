@@ -18,7 +18,7 @@ class DeviationComplaintController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $data =  DeviationComplaint::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
+        $data =  DeviationComplaint::where('user_id',$user->id)->with('deviation')->with('section')->with('code')->with('location')->with('risk_category')->with('code')->with('product')->orderBy('created_at', 'desc')->get();
         return response()->json(['data'=>$data],200);
     }
 
@@ -80,15 +80,15 @@ class DeviationComplaintController extends Controller
             'title' => 'required',
             'batch_no'=>'required',
             'occurance_date' => 'required|date',
-            'deviation_type' => 'required|string',
-            'deviation_code' => 'required|string',
-            'risk_category' => 'required|string',
-            'product' => 'required|string',
+            'deviation_type_id' => 'required|integer',
+            'deviation_code_id' => 'required|integer',
+            'risk_category_id' => 'required|integer',
+            'product_id' => 'required|integer',
         ]);
         $user = $request->user();
         $request['user_id'] = $user->id;
         DeviationComplaint::create($request->all());
-        return response()->json(["message"=>"Deviation Complaint saved successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_save_response","status"=>'1'],201);
     }
 
 
@@ -99,21 +99,19 @@ class DeviationComplaintController extends Controller
             'title' => 'required',
             'batch_no'=>'required',
             'occurance_date' => 'required|date',
-            'deviation_type' => 'required|string',
-            'deviation_code' => 'required|string',
-            'risk_category' => 'required|string',
-            'product' => 'required|string',
-            'location'=>'required|string',
-            'section'=>'required|string',
-            'deviation_description'=>'required|string',
-            'suggested_correction'=>'required|string',
+            'deviation_type_id' => 'required|integer',
+            'deviation_code_id' => 'required|integer',
+            'risk_category_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'location_id'=>'required|integer',
+            'section_id'=>'required|integer',
         ]);
         $user = $request->user();
         $validatedData['user_id'] = $user->id;
 
         $deviationcomplaint->update($validatedData);
 
-        return response()->json(["message"=>"Records updated successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_save_response","status"=>'1'],201);
     }
 
     
@@ -136,6 +134,6 @@ class DeviationComplaintController extends Controller
     public function destroy(DeviationComplaint $deviationcomplaint)
     {
         $deviationcomplaint->delete();
-        return response()->json(["message"=>"Resource deleted successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_delete_response","status"=>'1'],201);
     }
 }

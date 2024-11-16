@@ -47,29 +47,29 @@ const DeviationComplaintsWater = () => {
                   #
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Header
+                  {t("header")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
                   {t("date")}
                 </th>
 
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Deviation Type/Code
+                  {t("deviation_type")}/{t("code")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Product
+                  {t("product")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Article Number
+                  {t("article")} {t("number")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Batch Number
+                  {t("batch_number")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Location
+                  {t("location") + "/" + t("line")}
                 </th>
                 <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
-                  Line
+                  {t("section")}
                 </th>
                 <th className="py-2 px-2 font-medium text-black text-sm dark:text-white">
                   {t("actions")}
@@ -77,8 +77,7 @@ const DeviationComplaintsWater = () => {
               </tr>
             </thead>
             <tbody>
-              {deviationComplaintsData &&
-                deviationComplaintsData.length > 0 &&
+              {deviationComplaintsData?.length > 0 &&
                 deviationComplaintsData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
@@ -87,7 +86,7 @@ const DeviationComplaintsWater = () => {
 
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
-                        {input.reference_number + " " + input.title}
+                        {input.reference_number + " - " + input.title}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
@@ -98,13 +97,13 @@ const DeviationComplaintsWater = () => {
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.deviation_type} / {input.deviation_code}
+                        {t(input.deviation.name_key)} / {t(input.code.name_key)}
                       </p>
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.product}
+                        {t(input.product.name_key)}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
@@ -119,12 +118,12 @@ const DeviationComplaintsWater = () => {
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.location}
+                        {t(input.location.name_key)}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
-                        {input.line}
+                        {t(input.section.name_key)}
                       </p>
                     </td>
 
@@ -213,22 +212,22 @@ const DeviationComplaintsWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && deviationComplaintsData.length == 0 && (
+              {!isLoading && deviationComplaintsData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={8}
+                    colSpan={10}
                   >
-                    No record found! Please create record.
+                    {t("no_record_found")}
                   </td>
                 </tr>
               )}
 
-              {isLoading && deviationComplaintsData.length == 0 && (
+              {isLoading && deviationComplaintsData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={8}
+                    colSpan={10}
                   >
                     <Spinner /> Loading...
                   </td>

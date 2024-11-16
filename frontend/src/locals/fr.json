@@ -1,5 +1,13 @@
 {
   "greeting": "Bienvenue",
+  "sign_in_title": "Connectez-vous à Techfood",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "signin": "Se connecter",
+  "username_placeholder": "Entrez votre nom d'utilisateur",
+  "password_placeholder": "Entrez votre mot de passe",
+  "catch_phrase": "Optimisez votre laboratoire :",
+  "catch_sentence": "Numériser les résultats alimentaires avec précision !",
   "add_new": "Ajouter Nouveau",
   "language": "Langue",
   "dashboard": "Tableau de Bord",
@@ -28,5 +36,11 @@
   "water_value": "Valeur d'Eau",
   "actions": "Actions",
   "heading_protein_lactose_water": "Numérisation et suivi des résultats d'analyse de la teneur en protéines et en eau de la production",
-  "heading_fruit_production": "Numérisation de la production de fruits"
+  "heading_fruit_production": "Numérisation de la production de fruits",
+  "heading_deviation_complaints": "Numérisation et suivi des réclamations d'écarts",
+  "english": "Anglais",
+  "swedish": "Suédois",
+  "french": "Français",
+  "spanish": "Espagnol",
+  "portuguese": "Portugais"
 }

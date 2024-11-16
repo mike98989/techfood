@@ -1,5 +1,13 @@
 {
   "greeting": "Welcome back",
+  "sign_in_title": "Sign In to Techfood",
+  "username": "Username",
+  "password": "Password",
+  "signin": "Sign in",
+  "username_placeholder": "Enter your username",
+  "password_placeholder": "Enter your password",
+  "catch_phrase": "Streamline Your Lab:",
+  "catch_sentence": "Digitizing Food Results with Precision!",
   "add_new": "Add New",
   "language": "Language",
   "dashboard": "Dashboard",
@@ -29,5 +37,26 @@
   "actions": "Actions",
   "heading_protein_lactose_water": "Digitization and follow-up of protein and water content analysis results from production",
   "heading_fruit_production": "Digitization of fruit production",
-  "heading_deviation_complaints": "Digitization and follow-up of deviations complaints"
+  "heading_deviation_complaints": "Digitization and follow-up of deviations complaints",
+  "english": "English",
+  "swedish": "Swedish",
+  "french": "French",
+  "spanish": "Spanish",
+  "portuguese": "Portuguese",
+
+  "food_production_deviation_key": {
+    "physical": "Physical",
+    "microbiological": "Microbiological",
+    "allergens": "Allergens",
+    "chemical": "Chemical"
+  },
+  "deviation_complaint_section_key": {
+    "lab": "LAB",
+    "the_warehouse": "The Ware House",
+    "dry_side": "Dry Side",
+    "wet_side": "Wet side",
+    "workshop": "Workshop",
+    "out": "Out",
+    "miscellanous": "Miscellaneous"
+  }
 }

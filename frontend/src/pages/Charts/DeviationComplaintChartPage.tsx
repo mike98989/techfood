@@ -14,13 +14,13 @@ const Chart: React.FC = () => {
     });
 
   const { t } = useTranslation();
-  const pageTitle = t("deviation_complaint");
+  const pageTitle = t("deviation_complaints");
   return (
     <>
       <Breadcrumb
         links={[
           { title: pageTitle, link: "/" },
-          { title: "Chart", link: null },
+          { title: t("chart"), link: null },
         ]}
         showNewButton={true}
         pageTitle={pageTitle}

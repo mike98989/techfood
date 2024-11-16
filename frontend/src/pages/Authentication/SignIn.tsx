@@ -6,10 +6,14 @@ import LoginSvgImage from "../../components/Misc/LoginSvgImage";
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import SpinnerObject from "../../components/Spinner/Spinner";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
+import LanguageDropDown from "../../components/Dropdowns/LanguageDropDown";
+import { useTranslation } from "react-i18next";
+
 const SignIn: React.FC = () => {
-  const { userLogin, formErrors } = ReusableMethods();
+  const { userLogin } = ReusableMethods();
   const { setIsLoading, Spinner } = SpinnerObject();
   const { MessageBox, setFormMessage } = formReturnMessage();
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -23,8 +27,7 @@ const SignIn: React.FC = () => {
               </Link>
 
               <p className="2xl:px-20">
-                <b>Streamline Your Lab:</b> Digitizing Food Results with
-                Precision!{" "}
+                <b>{t("catch_phrase")}</b> {t("catch_sentence")}
               </p>
 
               <span className="mt-15 inline-block">
@@ -34,6 +37,9 @@ const SignIn: React.FC = () => {
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+            <div className="w-full flex right-0 justify-end mt-5 pr-7">
+              <LanguageDropDown />
+            </div>
             <div className="w-full p-8 sm:p-12.5 xl:p-10.5 justify-center flex flex-col">
               <img
                 className="block sm:hidden w-40 mb-5 self-center"
@@ -41,7 +47,7 @@ const SignIn: React.FC = () => {
                 alt="Logo"
               />
               <h2 className="mb-3 text-lg font-bold text-cyan-800 dark:text-white sm:text-title-xl2 md:text-left xs:text-center text-center">
-                Sign In to Techfood
+                {t("sign_in_title")}
               </h2>
               <MessageBox />
               <form
@@ -51,7 +57,7 @@ const SignIn: React.FC = () => {
                   //event.preventDefault();
                   userLogin({
                     event,
-                    action_url: "auth/wordpress_signin", // End Point
+                    action_url: "auth/signin", // End Point
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     formData: "", ///Form Data is empty because I used the form ID to grab the data instead
@@ -64,14 +70,14 @@ const SignIn: React.FC = () => {
               >
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Username
+                    {t("username")}
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="username"
                       required
-                      placeholder="Enter your username"
+                      placeholder={t("username_placeholder")}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
 
@@ -97,14 +103,14 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                    {t("password")}
                   </label>
                   <div className="relative">
                     <input
                       type="password"
                       name="password"
                       required
-                      placeholder="Enter your password"
+                      placeholder={t("password_placeholder")}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
 
@@ -138,7 +144,7 @@ const SignIn: React.FC = () => {
                     type="submit"
                     className="w-full cursor-pointer rounded-lg bg-cyan-700 p-4 text-white transition hover:bg-opacity-90"
                   >
-                    <Spinner /> Sign in
+                    <Spinner /> {t("signin")}
                   </button>
                 </div>
 
