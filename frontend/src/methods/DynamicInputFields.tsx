@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { httpRequest } from "./Requests";
 import { constant } from "../Utils/Constants";
+import DrillSamples from "../pages/DrillSamples";
 
 const { fetchApi } = httpRequest();
 
@@ -93,15 +94,28 @@ export const DynamicInputFields = () => {
   const handleRemoveBatch = ({
     poIndex,
     batchIndex,
+    batchCount,
   }: {
     poIndex: number;
     batchIndex: number;
+    batchCount: number;
   }) => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
-      updatedPoNumbers[poIndex].batches.splice(batchIndex, 1);
+      ///////Check if it is the last batch else delete both the po index
+      if (batchCount != 1) {
+        updatedPoNumbers[poIndex].batches.splice(batchIndex, 1);
+      } else {
+        updatedPoNumbers.splice(poIndex, 1);
+      }
       return updatedPoNumbers;
     });
+
+    // setFruitProduction((prev) => {
+    //   const updatedValues = [...prev];
+    //   updatedValues.splice(index, 1);
+    //   return updatedValues;
+    // });
   };
 
   const handleInputChange = ({
@@ -171,7 +185,7 @@ export const DynamicInputFields = () => {
         if (batch.proteinValue != "") {
           resultCount.totalCount++;
           resultCount.totalProteinCount++;
-          if (parseInt(batch.proteinValue) > constant.proteinConstantLimit) {
+          if (parseFloat(batch.proteinValue) > constant.proteinConstantLimit) {
             resultCount.countValid++;
             resultCount.countProteinValid++;
           } else {
@@ -183,7 +197,7 @@ export const DynamicInputFields = () => {
         if (batch.lactoseValue != "") {
           resultCount.totalCount++;
           resultCount.totalLactoseCount++;
-          if (parseInt(batch.lactoseValue) > constant.lactoseConstantLimit) {
+          if (parseFloat(batch.lactoseValue) > constant.lactoseConstantLimit) {
             resultCount.countValid++;
             resultCount.countLactoseValid++;
           } else {
@@ -195,7 +209,7 @@ export const DynamicInputFields = () => {
         if (batch.waterValue != "") {
           resultCount.totalCount++;
           resultCount.totalWaterCount++;
-          if (parseInt(batch.waterValue) > constant.waterConstantLimit) {
+          if (parseFloat(batch.waterValue) > constant.waterConstantLimit) {
             resultCount.countValid++;
             resultCount.countWaterValid++;
           } else {
@@ -332,5 +346,262 @@ export const DynamicInputFieldsFruitProduction = () => {
     handleAddFruitProduction,
     handleInputChange,
     handleRemoveRow,
+  };
+};
+
+export const DynamicInputFieldsDrillSamples = () => {
+  const initialState = {
+    week: "",
+    slaughter_number: "",
+    slaughter_house: "",
+    product_id: "",
+    slaughter_date: "",
+    pieces_date: "",
+    animal_id: "",
+    aerobic: "",
+    e_coli: "",
+  };
+
+  const [drillSamples, setDrillSamples] = useState<any[]>([]);
+  const initialComputeValues = {
+    countValid: 0,
+    countInValid: 0,
+    countAerobicValid: 0,
+    countAerobicInvalid: 0,
+    countEnterobactaValid: 0,
+    countEnterobactaInvalid: 0,
+    totalAerobicCount: 0,
+    totalEnterobactaCount: 0,
+    totalCount: 0,
+  };
+  const [computeValues, setComputValues] = useState<any>(initialComputeValues);
+
+  const handleAddDrillsSample = () => {
+    setDrillSamples((prev) => [...prev, initialState]);
+  };
+
+  const handleInputChange = ({
+    index,
+    field,
+    value,
+  }: {
+    index: number;
+    field: any;
+    value: String;
+  }) => {
+    setDrillSamples((prev) => {
+      const updatedValues = [...prev];
+      updatedValues[index][field] = value; // Update PO Number field
+
+      return updatedValues;
+    });
+  };
+
+  const handleRemoveRow = ({ index }: { index: number }) => {
+    alert(index);
+    setDrillSamples((prev) => {
+      const updatedValues = [...prev];
+      updatedValues.splice(index, 1);
+      return updatedValues;
+    });
+  };
+
+  const clearStateData = () => {
+    setDrillSamples([initialState]);
+  };
+
+  const handleCompute = () => {
+    const inputedValues = drillSamples;
+    //const initValues = initialComputeValues;
+    const resultCount = {
+      countValid: 0,
+      countInValid: 0,
+      countAerobicValid: 0,
+      countAerobicInvalid: 0,
+      countEnterobactaValid: 0,
+      countEnterobactaInvalid: 0,
+      totalAerobicCount: 0,
+      totalEnterobactaCount: 0,
+      totalCount: 0,
+    };
+    console.log("initialValues", resultCount);
+    inputedValues.map((drill, index) => {
+      //// Aerobic
+      if (drill.aerobic != "") {
+        resultCount.totalCount++;
+        resultCount.totalAerobicCount++;
+        if (parseFloat(drill.aerobic) < constant.aerobicConstantLimit) {
+          resultCount.countValid++;
+          resultCount.countAerobicValid++;
+        } else {
+          resultCount.countInValid++;
+          resultCount.countAerobicInvalid++;
+        }
+      }
+      //// Enterobacta
+      if (drill.enterobacta != "") {
+        resultCount.totalCount++;
+        resultCount.totalEnterobactaCount++;
+        if (parseFloat(drill.enterobacta) < constant.enterobactaConstantLimit) {
+          resultCount.countValid++;
+          resultCount.countEnterobactaValid++;
+        } else {
+          resultCount.countInValid++;
+          resultCount.countEnterobactaInvalid++;
+        }
+      }
+    });
+    console.log("compute", resultCount);
+    setComputValues(resultCount);
+  };
+
+  return {
+    drillSamples,
+    computeValues,
+    handleAddDrillsSample,
+    handleInputChange,
+    handleRemoveRow,
+    clearStateData,
+    handleCompute,
+  };
+};
+
+export const DynamicInputFieldsHeadMidRiff = () => {
+  const initialState = {
+    week: "",
+    slaughter_number: "",
+    slaughter_house: "",
+    product_id: "",
+    slaughter_date: "",
+    pieces_date: "",
+    animal_id: "",
+    aerobic: "",
+    e_coli: "",
+    staphylococcus: "",
+  };
+
+  const [headMidRiffs, setheadMidRiffs] = useState<any[]>([]);
+  const initialComputeValues = {
+    countValid: 0,
+    countInValid: 0,
+    countAerobicValid: 0,
+    countAerobicInvalid: 0,
+    countEcoliValid: 0,
+    countEcoliInvalid: 0,
+    countStaphylococcusValid: 0,
+    countStaphylococcusInvalid: 0,
+    totalAerobicCount: 0,
+    totalEcoliCount: 0,
+    totalStaphylococcusCount: 0,
+    totalCount: 0,
+  };
+  const [computeValues, setComputValues] = useState<any>(initialComputeValues);
+
+  const handleAddDrillsSample = () => {
+    setheadMidRiffs((prev) => [...prev, initialState]);
+  };
+
+  const handleInputChange = ({
+    index,
+    field,
+    value,
+  }: {
+    index: number;
+    field: any;
+    value: String;
+  }) => {
+    setheadMidRiffs((prev) => {
+      const updatedValues = [...prev];
+      updatedValues[index][field] = value; // Update PO Number field
+
+      return updatedValues;
+    });
+  };
+
+  const handleRemoveRow = ({ index }: { index: number }) => {
+    alert(index);
+    setheadMidRiffs((prev) => {
+      const updatedValues = [...prev];
+      updatedValues.splice(index, 1);
+      return updatedValues;
+    });
+  };
+
+  const clearStateData = () => {
+    setheadMidRiffs([initialState]);
+  };
+
+  const handleCompute = () => {
+    const inputedValues = headMidRiffs;
+    //const initValues = initialComputeValues;
+    const resultCount = {
+      countValid: 0,
+      countInValid: 0,
+      countAerobicValid: 0,
+      countAerobicInvalid: 0,
+      countEcoliValid: 0,
+      countEcoliInvalid: 0,
+      countStaphylococcusValid: 0,
+      countStaphylococcusInvalid: 0,
+      totalAerobicCount: 0,
+      totalEcoliCount: 0,
+      totalStaphylococcusCount: 0,
+      totalCount: 0,
+    };
+    console.log("initialValues", resultCount);
+    inputedValues.map((headmidriff, index) => {
+      //// Aerobic
+      if (headmidriff.aerobic != "") {
+        resultCount.totalCount++;
+        resultCount.totalAerobicCount++;
+        if (parseFloat(headmidriff.aerobic) < constant.aerobicConstantLimit) {
+          resultCount.countValid++;
+          resultCount.countAerobicValid++;
+        } else {
+          resultCount.countInValid++;
+          resultCount.countAerobicInvalid++;
+        }
+      }
+      //// E coli
+      if (headmidriff.e_coli != "") {
+        resultCount.totalCount++;
+        resultCount.totalEcoliCount++;
+        if (parseFloat(headmidriff.e_coli) < constant.ecoliConstantLimit) {
+          resultCount.countValid++;
+          resultCount.countEcoliValid++;
+        } else {
+          resultCount.countInValid++;
+          resultCount.countEcoliInvalid++;
+        }
+      }
+
+      //// Staphylococcus
+      if (headmidriff.staphylococcus != "") {
+        resultCount.totalCount++;
+        resultCount.totalStaphylococcusCount++;
+        if (
+          parseFloat(headmidriff.staphylococcus) <
+          constant.staphylococcusConstantLimit
+        ) {
+          resultCount.countValid++;
+          resultCount.countStaphylococcusValid++;
+        } else {
+          resultCount.countInValid++;
+          resultCount.countStaphylococcusInvalid++;
+        }
+      }
+    });
+    console.log("compute", resultCount);
+    setComputValues(resultCount);
+  };
+
+  return {
+    headMidRiffs,
+    computeValues,
+    handleAddDrillsSample,
+    handleInputChange,
+    handleRemoveRow,
+    clearStateData,
+    handleCompute,
   };
 };

@@ -7,14 +7,20 @@ const chartData = ({
   proteinLactoseChart,
   fruitProductionChart,
   deviationComplaintsDataChart,
+  drillSampleDataChart,
+  headMidRiffDataChart,
 }: {
   proteinLactoseChart: boolean;
   fruitProductionChart: boolean;
   deviationComplaintsDataChart: boolean;
+  drillSampleDataChart: boolean;
+  headMidRiffDataChart: boolean;
 }) => {
   const [proteinLactoseData, setProteinLactoseData] = useState([]);
   const [fruitProductionData, setFruitProductionData] = useState([]);
   const [deviationComplaintsData, setDeviationComplaintsData] = useState([]);
+  const [drillSamplesData, setDrillSamplesData] = useState([]);
+  const [headMidRiffData, setHeadMidRiffData] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { fetchApi } = httpRequest();
   const { allRequest } = ReusableMethods();
@@ -35,6 +41,10 @@ const chartData = ({
         setProteinLactoseData(response.data.proteinlactosewater.original);
       deviationComplaintsDataChart &&
         setDeviationComplaintsData(response.data.deviationcomplaints.original);
+      drillSampleDataChart &&
+        setDrillSamplesData(response.data.drillsamples.original);
+      headMidRiffDataChart &&
+        setHeadMidRiffData(response.data.headmidriff.original);
     });
   };
 
@@ -45,10 +55,20 @@ const chartData = ({
         "&fruitproduction=" +
         fruitProductionChart +
         "&proteinlactosewater=" +
-        proteinLactoseChart
+        proteinLactoseChart +
+        "&drillsamples=" +
+        drillSampleDataChart +
+        "&headmidriff=" +
+        headMidRiffDataChart
     );
   }, []);
 
-  return { proteinLactoseData, fruitProductionData, deviationComplaintsData };
+  return {
+    proteinLactoseData,
+    fruitProductionData,
+    deviationComplaintsData,
+    drillSamplesData,
+    headMidRiffData,
+  };
 };
 export default chartData;

@@ -9,15 +9,23 @@ import FoodProductionLineChart from "../../components/Charts/DashboardCharts/Foo
 import DeviationComplaintsPie from "../../components/Charts/DashboardCharts/DeviationComplaintsChart_Pie";
 import ProteinLactoseWaterChart from "../../components/Charts/DashboardCharts/ProteinLactoseWaterChart";
 import ProteinLactoseWaterThreshold from "../../components/Charts/DashboardCharts/ProteinLactoseWaterThresholdChart";
+import DrillSamplesChart from "../../components/Charts/DashboardCharts/DrillSamplesChart";
 import chartData from "../../methods/chartData";
 
 const Index: React.FC = () => {
-  const { proteinLactoseData, fruitProductionData, deviationComplaintsData } =
-    chartData({
-      proteinLactoseChart: true,
-      fruitProductionChart: true,
-      deviationComplaintsDataChart: true,
-    });
+  const {
+    proteinLactoseData,
+    fruitProductionData,
+    deviationComplaintsData,
+    drillSamplesData,
+    headMidRiffData,
+  } = chartData({
+    proteinLactoseChart: true,
+    fruitProductionChart: true,
+    deviationComplaintsDataChart: true,
+    drillSampleDataChart: true,
+    headMidRiffDataChart: true,
+  });
   const user = useSelector((state: any) => state.user.value);
   const { t } = useTranslation();
 
@@ -124,14 +132,12 @@ const Index: React.FC = () => {
         {t("dashboard")}
       </h2>
 
-      {/* <div className="mt-4 grid grid-cols-8 gap-2 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5"> */}
       <div className="w-full">
         <div className="w-full md:flex md:flex-row mb-2">
           <div className="w-full md:w-3/5 mr-3 mb-2">
             <ProteinLactoseWaterChart chartData={proteinLactoseData} />
           </div>
-          {/* <ProteinLactoseWaterChart2 /> */}
-          {/* <ChartTwo /> */}
+
           <div className="w-full md:w-3/5">
             <ProteinLactoseWaterThreshold chartData={proteinLactoseData} />
           </div>
@@ -142,23 +148,28 @@ const Index: React.FC = () => {
               <div className="w-full md:w-2/6 mr-3 mb-2">
                 <FoodProductionChart chartData={fruitProductionData} />
               </div>
-              {/* <div className="w-full md:w-2/6 mr-3 mb-2">
-                <FoodProductionLineChart chartData={fruitProductionData} />
-              </div> */}
             </>
           )}
           <div className="w-full md:w-4/6">
             <DeviationComplaintsPie chartData={deviationComplaintsData} />
           </div>
-          {/* {deviationComplaintsData && (
-          <DeviationComplaintChart chartData={deviationComplaintsData} />
-        )} */}
-          {/* 
-        <MapOne />
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne />
         </div>
-        <ChatCard /> */}
+
+        <div className="w-full md:flex md:flex-row">
+          {drillSamplesData && (
+            <>
+              <div className="w-full md:w-3/6 mr-3 mb-2">
+                <DrillSamplesChart chartData={drillSamplesData} />
+              </div>
+            </>
+          )}
+          {/* {headMidRiffData && (
+            <>
+          <div className="w-full md:w-4/6">
+            <DeviationComplaintsPie chartData={deviationComplaintsData} />
+          </div>
+          </>
+          )} */}
         </div>
       </div>
     </>

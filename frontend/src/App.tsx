@@ -14,13 +14,20 @@ import FormElements from "./pages/Form/FormElements";
 import ProteinLactoseWater from "./pages/ProteinLactoseWater";
 import FruitProduction from "./pages/FruitProduction";
 import DrillSamples from "./pages/DrillSamples";
+import HeadMidriff from "./pages/HeadMidRiff";
+import CcpFollowup from "./pages/CcpFollowup";
+
 import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
 import DeviationComplaints from "./pages/DeviationComplaints";
 import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
+import NewDrillSample from "./pages/Form/NewDrillSample";
+import NewHeadMidriff from "./pages/Form/NewHeadMidriff";
 import ProteinLactoseMainChart from "./pages/Charts/ProteinLactoseWaterChartPage";
+import DrillSampleMainChart from "./pages/Charts/DrillSampleChartPage";
 import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
 import DeviationComplaintMainChart from "./pages/Charts/DeviationComplaintChartPage";
+import HeadMidriffMainChart from "./pages/Charts/HeadMidChartPage";
 
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
@@ -240,7 +247,7 @@ function App() {
                   ></Route>
                 </Route>
 
-                {/* Fruit Production */}
+                {/* Drill Samples */}
                 <Route path="drill_samples">
                   <Route
                     path=""
@@ -251,7 +258,7 @@ function App() {
                       </DefaultLayout>
                     }
                   />
-                  {/* <Route
+                  <Route
                     path="new"
                     element={
                       <DefaultLayout>
@@ -259,9 +266,9 @@ function App() {
                         <NewDrillSample />
                       </DefaultLayout>
                     }
-                  ></Route> */}
+                  ></Route>
 
-                  {/* <Route
+                  <Route
                     path="chart"
                     element={
                       <DefaultLayout>
@@ -269,7 +276,71 @@ function App() {
                         <DrillSampleMainChart />
                       </DefaultLayout>
                     }
-                  ></Route> */}
+                  ></Route>
+                </Route>
+
+                {/* Slaughter Head Meat/Midriff */}
+                <Route path="head_midriff">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HeadMidriff />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewHeadMidriff />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HeadMidriffMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* CCP Follow up */}
+                <Route path="ccp_followup">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <CcpFollowup />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewHeadMidriff />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HeadMidriffMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
                 </Route>
               </Routes>
             </ProtectedRoute>

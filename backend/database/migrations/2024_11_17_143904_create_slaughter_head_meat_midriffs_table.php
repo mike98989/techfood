@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('drill_samples', function (Blueprint $table) {
+        Schema::create('slaughter_head_meat_midriffs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->date('pieces_date')->nullable();
             $table->string('animal_id');
             $table->string('aerobic');
-            $table->string('enterobacta');
+            $table->string('e_coli');
+            $table->string('staphylococcus');
             $table->integer('status')->default('1');
             $table->timestamps();
         });
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('drill_samples');
+        Schema::dropIfExists('slaughter_head_meat_midriffs');
     }
 };

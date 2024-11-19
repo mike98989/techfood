@@ -4,6 +4,7 @@ import SpinnerObject from "../../../components/Spinner/Spinner";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import formReturnMessage from "../../../components/Forms/FormAlerts/formReturnMessage";
 import { httpRequest } from "../../../methods/Requests";
+import { useTranslation } from "react-i18next";
 
 const EditProteinLactoseWater = (props: any) => {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -12,6 +13,7 @@ const EditProteinLactoseWater = (props: any) => {
   const [value, setValue] = useState(props.componentData);
   const { MessageBox, setFormMessage } = formReturnMessage();
   const { fetchApi } = httpRequest();
+  const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState({
     PO_number: "",
     batch_number: "",
@@ -48,7 +50,11 @@ const EditProteinLactoseWater = (props: any) => {
         <div className="w-full">
           <div className="border-b border-stroke py-2 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Update Protein, Lactose Or Water Values
+              {t("update") +
+                " " +
+                t("protein_lactose_water") +
+                " " +
+                t("values")}
             </h3>
           </div>
           <MessageBox />

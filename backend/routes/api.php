@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\Api\GenericController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\GenericController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\LabInputsController;
+use App\Http\Controllers\Api\DrillSampleController;
 use App\Http\Controllers\Api\WordPressAuthController;
 use App\Http\Controllers\Api\FruitProductionController;
 use App\Http\Controllers\Api\DeviationComplaintController;
+use App\Http\Controllers\Api\SlaughterHeadMeatMidriffController;
 //use App\Http\Controllers\Api\FruitProductionController;
 
 /*
@@ -32,6 +34,12 @@ Route::middleware('auth:sanctum')->group(function () {
     //////// API resource for deviation complaints
     Route::apiResource('deviationcomplaints', DeviationComplaintController::class); 
 
+    //////// API resource for Laboratory Inputs
+    Route::apiResource('drillsamples', DrillSampleController::class);
+
+    //////// API resource for Laboratory Inputs
+    Route::apiResource('headmidriffs', SlaughterHeadMeatMidriffController::class);
+    
     //////User Signout
     Route::post('/auth/signout', [AuthController::class, 'signout'])->name('user.logout');
 
@@ -75,6 +83,9 @@ Route::middleware('guest')->group(function () {
     // /////// Get All fruit production forms related data
     Route::get("fruit_production_form_related_data",[FruitProductionController::class, 'processAllRelatedTableData'])->name('fruit_production_status.get_related_form_data');
 
+    // /////// Get All Drill Samples forms related data
+    Route::get("drill_sample_form_related_data",[DrillSampleController::class, 'processAllRelatedTableData'])->name('drill_samples_status.get_related_form_data');
+    
     
     Route::get('generate', function (){
         \Illuminate\Support\Facades\Artisan::call('storage:link');

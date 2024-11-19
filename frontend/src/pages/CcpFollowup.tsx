@@ -1,10 +1,10 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-import DrillSamplesTable from "../components/Tables/DrillSamplesTable";
+import HeadMidRiffTable from "../components/Tables/HeadMidRiffTable";
 import { useTranslation } from "react-i18next";
 
-const DrillSamples = () => {
+const CcpFollowup = () => {
   const { t } = useTranslation();
-  const pageTitle = t("drill_samples_in_slaughter");
+  const pageTitle = t("ccp_follow_up");
   return (
     <>
       <Breadcrumb
@@ -13,10 +13,10 @@ const DrillSamples = () => {
         pageTitle={pageTitle}
       />
       <div className="">
-        <DrillSamplesTable />
+        <HeadMidRiffTable />
       </div>
     </>
   );
 };
 
-export default DrillSamples;
+export default CcpFollowup;

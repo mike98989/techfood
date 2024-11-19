@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\DrillSample;
+use Illuminate\Http\Request;
 use App\Models\DrillSampleAnimals;
 use App\Models\DrillSampleProducts;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\SlaughterHeadMeatMidriff;
 
-class DrillSampleController extends Controller
+class SlaughterHeadMeatMidriffController extends Controller
 {
     public function index(Request $request)
     {
         $user = $request->user();
-        $data =  DrillSample::where('user_id',$user->id)->with('animal')->with('product')->orderBy('created_at', 'desc')->get();
+        $data =  SlaughterHeadMeatMidriff::where('user_id',$user->id)->with('animal')->with('product')->orderBy('created_at', 'desc')->get();
         return response()->json(['data'=>$data],201);
         
     }
@@ -36,19 +36,20 @@ class DrillSampleController extends Controller
             '*.pieces_date' => 'nullable|date',
             '*.animal_id' => 'nullable|integer',
             '*.aerobic' => 'nullable|numeric',
-            '*.enterobacta' => 'nullable|numeric',
+            '*.e_coli' => 'nullable|numeric',
+            '*.staphylococcus' => 'nullable|numeric',
         ]);
         $user = $request->user();
         // Use a transaction to handle multiple inserts
         foreach ($validatedData as $data) {
             $data['user_id'] = $user->id; 
-            DrillSample::create($data);
+            SlaughterHeadMeatMidriff::create($data);
         }
 
         return response()->json(["message"=>"success_save_response","status"=>'1'],200);
     }
 
-    public function update(Request $request, DrillSample $drillsample)
+    public function update(Request $request, SlaughterHeadMeatMidriff $headmidriff)
     {
         $validatedData = $request->validate([
             'week' => 'required|integer',
@@ -59,12 +60,13 @@ class DrillSampleController extends Controller
             'pieces_date' => 'nullable|date',
             'animal_id' => 'nullable|integer',
             'aerobic' => 'nullable|numeric',
-            'enterobacta' => 'nullable|numeric',
+            'e_coli' => 'nullable|numeric',
+            'staphylococcus' => 'nullable|numeric',
         ]);
         $user = $request->user();
         $validatedData['user_id'] = $user->id;
         
-        $drillsample->update($validatedData);
+        $headmidriff->update($validatedData);
 
         return response()->json(["message"=>"success_save_response","status"=>'1'],201);
     }
@@ -87,9 +89,9 @@ class DrillSampleController extends Controller
         ],200);
     }
 
-    public function destroy(DrillSample $drillsample)
+    public function destroy(SlaughterHeadMeatMidriff $headmidriff)
     {
-        $drillsample->delete();
+        $headmidriff->delete();
         return response()->json(["message"=>"success_delete_response","status"=>'1'],201);
     }
 }

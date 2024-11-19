@@ -72,6 +72,7 @@ const ProteinLactoseWater = () => {
             <tbody>
               {proteinLactosWaterData?.length > 0 &&
                 proteinLactosWaterData.map((input: any, key) => (
+                  // <tr key={key} className="even:bg-gray-2">
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}

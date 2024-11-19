@@ -45,10 +45,10 @@ export const httpRequest = () => {
       return data;
     } catch (error: any) {
       if (error.response) {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 || error.response.status === 401) {
           // Token is invalid, redirect to login page
           window.location.href =
-            Constants.PROTOCOL + Constants.FRONT_END_BASE_URL + "auth/signin";
+            Constants.PROTOCOL + Constants.URL + "auth/signin";
         }
 
         // The server responded with a status other than 2xx

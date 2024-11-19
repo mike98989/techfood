@@ -449,6 +449,7 @@ const FruitProductionChart1: React.FC<ChartProps> = (props: any) => {
                 }}
               />
             </div>
+
             <div className="w-2/8">
               <span className="text-sm pl-1">{t("chart_type")}</span>
               <select

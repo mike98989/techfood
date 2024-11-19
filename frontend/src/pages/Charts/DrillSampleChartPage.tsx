@@ -1,21 +1,21 @@
 import React from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import ChartOne from "../../components/Charts/ProteinLactoseWaterCharts/ProteinLactoseWaterChart1";
+import DrillSamplesChart from "../../components/Charts/DrillSamplesCharts/DrillSamplesChart1";
 //import ChartTwo from "../../components/Charts/ChartTwo";
 import { useTranslation } from "react-i18next";
 import chartData from "../../methods/chartData";
 
 const Chart: React.FC = () => {
-  const { proteinLactoseData } = chartData({
-    proteinLactoseChart: true,
+  const { drillSamplesData } = chartData({
+    proteinLactoseChart: false,
     fruitProductionChart: false,
     deviationComplaintsDataChart: false,
-    drillSampleDataChart: false,
+    drillSampleDataChart: true,
     headMidRiffDataChart: false,
   });
 
   const { t } = useTranslation();
-  const pageTitle = t("protein_lactose_water_chart");
+  const pageTitle = t("drill_samples_in_slaughter");
   return (
     <>
       <Breadcrumb
@@ -28,7 +28,7 @@ const Chart: React.FC = () => {
       />
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne chartData={proteinLactoseData} />
+        <DrillSamplesChart chartData={drillSamplesData} />
         {/* <ChartTwo /> */}
       </div>
     </>
