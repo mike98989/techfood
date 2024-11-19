@@ -9,9 +9,9 @@ import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
 import { constant } from "../../Utils/Constants";
-const DrillSamples = () => {
-  const { fetchApi } = httpRequest();
-  const [drillSamplesData, setDrillSamplesData] = useState([]);
+
+const CCPFollowup = () => {
+  const [headMidriffData, setHeadMidriffData] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { isLoading, setIsLoading, Spinner } = SpinnerObject();
   const { allRequest } = ReusableMethods();
@@ -24,14 +24,14 @@ const DrillSamples = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "drillsamples", // End Point
+      action_url: "headmidriffs", // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
       setIsLoading,
-      setReturnData: setDrillSamplesData,
+      setReturnData: setHeadMidriffData,
     });
   }, []);
 
@@ -44,47 +44,53 @@ const DrillSamples = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 font-medium text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 text-sm font-bold text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("slaughter_number")}
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("week")}
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("slaughter_house")}
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("product")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("slaughter_date")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("kind_of_animal")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("aerobic")} <br />
                   <span className="text-sm text-cyan-800 dark:text-white">
                     {t("limit") + " = " + constant.aerobicConstantLimit}
                   </span>
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("enterobacta")} <br />
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                  {t("e_coli")} <br />
                   <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.enterobactaConstantLimit}
+                    {t("limit") + " = " + constant.ecoliConstantLimit}
                   </span>
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                  {t("staphylococcus")} <br />
+                  <span className="text-sm text-cyan-800 dark:text-white">
+                    {t("limit") + " = " + constant.staphylococcusConstantLimit}
+                  </span>
+                </th>
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {drillSamplesData?.length > 0 &&
-                drillSamplesData.map((input: any, key) => (
+              {headMidriffData?.length > 0 &&
+                headMidriffData.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}
@@ -138,19 +144,36 @@ const DrillSamples = () => {
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">
-                          {input.enterobacta}
-                        </span>
+                        <span className="text-xs mr-1">{input.e_coli}</span>
                         <br />
-                        {parseFloat(input.enterobacta) >
-                          constant.enterobactaConstantLimit && (
+                        {parseFloat(input.e_coli) >
+                          constant.ecoliConstantLimit && (
                           <Badge
                             type="danger"
                             value={t(constant.unApprovedText)}
                           />
                         )}
-                        {parseFloat(input.enterobacta) <=
-                          constant.enterobactaConstantLimit && (
+                        {parseFloat(input.e_coli) <=
+                          constant.ecoliConstantLimit && (
+                          <Badge type="1" value={t(constant.approvedText)} />
+                        )}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-sm text-black dark:text-white flex">
+                        <span className="text-xs mr-1">
+                          {input.staphylococcus}
+                        </span>
+                        <br />
+                        {parseFloat(input.staphylococcus) >
+                          constant.staphylococcusConstantLimit && (
+                          <Badge
+                            type="danger"
+                            value={t(constant.unApprovedText)}
+                          />
+                        )}
+                        {parseFloat(input.staphylococcus) <=
+                          constant.staphylococcusConstantLimit && (
                           <Badge type="1" value={t(constant.approvedText)} />
                         )}
                       </p>
@@ -165,7 +188,7 @@ const DrillSamples = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditDrillSample",
+                                  form: "../../pages/Form/Edit/EditHeadMidriff",
                                   data: input,
                                 },
                               });
@@ -199,7 +222,7 @@ const DrillSamples = () => {
                                 modalSize: "sm",
                                 modalData: {
                                   index: key,
-                                  endPoint: "drillsamples/" + input.id,
+                                  endPoint: "headmidriffs/" + input.id,
                                   action: "DELETE",
                                   token: user.token,
                                   title:
@@ -209,11 +232,15 @@ const DrillSamples = () => {
                                     " = " +
                                     input.aerobic +
                                     " ," +
-                                    t("enterobacta") +
+                                    t("e_coli") +
                                     " = " +
-                                    t(input.enterobacta),
-                                  data: drillSamplesData,
-                                  setData: setDrillSamplesData,
+                                    t(input.e_coli) +
+                                    " ," +
+                                    t("staphylococcus") +
+                                    " = " +
+                                    t(input.staphylococcus),
+                                  data: headMidriffData,
+                                  setData: setHeadMidriffData,
                                 },
                               });
                           }}
@@ -249,7 +276,7 @@ const DrillSamples = () => {
                   </tr>
                 ))}
 
-              {!isLoading && drillSamplesData?.length == 0 && (
+              {!isLoading && headMidriffData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -260,11 +287,11 @@ const DrillSamples = () => {
                 </tr>
               )}
 
-              {isLoading && drillSamplesData?.length == 0 && (
+              {isLoading && headMidriffData?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={11}
+                    colSpan={12}
                   >
                     <Spinner /> Loading...
                   </td>
@@ -278,4 +305,4 @@ const DrillSamples = () => {
   );
 };
 
-export default DrillSamples;
+export default CCPFollowup;

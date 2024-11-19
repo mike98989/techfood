@@ -6,12 +6,13 @@ import { useTranslation } from "react-i18next";
 import chartData from "../../methods/chartData";
 
 const FruitProductionChartPage: React.FC = () => {
-  const { proteinLactoseData, fruitProductionData, deviationComplaintsData } =
-    chartData({
-      proteinLactoseChart: false,
-      fruitProductionChart: true,
-      deviationComplaintsDataChart: false,
-    });
+  const { fruitProductionData } = chartData({
+    proteinLactoseChart: false,
+    fruitProductionChart: true,
+    deviationComplaintsDataChart: false,
+    drillSampleDataChart: false,
+    headMidRiffDataChart: false,
+  });
 
   const { t } = useTranslation();
   const pageTitle = t("fruit_production");

@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import Badge from "../../Badges/Badge";
 
 const options: ApexOptions = {
   colors: ["#3C50E0", "#80CAEE"],

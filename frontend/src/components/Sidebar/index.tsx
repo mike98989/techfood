@@ -267,6 +267,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               {t("deviation_complaints")}
                             </NavLink>
                           </li>
+
+                          <li>
+                            <NavLink
+                              to="/drill_samples"
+                              className={`
+                                ${activeMenu === "drill_samples" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {t("drill_samples_in_slaughter")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/head_midriff"
+                              className={`
+                                ${activeMenu === "head_midriff" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {t("slaughtered_head_meat_midriff")}
+                            </NavLink>
+                          </li>
+
                           <li>
                             <NavLink
                               to="#"
@@ -288,20 +313,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               {t("staffing_of_production")}
                             </NavLink>
                           </li>
+
                           <li>
                             <NavLink
-                              to="/drill_samples"
-                              className={`
-                                ${activeMenu === "protein_lactose_water" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
-                              `}
-                            >
-                              {t("drill_samples_in_slaughter")}
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              to="#"
+                              to="/ccp_followup"
                               className={
                                 "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }

@@ -197,7 +197,7 @@ export const ReusableMethods = () => {
     const start = new Date(startDate).getTime();
     const end = new Date(endDate).getTime();
 
-    console.log("Begins", start, "ends", end, "dateToCheck", date);
+    //console.log("Begins", start, "ends", end, "dateToCheck", date);
     return date >= start && date <= end;
   };
 

@@ -462,6 +462,7 @@ export default function NewProteinLactoseWater() {
                               handleRemoveBatch({
                                 poIndex,
                                 batchIndex,
+                                batchCount: po.batches.length,
                               })
                             }
                           >
