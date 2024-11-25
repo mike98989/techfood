@@ -288,6 +288,50 @@ export const DynamicInputFields = () => {
 };
 
 ///////Dynamic input field for fruit production
+export const DynamicInputFieldsCCPFollowUp = () => {
+  //const [poNumbers, setPoNumbers] = useState([]);
+  ////Set the first values to be an object with empty values
+  const [CCPSummation, setCCPSummation] = useState<any[]>([
+    {
+      total: "",
+      ren: "",
+      percent: "",
+      slaughtered_total: "",
+      slaughtered: "",
+    },
+  ]);
+
+  const handleCCPSummation = (CCPFollowUp: any) => {
+    const total: number =
+      CCPFollowUp.ham * 1 +
+      CCPFollowUp.front_leg * 1 +
+      CCPFollowUp.sternum * 1 +
+      CCPFollowUp.belly_cut * 1 +
+      CCPFollowUp.back * 1 +
+      CCPFollowUp.neck * 1 +
+      CCPFollowUp.flank * 1 +
+      CCPFollowUp.ribs * 1 +
+      CCPFollowUp.inside * 1 +
+      CCPFollowUp.hind_leg * 1;
+    CCPFollowUp.total = total;
+    CCPFollowUp.clean =
+      CCPFollowUp.slaughtered_total != "0"
+        ? CCPFollowUp.slaughtered_total - total
+        : total;
+    CCPFollowUp.percent = Math.ceil(
+      (CCPFollowUp.total / CCPFollowUp.slaughtered_total) * 100
+    );
+    console.log("CCP", CCPFollowUp);
+    return CCPFollowUp;
+  };
+
+  return {
+    CCPSummation,
+    handleCCPSummation,
+  };
+};
+
+///////Dynamic input field for fruit production
 export const DynamicInputFieldsFruitProduction = () => {
   //const [poNumbers, setPoNumbers] = useState([]);
   ////Set the first values to be an object with empty values

@@ -117,7 +117,7 @@ const ProteinLactoseWater = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditProteinLactoseWater",
+                                  form: "EditProteinLactoseWater",
                                   data: input,
                                 },
                               });

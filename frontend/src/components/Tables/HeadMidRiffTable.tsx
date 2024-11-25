@@ -188,7 +188,7 @@ const HeadMidriff = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditHeadMidriff",
+                                  form: "EditHeadMidriff",
                                   data: input,
                                 },
                               });

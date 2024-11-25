@@ -31,7 +31,7 @@ const AlertModal = () => {
     return (
       <Modal
         show={openModal}
-        size={modalQueryData.modalSize || "sm"}
+        size={modalQueryData.modalSize || "xl"}
         onClose={() => setOpenModal(false)}
         className="custom-overlay pt-30"
         position="center"

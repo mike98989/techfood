@@ -219,6 +219,36 @@ span.flatpickr-weekday,
 .submit_button {
   @apply w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90;
 }
+.rotate-minus-30 {
+  transform: rotate(-90deg);
+}
+
+#staffingProduction th > *:nth-child(1) {
+  background-color: #ffebee;
+} /* Light red */
+#staffingProduction th *:nth-child(2) {
+  background-color: #f3e5f5;
+} /* Light purple */
+#staffingProduction th > *:nth-child(3) {
+  background-color: #e3f2fd;
+} /* Light blue */
+#staffingProduction th > *:nth-child(4) {
+  background-color: #e8f5e9;
+} /* Light green */
+#staffingProduction th > *:nth-child(5) {
+  background-color: #fff3e0;
+} /* Light orange */
+#staffingProduction th > *:nth-child(6) {
+  background-color: #ede7f6;
+} /* Light lavender */
+#staffingProduction th > *:nth-child(7) {
+  background-color: #fbe9e7;
+} /* Light salmon */
+#staffingProduction th > *:nth-child(8) {
+  background-color: #e0f7fa;
+}
+/* Light cyan */
+
 .custom-overlay {
   position: fixed;
   inset: 0;

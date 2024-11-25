@@ -9,18 +9,25 @@ const chartData = ({
   deviationComplaintsDataChart,
   drillSampleDataChart,
   headMidRiffDataChart,
+  ccpFollowUpDataChart,
+  staffingProductionDataChart,
 }: {
   proteinLactoseChart: boolean;
   fruitProductionChart: boolean;
   deviationComplaintsDataChart: boolean;
   drillSampleDataChart: boolean;
   headMidRiffDataChart: boolean;
+  ccpFollowUpDataChart: boolean;
+  staffingProductionDataChart: boolean;
 }) => {
   const [proteinLactoseData, setProteinLactoseData] = useState([]);
   const [fruitProductionData, setFruitProductionData] = useState([]);
   const [deviationComplaintsData, setDeviationComplaintsData] = useState([]);
   const [drillSamplesData, setDrillSamplesData] = useState([]);
+  const [ccpFollowUpData, setCCPFollowUpData] = useState([]);
   const [headMidRiffData, setHeadMidRiffData] = useState([]);
+  const [staffingProductionData, setStaffingOfProductionData] = useState([]);
+
   const user = useSelector((state: any) => state.user.value);
   const { fetchApi } = httpRequest();
   const { allRequest } = ReusableMethods();
@@ -45,6 +52,10 @@ const chartData = ({
         setDrillSamplesData(response.data.drillsamples.original);
       headMidRiffDataChart &&
         setHeadMidRiffData(response.data.headmidriff.original);
+      ccpFollowUpDataChart &&
+        setCCPFollowUpData(response.data.ccpfollowups.original);
+      staffingProductionDataChart &&
+        setStaffingOfProductionData(response.data.staffingproduction.original);
     });
   };
 
@@ -59,7 +70,11 @@ const chartData = ({
         "&drillsamples=" +
         drillSampleDataChart +
         "&headmidriff=" +
-        headMidRiffDataChart
+        headMidRiffDataChart +
+        "&ccpfollowups=" +
+        ccpFollowUpDataChart +
+        "&staffingproduction=" +
+        staffingProductionDataChart
     );
   }, []);
 
@@ -69,6 +84,8 @@ const chartData = ({
     deviationComplaintsData,
     drillSamplesData,
     headMidRiffData,
+    ccpFollowUpData,
+    staffingProductionData,
   };
 };
 export default chartData;

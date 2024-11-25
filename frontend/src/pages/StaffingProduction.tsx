@@ -1,10 +1,10 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-import CCPFollowUpTable from "../components/Tables/CCPFollowupTable";
+import StaffingProduction from "../components/Tables/StaffingProductionTable";
 import { useTranslation } from "react-i18next";
 
-const CcpFollowup = () => {
+const StaffingOfProduction = () => {
   const { t } = useTranslation();
-  const pageTitle = t("ccp_follow_up");
+  const pageTitle = t("staffing_of_production");
   return (
     <>
       <Breadcrumb
@@ -13,10 +13,10 @@ const CcpFollowup = () => {
         pageTitle={pageTitle}
       />
       <div className="">
-        <CCPFollowUpTable />
+        <StaffingProduction />
       </div>
     </>
   );
 };
 
-export default CcpFollowup;
+export default StaffingOfProduction;

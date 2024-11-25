@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -233,7 +233,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           open && "hidden"
                         }`}
                       >
-                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-3">
                           <li>
                             <NavLink
                               to="/protein_lactose_water"
@@ -242,6 +242,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                className="feather feather-droplet"
+                              >
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                              </svg>
+
                               {t("protein_lactose_water")}
                             </NavLink>
                           </li>
@@ -253,6 +268,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                className="feather feather-thermometer"
+                              >
+                                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+                              </svg>
+
                               {t("fruit_production")}
                             </NavLink>
                           </li>
@@ -264,6 +294,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                              >
+                                <path d="M12 2L2 22h20L12 2zm0 15v-2h-2v2h2zm0-4V7h-2v6h2z" />
+                              </svg>
+
                               {t("deviation_complaints")}
                             </NavLink>
                           </li>
@@ -276,6 +318,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="1"
+                              >
+                                <path d="M10 2C6.69 2 4 4.69 4 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM16 12l1.5 1.5-3 3-1.5-1.5 3-3z" />
+                              </svg>
+
                               {t("drill_samples_in_slaughter")}
                             </NavLink>
                           </li>
@@ -294,6 +348,42 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                           <li>
                             <NavLink
+                              to="/staffing_production"
+                              className={`
+                                ${activeMenu === "staffing_production" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {t("staffing_of_production")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/ccp_followup"
+                              className={`
+                                ${activeMenu === "ccp_followup" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {t("ccp_follow_up")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="oee_and_efficiency"
+                              className={`
+                                ${activeMenu === "oee_and_efficiency" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {t("oee_and_efficiency")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
                               to="#"
                               className={
                                 "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
@@ -303,27 +393,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
 
-                          <li>
-                            <NavLink
-                              to="#"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
-                            >
-                              {t("staffing_of_production")}
-                            </NavLink>
-                          </li>
-
-                          <li>
-                            <NavLink
-                              to="/ccp_followup"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
-                            >
-                              {t("ccp_follow_up")}
-                            </NavLink>
-                          </li>
                           <li>
                             <NavLink
                               to="#"

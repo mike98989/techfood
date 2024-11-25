@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\StaffingProductionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GenericController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\LabInputsController;
+use App\Http\Controllers\Api\CCPFollowUpController;
 use App\Http\Controllers\Api\DrillSampleController;
 use App\Http\Controllers\Api\WordPressAuthController;
 use App\Http\Controllers\Api\FruitProductionController;
@@ -33,13 +35,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('fruitproduction', FruitProductionController::class);
     //////// API resource for deviation complaints
     Route::apiResource('deviationcomplaints', DeviationComplaintController::class); 
-
     //////// API resource for Laboratory Inputs
     Route::apiResource('drillsamples', DrillSampleController::class);
-
     //////// API resource for Laboratory Inputs
     Route::apiResource('headmidriffs', SlaughterHeadMeatMidriffController::class);
-    
+    //////// API resource for Laboratory Inputs
+    Route::apiResource('ccpfollowups', CCPFollowUpController::class);
+    //////// API resource for Laboratory Inputs
+    Route::apiResource('staffingproduction', StaffingProductionController::class);
+
     //////User Signout
     Route::post('/auth/signout', [AuthController::class, 'signout'])->name('user.logout');
 

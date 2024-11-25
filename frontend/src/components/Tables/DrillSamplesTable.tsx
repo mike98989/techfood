@@ -165,7 +165,7 @@ const DrillSamples = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditDrillSample",
+                                  form: "EditDrillSample",
                                   data: input,
                                 },
                               });

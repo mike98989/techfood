@@ -1,35 +1,43 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, { lazy, Suspense, ReactNode } from "react";
+import LazyComponentMap from "../../methods/LazyComponents";
+// Create a map of components using React.lazy
+// const componentMap: Record<string, React.LazyExoticComponent<any>> = {
+//   StaffingProductionModal: lazy(
+//     () => import("../../pages/Views/StaffingProductionModal")
+//   ),
+//   EditFruitProduction: lazy(
+//     () => import("../../pages/Form/Edit/EditFruitProduction")
+//   ),
+// };
 
+// Wrapper for rendering dynamically loaded components
 const DynamicComponentLoader = ({
   componentPath,
   componentData,
 }: {
   componentPath: string;
-  componentData: Object;
+  componentData?: Record<string, any>;
 }) => {
-  const [Component, setComponent] = useState(null);
+  const loadComponent = (name: string): ReactNode => {
+    const Component = LazyComponentMap[name];
+    if (Component) {
+      return <Component componentData={componentData} />;
+    } else {
+      throw new Error(`Component "${name}" not found.`);
+    }
+  };
 
-  useEffect(() => {
-    const handleLoadComponent = async () => {
-      try {
-        // Dynamically import the component using the prop path
-        const { default: LoadedComponent } = await import(`${componentPath}`);
-        setComponent(() => LoadedComponent);
-      } catch (error) {
-        console.error("Error loading component:", error);
-      }
-    };
-
-    handleLoadComponent();
-  }, []);
+  let ComponentToRender;
+  try {
+    console.log("component", componentPath);
+    ComponentToRender = loadComponent(componentPath);
+  } catch (error) {
+    console.error(error);
+    return <div>Error: Unable to load the component.</div>;
+  }
 
   return (
-    <div>
-      {/* <button onClick={handleLoadComponent}>Load Component</button> */}
-      <Suspense fallback={<div>Loading...</div>}>
-        {Component && <Component componentData={componentData} />}
-      </Suspense>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>{ComponentToRender}</Suspense>
   );
 };
 

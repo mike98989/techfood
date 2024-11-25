@@ -206,6 +206,12 @@ export const ReusableMethods = () => {
     return urlArray;
   };
 
+  const getWeekNumber = (date: any) => {
+    const startOfYear: any = new Date(date.getFullYear(), 0, 1);
+    const days = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+    return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+  };
+
   return {
     userLogin,
     userLogout,
@@ -215,5 +221,6 @@ export const ReusableMethods = () => {
     allRequest,
     isDateInRange,
     getUrlArray,
+    getWeekNumber,
   };
 };
