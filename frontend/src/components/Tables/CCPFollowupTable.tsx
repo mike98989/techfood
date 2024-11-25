@@ -11,7 +11,7 @@ import Badge from "../Badges/Badge";
 import { constant } from "../../Utils/Constants";
 
 const CCPFollowup = () => {
-  const [headMidriffData, setHeadMidriffData] = useState([]);
+  const [ccpFollowUps, setCcpFollowUps] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { isLoading, setIsLoading, Spinner } = SpinnerObject();
   const { allRequest } = ReusableMethods();
@@ -24,14 +24,14 @@ const CCPFollowup = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "headmidriffs", // End Point
+      action_url: "ccpfollowups", // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
       setIsLoading,
-      setReturnData: setHeadMidriffData,
+      setReturnData: setCcpFollowUps,
     });
   }, []);
 
@@ -44,44 +44,59 @@ const CCPFollowup = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 text-sm font-bold text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 text-xs font-bold text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("slaughter_number")}
+                <th className="text-xs font-bold text-black dark:text-white">
+                  {t("date")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("week")}
-                </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("slaughter_house")}
-                </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("product")}
-                </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("slaughter_date")}
-                </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("kind_of_animal")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("aerobic")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.aerobicConstantLimit}
-                  </span>
+                <th className="text-xs font-bold text-black dark:text-white">
+                  {t("tracking")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("e_coli")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.ecoliConstantLimit}
-                  </span>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("slaughter")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
-                  {t("staphylococcus")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.staphylococcusConstantLimit}
-                  </span>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.ham")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.front_leg")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.sternum")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.belly_cut")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.back")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.neck")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.flank")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.ribs")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.inside")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("ccp_followup_keys.hind_leg")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("slaughtered_total")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("clean")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("total")}/{t("percent")}
                 </th>
                 <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("actions")}
@@ -89,93 +104,112 @@ const CCPFollowup = () => {
               </tr>
             </thead>
             <tbody>
-              {headMidriffData?.length > 0 &&
-                headMidriffData.map((input: any, key) => (
+              {ccpFollowUps?.length > 0 &&
+                ccpFollowUps.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + 1}
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
-                        {input.slaughter_number}
-                      </h5>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
-                        {input.week}
-                      </h5>
-                    </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {input.slaughter_house}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {t(input.product.name_key)}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {input.slaughter_date}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {t(input.animal.name_key)}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">{input.aerobic}</span>
+                      <p className="text-xs text-black dark:text-white">
+                        {input.date}
                         <br />
-                        {parseFloat(input.aerobic) >
-                          constant.aerobicConstantLimit && (
-                          <Badge
-                            type="danger"
-                            value={t(constant.unApprovedText)}
-                          />
-                        )}
-                        {parseFloat(input.aerobic) <=
-                          constant.aerobicConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
-                        )}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">{input.e_coli}</span>
-                        <br />
-                        {parseFloat(input.e_coli) >
-                          constant.ecoliConstantLimit && (
-                          <Badge
-                            type="danger"
-                            value={t(constant.unApprovedText)}
-                          />
-                        )}
-                        {parseFloat(input.e_coli) <=
-                          constant.ecoliConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
-                        )}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">
-                          {input.staphylococcus}
+                        <span className="text-cyan-600 font-bold">
+                          {"week " + input.week}
                         </span>
-                        <br />
-                        {parseFloat(input.staphylococcus) >
-                          constant.staphylococcusConstantLimit && (
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
+                      <h5 className="text-xs text-black dark:text-white">
+                        {t(input.animal.name_key)}
+                      </h5>
+                    </td>
+                    <td className="border-b text-center border-[#eee] py-2 px-2 dark:border-strokedark">
+                      <h5 className="text-xs text-black dark:text-white">
+                        {/* 1 is Monitoring, 2 is Verification */}
+                        {input.verify_or_monitor == "1" ? (
                           <Badge
-                            type="danger"
-                            value={t(constant.unApprovedText)}
+                            type={input.verify_or_monitor}
+                            value={t("monitoring")}
+                          />
+                        ) : (
+                          <Badge
+                            type={input.verify_or_monitor}
+                            value={t("verification")}
                           />
                         )}
-                        {parseFloat(input.staphylococcus) <=
-                          constant.staphylococcusConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
-                        )}
+                        <br />
+                      </h5>
+                    </td>
+                    <td className="border-b text-center border-[#eee] py-2 px-2 dark:border-strokedark">
+                      <h5 className="text-xs text-black dark:text-white">
+                        {t(input.slaughter)}
+                      </h5>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.ham)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.front_leg)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.sternum)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.belly_cut)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.back)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.neck)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.flank)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.ribs)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.inside)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {t(input.hind_leg)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black font-bold dark:text-white">
+                        {t(input.slaughtered_total)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black font-bold dark:text-white">
+                        {t(input.clean)}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black font-bold dark:text-white">
+                        {t(input.total)} / {t(input.percent)}%
                       </p>
                     </td>
 
@@ -188,7 +222,7 @@ const CCPFollowup = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditHeadMidriff",
+                                  form: "EditHeadMidriff",
                                   data: input,
                                 },
                               });
@@ -222,25 +256,17 @@ const CCPFollowup = () => {
                                 modalSize: "sm",
                                 modalData: {
                                   index: key,
-                                  endPoint: "headmidriffs/" + input.id,
+                                  endPoint: "ccpfollowups/" + input.id,
                                   action: "DELETE",
                                   token: user.token,
                                   title:
-                                    t(input.product.name_key) +
+                                    t(input.animal.name_key) +
                                     ", - " +
-                                    t("aerobic") +
+                                    t("date") +
                                     " = " +
-                                    input.aerobic +
-                                    " ," +
-                                    t("e_coli") +
-                                    " = " +
-                                    t(input.e_coli) +
-                                    " ," +
-                                    t("staphylococcus") +
-                                    " = " +
-                                    t(input.staphylococcus),
-                                  data: headMidriffData,
-                                  setData: setHeadMidriffData,
+                                    input.date,
+                                  data: ccpFollowUps,
+                                  setData: setCcpFollowUps,
                                 },
                               });
                           }}
@@ -276,22 +302,22 @@ const CCPFollowup = () => {
                   </tr>
                 ))}
 
-              {!isLoading && headMidriffData?.length == 0 && (
+              {!isLoading && ccpFollowUps?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={10}
+                    colSpan={19}
                   >
                     {t("no_record_found")}
                   </td>
                 </tr>
               )}
 
-              {isLoading && headMidriffData?.length == 0 && (
+              {isLoading && ccpFollowUps?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={12}
+                    colSpan={19}
                   >
                     <Spinner /> Loading...
                   </td>

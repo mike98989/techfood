@@ -136,7 +136,7 @@ const DeviationComplaintsWater = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditDeviationComplaint",
+                                  form: "EditDeviationComplaint",
                                   data: input,
                                 },
                               });

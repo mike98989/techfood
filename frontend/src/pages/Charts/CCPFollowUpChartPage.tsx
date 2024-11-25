@@ -1,23 +1,23 @@
 import React from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import DrillSamplesChart from "../../components/Charts/DrillSamplesCharts/DrillSamplesChart1";
+import CCPFollowUpChart from "../../components/Charts/CCPFollowUpCharts/CCPFollowUpChart1";
 //import ChartTwo from "../../components/Charts/ChartTwo";
 import { useTranslation } from "react-i18next";
 import chartData from "../../methods/chartData";
 
 const Chart: React.FC = () => {
-  const { drillSamplesData } = chartData({
+  const { ccpFollowUpData } = chartData({
     proteinLactoseChart: false,
     fruitProductionChart: false,
     deviationComplaintsDataChart: false,
-    drillSampleDataChart: true,
+    drillSampleDataChart: false,
     headMidRiffDataChart: false,
-    ccpFollowUpDataChart: false,
+    ccpFollowUpDataChart: true,
     staffingProductionDataChart: false,
   });
 
   const { t } = useTranslation();
-  const pageTitle = t("drill_samples_in_slaughter");
+  const pageTitle = t("ccp_follow_up");
   return (
     <>
       <Breadcrumb
@@ -30,7 +30,7 @@ const Chart: React.FC = () => {
       />
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <DrillSamplesChart chartData={drillSamplesData} />
+        <CCPFollowUpChart chartData={ccpFollowUpData} />
         {/* <ChartTwo /> */}
       </div>
     </>

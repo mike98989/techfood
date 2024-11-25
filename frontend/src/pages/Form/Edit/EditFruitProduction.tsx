@@ -6,7 +6,7 @@ import formReturnMessage from "../../../components/Forms/FormAlerts/formReturnMe
 import { httpRequest } from "../../../methods/Requests";
 import { useTranslation } from "react-i18next";
 
-const EditFrutProduction = (props: any) => {
+const EditFruitProduction = (props: any) => {
   const { setIsLoading, Spinner } = SpinnerObject();
   const user = useSelector((state: any) => state.user.value);
   const { allRequest } = ReusableMethods();
@@ -241,4 +241,4 @@ const EditFrutProduction = (props: any) => {
   );
 };
 
-export default EditFrutProduction;
+export default EditFruitProduction;

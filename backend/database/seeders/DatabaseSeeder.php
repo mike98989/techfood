@@ -3,19 +3,21 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\SlaughterHeadMeatMidriff;
 use App\Models\User;
 use App\Models\Fruits;
 use App\Models\LabInputs;
+use App\Models\CCPFollowUp;
 use App\Models\DrillSample;
 use App\Models\Translations;
 use App\Models\FruitProduction;
 use Illuminate\Database\Seeder;
 use App\Models\DeviationComplaint;
 use App\Models\DrillSampleAnimals;
+use App\Models\StaffingProduction;
 use App\Models\DrillSampleProducts;
 use Database\Factories\UserFactory;
 use App\Models\FruitProductionCauses;
+use App\Models\SlaughterHeadMeatMidriff;
 use App\Models\DeviationComplaintSections;
 use App\Models\FruitProductionStatusTypes;
 use App\Models\DeviationComplaintLineTypes;
@@ -32,8 +34,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-$translation = '{"en": {"greeting":"Welcome back","sign_in_title":"Sign In to Techfood","username":"Username","password": "Password","signin":"Sign in","username_placeholder":"Enter your username","password_placeholder":"Enter your password","catch_phrase":"Streamline Your Lab:","catch_sentence":"Digitizing Food Results with Precision!","add_new":"Add New","new":"New","language":"Language","dashboard": "Dashboard","my_records":"My Records","protein_lactose_water":"Protein Lactos & Water","protein_lactose_water_chart":"Protein Lactos & Water Charts","fruit_production":"Fruit Production","deviation_complaints":"Deviation Complaints","microbiological_sample":"Microbiological Samples Environment","product":"Product","limit":"Limit","from":"From","to":"To",
-"staffing_of_production":"Staffing of production","drill_samples_in_slaughter": "Drill samples in slaughter","ccp_follow_up": "CCP follow up","slaughtered_head_meat_midriff":"Slaughter Head Meat/Midriff","satisfactory":"Satisfactory","actions_required":"Actions are required","daily_hygiene_rounds": "Daily Hygiene Rounds","settings": "Settings","menu": "MENU","home": "Home","date": "Date","month": "Month","section": "Section","cause": "Cause","status": "Status","deviation_type": "Deviation Type","batch_number": "Batch Number","protein_value": "Protein Value","lactose_value": "Lactose Value",
+$translation = '{"en": {"greeting":"Welcome back","sign_in_title":"Sign In to Techfood","username":"Username","password": "Password","signin":"Sign in","username_placeholder":"Enter your username","password_placeholder":"Enter your password","catch_phrase":"Streamline Your Lab:","catch_sentence":"Digitizing Food Results with Precision!","add_new":"Add New","new":"New","language":"Language","dashboard": "Dashboard","my_records":"My Records","protein_lactose_water":"Protein Lactos & Water","protein_lactose_water_chart":"Protein Lactos & Water Charts","fruit_production":"Food Safety Monitoring","deviation_complaints":"Deviation Complaints","microbiological_sample":"Microbiological Samples Environment","product":"Product","limit":"Limit","from":"From","to":"To",
+"staffing_of_production":"Staffing of production","drill_samples_in_slaughter": "Drill samples in slaughter","ccp_follow_up": "CCP follow up","oee_and_efficiency":"Digitization and follow-up of OEE and Efficiency","slaughtered_head_meat_midriff":"Slaughter Head Meat/Midriff","satisfactory":"Satisfactory","actions_required":"Actions are required","daily_hygiene_rounds": "Daily Hygiene Rounds","settings": "Settings","menu": "MENU","home": "Home","date": "Date","month": "Month","section": "Section","cause": "Cause","status": "Status","deviation_type": "Deviation Type","batch_number": "Batch Number","protein_value": "Protein Value","lactose_value": "Lactose Value",
 "water_value": "Water Value","actions": "Actions","heading_protein_lactose_water": "Digitization and follow-up of protein and water content analysis results from production","heading_fruit_production":"Digitization of fruit production","heading_deviation_complaints":"Digitization and follow-up of deviations complaints","heading_drill_sample":"Streamlining Data Collection and Analysis for Drill Samples","english":"English","swedish": "Swedish","french": "French","spanish": "Spanish","portuguese":"Portuguese","fruit_production_fruit_key": {"orange":"Orange","apple":"Apple","banana":"Banana","strawberry":"Strawberry","cherries":"Cherries","avocado":"Avocado","watermelon":"Watermelon","grape":"Grape"},"save":"Save","add_row":"Add Row","select":"Select","success_save_response":"Ok! Data saved successfully","success_save_protein_lactose_water":"
 Protein, Lactos, water data saved successfully","loading":"Loading","protein":"Protein","lactose":"Lactose","water":"Water","chart_type":"Chart Type","bar":"Bar","area":"Area","stack":"Stack","not":"Not","yes":"Yes","no":"No","week":"Week","slaughter_house":"Slaughter house","slaughter_date":"Slaughter Date","slaughter_number":"Slaughter Number","piece_date":"Piece Date","number_of_days_after_slaughter":"Number of days after slaughter","kind_of_animal":"Kind of animal","aerobic":"Aerobic","e_coli":"E.Coli","enterobacta":"Enterobacter","staphylococcus":"Staphylococcus","all":"All",
 "drill_sample_product_key":{
@@ -41,6 +43,9 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
 },"drill_sample_animal_key":{
 "beef_118":"Beef 118","beef":"Beef","lam":"Lam","beef_048":"Beef 048","pork":"Pork"
 },
+"tracking":"Tracking","slaughtered_total":"Slaughtered","slaughter":"Slaughter","clean":"Clean","total":"Total","percent":"Percent","verification":"Verification","monitoring":"Monitoring",
+"ccp_followup_keys":{
+"ham":"Ham","front_leg":"Front Leg","sternum":"Sternum","belly_cut":"Belly Cut","back":"Back","neck":"Neck","flank":"Flank","ribs":"Ribs","inside":"Inside","hind_leg":"Hind Leg"},
 "success_delete_response":"Data deleted successfully","update":"Update","values":"Values","delete_question":"Are you sure you want to delete this record","yes_confirm":"Yes I`m sure","no_confirm":"No, Cancel","view_chart":"View Chart","chart":"Chart","my_profile":"My Profile","account_settings":"Account Settings","signout":"Sign Out","no_record_found":"No record found! Please create record","header":"Header","code":"Code","article":"Article","number":"Number","location":"Location","line":"Line","reference_number":"Reference Number","title":"Title","occurance_date":"Occurance Date","deviation_code":"Deviation Code","risk_category":"Risk Category","product_type":"Product Type","deviation_description":"Description of deviation","suggested_correction":"Suggested Correction",
 "fruit_production_cause_key": {"tidiness_and_cleaning":"Tidiness and cleaning","maintenance":"Maintenance","order_and_order":"Order and order","pest":"Pest","food_hygiene":"Food hygiene"},
 "fruit_production_status_type_key": {"not_started":"Not Started","job_in_progress":"Job in Progress","job_finished":"Job Finished","effect_implemented":"Effect Implemented"},
@@ -49,17 +54,17 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
 "deviation_complaint_deviation_types_key":{"fire_protection":"Fire Protection","ecokrav":"Eco/KRav","hygiene_round":"Hygiene Round","customer_audit":"Customer Audit","quality":"Quality","quality_audit_-_external_fssc":"Quality Audit - External FSSC","quality_audit_-_external_iso_9001":"Quality Audit - External ISO 9001","quality_audit_-_internal":"Quality Audit - Internal","environment":"Environment","environmental_audit_-_external_iso_14000":"Environmental Audit - External ISO 14000","environmental_audit_-_internal":"Environmental Audit - Internal","energy_audit_-_external":"Energy Audit - External"},
 "deviation_complaint_remark_key":{"big_bag_-_gassing_error":"Big Bag - Gassing error","big_bag-lock_not_on":"Big Bag-Lock not on","big-bag_broken_filters":"Big-Bag Broken filters","big_bag-_other_comment":"Big Bag- Other (Comment)","ccp-_closure":"CCP- Closure","ccp-sight":"CCP-Sight","ccp_metal_detector":"CCP_Metal detector","paper":"Paper","cip_disk":"CIP Disk","routineinstruction_not_followed":"Routine/instruction not followed","packaging-decor_error":"Packaging-Decor error","packaging_-_misdelivery":"Packaging - Misdelivery","packaging-damaged_packaging":"Packaging-Damaged packaging","error_in_instruction":"Error in instruction","error_in_routine":"Error in routine","fault_in_production_equipment":"Fault in production equipment","mismixed":"Mismixed","deficient_cleaning":"Deficient cleaning","lack_of_order_and_order":"Lack of order and order","different_texture":"Different texture","moldyyeasthorrible":"Moldy/Yeast/Horrible","foreign_objects":"Foreign objects","wood":"Wood","plastic":"Plastic","metal":"Metal","rubber":"Rubber","packaging_plastic":"Packaging Plastic","hair":"Hair","difficult_to_prepare":"Difficult to prepare","damaged_use_no_glass_in_product":"No glass in product","damaged_use_glass_in_product":"Glass in product","undamaged_use_glass_in_product":"Glass in product","conical_piece_of_glass_from_the_bottom":"Conical piece of glass from the bottom","glass_piece_not_glass_packaging":"Glass piece, Not glass packaging","raw_material_residue":"Raw material residue","damaged_animals":"Damaged animals","brokendamaged_packaging":"Broken/damaged packaging","wrong_label":"Wrong label","wrongly_packed":"Wrongly packed","no_visible_best_before_date":"No visible best before date","wrong_product_quantity_in_packaging":"Wrong product quantity in packaging","hard-to-open_packaging":"Hard-to-open packaging","contaminated_product":"Contaminated product","different_appearance":"Different appearance","burnt_particles":"Burnt particles"},
 "deviation_complaint_product_type_key":{"bmp-buttermilk":"BMP-Buttermilk","bread_mix":"Bread mix","porridge":"Porridge","crispbread":"Crispbread","mme":"MME","scrubbing_fluid":"Scrubbing fluid","spray_grease":"Spray grease","spray_foamed_milk":"Spray foamed milk","waltz_cereals":"Waltz Cereals","whey":"Whey","whey_milk":"Whey milk","wpc":"WPC","gruel":"Gruel","gourd-requirements":"Gourd-Requirements","other":"Other"},
-"deviation_complaint_line_type_key":{"the_packaging_warehouse":"The packaging warehouse","the_finished_goods_warehouse":"The finished goods warehouse","the_raw_material_warehouse":"The raw material warehouse","l52":"L52","l53":"L53","l54":"L54","l55":"L55","l56":"L56","l57":"L57","l58":"L58","l59":"L59","l62":"L62","l70":"L70","l71":"L71","l73":"L73","l81_rovema_1":"L81 (Rovema 1)","l83_rovema_3":"L83 (Rovema 3)","l84_hermic":"L84 (Hermic)","l89_rovema_4":"L89 (Rovema 4)","l90_can_line":"L90 Can line","tower_1":"Tower 1","tower_3":"Tower 3","tower_4":"Tower 4","the_ultrafiltration":"The ultrafiltration","waltz_6":"Waltz 6","waltz_78":"Waltz 7/8","tank_hall":"Tank hall"}
+"deviation_complaint_line_type_key":{"the_packaging_warehouse":"The packaging warehouse","the_finished_goods_warehouse":"The finished goods warehouse","the_raw_material_warehouse":"The raw material warehouse","l52":"L52","l53":"L53","l54":"L54","l55":"L55","l56":"L56","l57":"L57","l58":"L58","l59":"L59","l62":"L62","l70":"L70","l71":"L71","l73":"L73","l81_rovema_1":"L81 (Rovema 1)","l83_rovema_3":"L83 (Rovema 3)","l84_hermic":"L84 (Hermic)","l89_rovema_4":"L89 (Rovema 4)","l90_can_line":"L90 Can line","tower_1":"Tower 1","tower_3":"Tower 3","tower_4":"Tower 4","the_ultrafiltration":"The ultrafiltration","waltz_6":"Waltz 6","waltz_78":"Waltz 7/8","tank_hall":"Tank hall"},
+"supervisor":"Supervisor","control":"Control","operator":"Operator","number_of_hours":"Number of hours","total_hours":"Total(Hours)","total_production":"Production-(kg)","efficiency":"Efficiency","productivity":"Productivity","monday":"Monday","tuesday":"Tuesday","wednesday":"Wednesday","thursday":"Thursday","friday":"Friday","saturday":"Saturday","sunday":"Sunday","days":"Days"
 },
-"sv": {"greeting":"Välkommen tillbaka","sign_in_title": "Logga in på Techfood","username": "Användarnamn","password": "Lösenord","signin": "Logga in","username_placeholder": "Ange ditt användarnamn","password_placeholder": "Ange ditt lösenord","catch_phrase": "Strömlinjeforma ditt laboratorium:","catch_sentence": "Digitalisera livsmedelsresultat med precision!","add_new": "Lägga till ny","product": "Produkt","new":"Ny","language": "Språk","dashboard": "Instrumentbräda","my_records": "mina Rekord","protein_lactose_water": "Protein,laktos och vatten","protein_lactose_water_chart": "Protein laktos och vatten diagram","satisfactory":"Tillfredsställande","actions_required":"Åtgärder krävs","fruit_production": "Livsmedelssäkerhet uppföljning","deviation_complaints": "Avvikelse uppföljning","microbiological_sample": "Analys av mikrobiologiska provresultat","staffing_of_production": "Bemanning av produktion","drill_samples_in_slaughter":"Borrprover i slakt","ccp_follow_up":"CCP uppföljning","slaughtered_head_meat_midriff": "Slakt Skallkött/Mellangärde","limit": "Gränsvärde",
+"sv": {"greeting":"Välkommen tillbaka","sign_in_title": "Logga in på Techfood","username": "Användarnamn","password": "Lösenord","signin": "Logga in","username_placeholder": "Ange ditt användarnamn","password_placeholder": "Ange ditt lösenord","catch_phrase": "Strömlinjeforma ditt laboratorium:","catch_sentence": "Digitalisera livsmedelsresultat med precision!","add_new": "Lägga till ny","product": "Produkt","new":"Ny","language": "Språk","dashboard": "Instrumentbräda","my_records": "mina Rekord","protein_lactose_water": "Protein,laktos och vatten","protein_lactose_water_chart": "Protein laktos och vatten diagram","satisfactory":"Tillfredsställande","actions_required":"Åtgärder krävs","fruit_production": "Livsmedelssäkerhet uppföljning","deviation_complaints": "Avvikelse uppföljning","microbiological_sample": "Analys av mikrobiologiska provresultat","staffing_of_production": "Bemanning av produktion","drill_samples_in_slaughter":"Borrprover i slakt","ccp_follow_up":"CCP uppföljning","oee_and_efficiency": "Digitalisering och uppföljning av OEE och verkningsgrad","slaughtered_head_meat_midriff": "Slakt Skallkött/Mellangärde","limit": "Gränsvärde",
 "daily_hygiene_rounds": "Dagliga hygienrundor","settings": "Inställningar","menu": "MENY","home": "Hem","date": "Datum","month": "Månad","section": "Avdelning","cause": "Orsaka","status": "Status","deviation_type": "Typ av avvikelse","batch_number": "Satsnummer","protein_value": "Proteinvärde","lactose_value": "Laktosvärde","water_value": "Vattenvärde","actions": "Handlingar","from":"Från","to":"Till","heading_protein_lactose_water": "Digitalisering och uppföljning av protein- och vatteninnehållsanalysresultat från produktionen","heading_fruit_production": "Digitalisering av livsmedelssäkerhet uppföljning","heading_deviation_complaints": "Digitalisering och uppföljning av Avvikelse uppföljning","english": "Engelska","swedish": "Svenska","french": "Franska","spanish": "Spanska","portuguese": "Portugisiska","fruit_production_fruit_key": {"orange":"Orange","apple":"Äpple","banana":"Banan","strawberry":"Jordgubb","cherries":"Körsbär","avocado":" Avocado","watermelon":"Vattenmelon","grape":"Druva"},"chart_type": "Diagramtyp",
   "bar": "Stapeldiagram",
   "area": "Ytdiagram",
   "stack": "Stapla",
   "not": "Inte",
   "yes": "Ja",
-  "no": "Nej",
-   "week": "Vecka",
+  "no": "Nej","week": "Vecka",
   "slaughter_house": "Slakteri",
   "slaughter_number": "Slaktnummer",
   "slaughter_date": "Slaktdatum",
@@ -205,7 +210,41 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
     "waltz_6": "Vals 6",
     "waltz_78":"Waltz 7/8",
     "tank_hall":"Tank hall"
-    }
+    },
+    "tracking": "Spårning",
+    "slaughtered_total": "Slaktade","slaughter":"Slakt",
+    "clean": "Ren",
+    "total": "Totalt",
+    "percent": "Procent","verification": "Verifiering",
+    "monitoring": "Övervakning",
+    "ccp_followup_keys": {
+    "ham": "Skinka",
+    "front_leg": "Framlägg",
+    "sternum": "Bröstben",
+    "belly_cut": "Buksnitt",
+    "back": "Rygg",
+    "neck": "Hals",
+    "flank": "Flank",
+    "ribs": "Revben",
+    "inside": "Inuti",
+    "hind_leg": "Bakben"
+    },
+    "supervisor": "Arbetsledare",
+  "control": "Kontroll",
+  "operator": "Operatör",
+  "number_of_hours":"Antal timmar",
+  "total_hours": "Total(timer)", 
+  "total_production": "Produktion-(kg)",
+  "efficiency": "Effektivitet",
+  "productivity": "Produktivitet",
+  "monday": "Måndag",
+  "tuesday": "Tisdag",
+  "wednesday": "Onsdag",
+  "thursday": "Torsdag",
+  "friday": "Fredag",
+  "saturday": "Lördag",
+  "sunday": "Söndag",
+  "days":"Dagar"
 },"fr":{
   "greeting": "Bienvenue",
   "sign_in_title": "Connectez-vous à Techfood",
@@ -233,7 +272,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "microbiological_sample": "Échantillons Microbiologiques Environnement",
   "staffing_of_production": "Dotation en Personnel de Production",
   "drill_samples_in_slaughter": "Échantillons de Forage à l`Abattage",
-  "ccp_follow_up": "Suivi CCP","slaughtered_head_meat_midriff": "Viande de tête/Diaphragme abattus",
+  "ccp_follow_up": "Suivi CCP","slaughtered_head_meat_midriff": "Viande de tête/Diaphragme abattus","oee_and_efficiency": "Numérisation et suivi de l`OEE et de l`efficacité",
   "daily_hygiene_rounds": "Rondes d`Hygiène Quotidiennes",
   "settings": "Paramètres",
   "menu": "MENU",
@@ -392,7 +431,40 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
     "waltz_6": "Valse 6",
     "waltz_78":"Waltz 7/8",
     "tank_hall":"Tank hall"
-    }
+    },"tracking": "Suivi",
+    "slaughtered_total": "Total Abattu","slaughter":"Abattu",
+    "clean": "Propre",
+    "total": "Total",
+    "percent": "Pourcentage","verification": "Vérification",
+    "monitoring": "Surveillance",
+    "ccp_followup_keys": {
+    "ham": "Jambon",
+    "front_leg": "Soumettre",
+    "sternum": "Sternum",
+    "belly_cut": "Coupe Ventre",
+    "back": "Dos",
+    "neck": "Cou",
+    "flank": "Flanc",
+    "ribs": "Côtes",
+    "inside": "Intérieur",
+    "hind_leg": "Patte Arrière"
+    },
+    "supervisor": "Superviseur",
+  "control": "Contrôle",
+  "operator": "Opérateur",
+  "number_of_hours":"Nombre d`heures",
+  "total_hours":  "Total(heures)",
+  "total_production": "Production-(kg)",
+  "efficiency": "Efficacité",
+  "productivity": "Productivité",
+  "monday": "Lundi",
+  "tuesday": "Mardi",
+  "wednesday": "Mercredi",
+  "thursday": "Jeudi",
+  "friday": "Vendredi",
+  "saturday": "Samedi",
+  "sunday": "Dimanche",
+  "days":"Jours"
   },"pt":{
   "greeting": "Bem-vindo de volta",
   "sign_in_title": "Entrar no Techfood",
@@ -425,7 +497,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "microbiological_sample": "Amostras Microbiológicas do Ambiente",
   "staffing_of_production": "Contratação de Pessoal na Produção",
   "drill_samples_in_slaughter": "Amostras de Perfuração no Abate",
-  "ccp_follow_up": "Acompanhamento CCP","slaughtered_head_meat_midriff": "Carne de Cabeça/Meio do Corpo Abatida",
+  "ccp_follow_up": "Acompanhamento CCP","slaughtered_head_meat_midriff": "Carne de Cabeça/Meio do Corpo Abatida","oee_and_efficiency": "Digitalização e acompanhamento do OEE e da eficiência",
   "daily_hygiene_rounds": "Rondas Diárias de Higiene",
   "settings": "Configurações",
   "menu": "MENU",
@@ -579,7 +651,40 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
     "waltz_6": "Valsa 6",
     "waltz_78":"Waltz 7/8",
     "tank_hall":"Tank hall"
-    }
+    },"tracking": "Rastreamento",
+    "slaughtered_total": "Total Abatido","slaughter":"Abatido",
+    "clean": "Limpo",
+    "total": "Total",
+    "percent": "Porcentagem","verification": "Verificação",
+    "monitoring": "Monitoramento",
+    "ccp_followup_keys": {
+    "ham": "Presunto",
+    "front_leg": "Enviar",
+    "sternum": "Esterno",
+    "belly_cut": "Corte Abdominal",
+    "back": "Costas",
+    "neck": "Pescoço",
+    "flank": "Flanco",
+    "ribs": "Costelas",
+    "inside": "Interior",
+    "hind_leg": "Pata Traseira"
+    },
+    "supervisor": "Supervisor",
+  "control": "Controle",
+  "operator": "Operador",
+  "number_of_hours":"Número de horas",
+  "total_hours":  "Total(horas)",
+  "total_production": "Produção-(kg)",
+  "efficiency": "Eficiência",
+  "productivity": "Produtividade",
+  "monday": "Segunda-feira",
+  "tuesday": "Terça-feira",
+  "wednesday": "Quarta-feira",
+  "thursday": "Quinta-feira",
+  "friday": "Sexta-feira",
+  "saturday": "Sábado",
+  "sunday": "Domingo",
+  "days":"Dias"
   },"sp":{
   "greeting": "Bienvenido",
   "sign_in_title": "Iniciar sesión en Techfood",
@@ -633,7 +738,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "microbiological_sample": "Muestras Microbiológicas del Entorno",
   "staffing_of_production": "Dotación de Personal en Producción",
   "drill_samples_in_slaughter": "Muestras de Perforación en Sacrificio",
-  "ccp_follow_up": "Seguimiento CCP", "slaughtered_head_meat_midriff": "Carne de Cabeza/Diafragma Sacrificada",
+  "ccp_follow_up": "Seguimiento CCP", "slaughtered_head_meat_midriff": "Carne de Cabeza/Diafragma Sacrificada","oee_and_efficiency": "Digitalización y seguimiento del OEE y la eficiencia",
   "daily_hygiene_rounds": "Rondas Diarias de Higiene",
   "settings": "Configuraciones",
   "menu": "MENÚ",
@@ -766,7 +871,39 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
     "waltz_6": "Vals 6",
     "waltz_78":"Waltz 7/8",
     "tank_hall":"Tank hall"
-    }
+    },"tracking": "Seguimiento",
+    "slaughtered_total": "Total Sacrificado","slaughter":"Sacrificado",
+    "clean": "Limpio",
+    "total": "Total",
+    "percent": "Porcentaje", "verification": "Verificación",
+    "monitoring": "Monitoreo",
+    "ccp_followup_keys": {
+    "ham": "Jamón",
+    "front_leg": "Entregar",
+    "sternum": "Esternón",
+    "belly_cut": "Corte Abdominal",
+    "back": "Espalda",
+    "neck": "Cuello",
+    "flank": "Flanco",
+    "ribs": "Costillas",
+    "inside": "Interior",
+    "hind_leg": "Pata Trasera"
+    },"supervisor": "Supervisor",
+  "control": "Control",
+  "operator": "Operador",
+  "number_of_hours":"Número de horas",
+  "total_hours": "Total(horas)",
+  "total_production": "Producción-(kg)",
+  "efficiency": "Eficiencia",
+  "productivity": "Productividad",
+  "monday": "Lunes",
+  "tuesday": "Martes",
+  "wednesday": "Miércoles",
+  "thursday": "Jueves",
+  "friday": "Viernes",
+  "saturday": "Sábado",
+  "sunday": "Domingo",
+  "days":"Dias"
   }}';
 
 
@@ -1080,17 +1217,19 @@ $product_types = [
         // }
 
         
-            // Translations::create([
-            //     'translation' => str_replace("’","'",$translation),
-            //     'status'=>'1',
-            // ]);
+            Translations::create([
+                'translation' => str_replace("’","'",$translation),
+                'status'=>'1',
+            ]);
         
         //User::factory(5)->create();
         //LabInputs::factory(100)->create();
         // FruitProduction::factory(100)->create();
-        DeviationComplaint::factory(100)->create();
+        //DeviationComplaint::factory(100)->create();
         //DrillSample::factory(100)->create();
         //SlaughterHeadMeatMidriff::factory(150)->create();
+        //CCPFollowUp::factory(150)->create();
+        //StaffingProduction::factory(150)->create();
         
     }
 }

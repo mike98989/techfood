@@ -7,6 +7,7 @@ import SpinnerObject from "../../../components/Spinner/Spinner";
 import { constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import Badge from "../../Badges/Badge";
 
 interface ChartOneState {
   series: {
@@ -251,13 +252,19 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               </div>
             </div>
           </div>
-          <ReactApexChart
-            key={"1"}
-            options={options}
-            series={series.series}
-            type={chartType}
-            height={320}
-          />
+          {props.chartData && props.chartData?.data?.length > 0 ? (
+            <ReactApexChart
+              key={"1"}
+              options={options}
+              series={series.series}
+              type={chartType}
+              height={320}
+            />
+          ) : (
+            <div className="flex justify-center pt-3">
+              <Badge type="danger" value={t("no_record_found")} />
+            </div>
+          )}
         </div>
       </div>
     </div>

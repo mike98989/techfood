@@ -12,6 +12,8 @@ const Chart: React.FC = () => {
     deviationComplaintsDataChart: false,
     drillSampleDataChart: false,
     headMidRiffDataChart: true,
+    ccpFollowUpDataChart: false,
+    staffingProductionDataChart: false,
   });
 
   const { t } = useTranslation();

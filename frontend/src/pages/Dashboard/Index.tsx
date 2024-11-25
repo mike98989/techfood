@@ -11,6 +11,7 @@ import ProteinLactoseWaterChart from "../../components/Charts/DashboardCharts/Pr
 import ProteinLactoseWaterThreshold from "../../components/Charts/DashboardCharts/ProteinLactoseWaterThresholdChart";
 import DrillSamplesChart from "../../components/Charts/DashboardCharts/DrillSamplesChart";
 import chartData from "../../methods/chartData";
+import CCPFollowUpChart from "../../components/Charts/DashboardCharts//CCPFollowUpChart";
 
 const Index: React.FC = () => {
   const {
@@ -19,12 +20,15 @@ const Index: React.FC = () => {
     deviationComplaintsData,
     drillSamplesData,
     headMidRiffData,
+    ccpFollowUpData,
   } = chartData({
     proteinLactoseChart: true,
     fruitProductionChart: true,
     deviationComplaintsDataChart: true,
     drillSampleDataChart: true,
     headMidRiffDataChart: true,
+    ccpFollowUpDataChart: true,
+    staffingProductionDataChart: false,
   });
   const user = useSelector((state: any) => state.user.value);
   const { t } = useTranslation();
@@ -160,6 +164,14 @@ const Index: React.FC = () => {
             <>
               <div className="w-full md:w-3/6 mr-3 mb-2">
                 <DrillSamplesChart chartData={drillSamplesData} />
+              </div>
+            </>
+          )}
+
+          {ccpFollowUpData && (
+            <>
+              <div className="w-full md:w-3/6 mr-3 mb-2">
+                <CCPFollowUpChart chartData={ccpFollowUpData} />
               </div>
             </>
           )}

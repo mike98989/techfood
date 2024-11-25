@@ -12,6 +12,8 @@ const FruitProductionChartPage: React.FC = () => {
     deviationComplaintsDataChart: false,
     drillSampleDataChart: false,
     headMidRiffDataChart: false,
+    ccpFollowUpDataChart: false,
+    staffingProductionDataChart: false,
   });
 
   const { t } = useTranslation();

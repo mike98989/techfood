@@ -15,8 +15,10 @@ import ProteinLactoseWater from "./pages/ProteinLactoseWater";
 import FruitProduction from "./pages/FruitProduction";
 import DrillSamples from "./pages/DrillSamples";
 import HeadMidriff from "./pages/HeadMidRiff";
-import CcpFollowup from "./pages/CcpFollowup";
-
+import CCPFollowUp from "./pages/CcpFollowup";
+import StaffingProduction from "./pages/StaffingProduction";
+import NewStaffingProduction from "./pages/Form/NewStaffingProduction";
+import NewCCPFollowUp from "./pages/Form/NewCCPFollowUp";
 import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
 import DeviationComplaints from "./pages/DeviationComplaints";
@@ -28,6 +30,8 @@ import DrillSampleMainChart from "./pages/Charts/DrillSampleChartPage";
 import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
 import DeviationComplaintMainChart from "./pages/Charts/DeviationComplaintChartPage";
 import HeadMidriffMainChart from "./pages/Charts/HeadMidChartPage";
+import CCPFollowUpMainChart from "./pages/Charts/CCPFollowUpChartPage";
+import StaffingProductionMainChart from "./pages/Charts/StaffingProductionChartPage";
 
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
@@ -318,7 +322,7 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <CcpFollowup />
+                        <CCPFollowUp />
                       </DefaultLayout>
                     }
                   />
@@ -327,7 +331,7 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewHeadMidriff />
+                        <NewCCPFollowUp />
                       </DefaultLayout>
                     }
                   ></Route>
@@ -337,7 +341,39 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HeadMidriffMainChart />
+                        <CCPFollowUpMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* Staffing of Production */}
+                <Route path="staffing_production">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <StaffingProduction />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewStaffingProduction />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <StaffingProductionMainChart />
                       </DefaultLayout>
                     }
                   ></Route>

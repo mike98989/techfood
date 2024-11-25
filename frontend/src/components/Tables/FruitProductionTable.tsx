@@ -122,7 +122,7 @@ const FruitProductionTable = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "../../pages/Form/Edit/EditFruitProduction",
+                                  form: "EditFruitProduction",
                                   data: input,
                                 },
                               });
