@@ -7,6 +7,9 @@ import { ReusableMethods } from "../../methods/ReusableMethods";
 import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
+import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import PaginationObject from "../Pagination/Paginate";
+import Badge from "../Badges/Badge";
 
 const ProteinLactoseWater = () => {
   const { fetchApi } = httpRequest();
@@ -16,14 +19,16 @@ const ProteinLactoseWater = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
-
+  const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
+    PaginationObject();
   //const { MessageBox, setFormMessage } = formReturnMessage();
 
   useEffect(() => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "labinputs", // End Point
+      action_url:
+        `labinputs?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -32,50 +37,73 @@ const ProteinLactoseWater = () => {
       setIsLoading,
       setReturnData: setProteinLactosWaterData,
     });
-  }, []);
+  }, [currentPage]);
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
       <ModalUIComponent />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {!isLoading && (
+          <div className="px-4 py-4">
+            <PaginateSpanHeader
+              totalPageItemCount={proteinLactosWaterData.to}
+              TotalItemCount={proteinLactosWaterData.total}
+            />
+          </div>
+        )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 font-medium text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 text-sm text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   PO
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("date")}
                 </th>
-                <th className="min-w-[150px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("batch_number")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("protein_value")}
+                  <br />
+                  <span className="text-sm text-cyan-800 dark:text-white">
+                    {t("limit") + " = " + constant.proteinConstantLimit}
+                  </span>
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("lactose_value")}
+                  <br />
+                  <span className="text-sm text-cyan-800 dark:text-white">
+                    {t("limit") + " = " + constant.lactoseConstantLimit}
+                  </span>
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("water_value")}
+                  <br />
+                  <span className="text-sm text-cyan-800 dark:text-white">
+                    {t("limit") + " = " + constant.waterConstantLimit}
+                  </span>
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {proteinLactosWaterData?.length > 0 &&
-                proteinLactosWaterData.map((input: any, key) => (
+              {proteinLactosWaterData?.data?.length > 0 &&
+                proteinLactosWaterData?.data?.map((input: any, key) => (
                   // <tr key={key} className="even:bg-gray-2">
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {key + 1}
+                      {key + proteinLactosWaterData.from}
                     </td>
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
@@ -95,16 +123,52 @@ const ProteinLactoseWater = () => {
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
                         {input.protein_value}
+
+                        {parseFloat(input.protein_value) <
+                          constant.proteinConstantLimit && (
+                          <Badge
+                            type="danger"
+                            value={t(constant.unApprovedText)}
+                          />
+                        )}
+                        {parseFloat(input.protein_value) >=
+                          constant.proteinConstantLimit && (
+                          <Badge type="1" value={t(constant.approvedText)} />
+                        )}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
                         {input.lactose_value}
+
+                        {parseFloat(input.lactose_value) <
+                          constant.lactoseConstantLimit && (
+                          <Badge
+                            type="danger"
+                            value={t(constant.unApprovedText)}
+                          />
+                        )}
+                        {parseFloat(input.lactose_value) >=
+                          constant.lactoseConstantLimit && (
+                          <Badge type="1" value={t(constant.approvedText)} />
+                        )}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
                         {input.water_value}
+
+                        {parseFloat(input.water_value) <
+                          constant.waterConstantLimit && (
+                          <Badge
+                            type="danger"
+                            value={t(constant.unApprovedText)}
+                          />
+                        )}
+                        {parseFloat(input.water_value) >=
+                          constant.waterConstantLimit && (
+                          <Badge type="1" value={t(constant.approvedText)} />
+                        )}
                       </p>
                     </td>
 
@@ -197,7 +261,7 @@ const ProteinLactoseWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && proteinLactosWaterData?.length == 0 && (
+              {!isLoading && proteinLactosWaterData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -208,7 +272,7 @@ const ProteinLactoseWater = () => {
                 </tr>
               )}
 
-              {isLoading && proteinLactosWaterData?.length == 0 && (
+              {isLoading && proteinLactosWaterData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -220,6 +284,22 @@ const ProteinLactoseWater = () => {
               )}
             </tbody>
           </table>
+          <div className="pl-3 pt-2">
+            {!isLoading && (
+              <div className="px-4 py-4">
+                <PaginateSpanHeader
+                  totalPageItemCount={proteinLactosWaterData.to}
+                  TotalItemCount={proteinLactosWaterData.total}
+                />
+              </div>
+            )}
+            <Spinner />
+            <Paginate
+              currentPage={proteinLactosWaterData.current_page}
+              totalPages={proteinLactosWaterData.last_page}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
     </>

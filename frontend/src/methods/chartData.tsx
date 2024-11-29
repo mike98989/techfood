@@ -11,6 +11,7 @@ const chartData = ({
   headMidRiffDataChart,
   ccpFollowUpDataChart,
   staffingProductionDataChart,
+  oeeFollowUpDataChart,
 }: {
   proteinLactoseChart: boolean;
   fruitProductionChart: boolean;
@@ -19,6 +20,7 @@ const chartData = ({
   headMidRiffDataChart: boolean;
   ccpFollowUpDataChart: boolean;
   staffingProductionDataChart: boolean;
+  oeeFollowUpDataChart: boolean;
 }) => {
   const [proteinLactoseData, setProteinLactoseData] = useState([]);
   const [fruitProductionData, setFruitProductionData] = useState([]);
@@ -27,6 +29,7 @@ const chartData = ({
   const [ccpFollowUpData, setCCPFollowUpData] = useState([]);
   const [headMidRiffData, setHeadMidRiffData] = useState([]);
   const [staffingProductionData, setStaffingOfProductionData] = useState([]);
+  const [oeeFollowUpData, setOEEFollowUpData] = useState([]);
 
   const user = useSelector((state: any) => state.user.value);
   const { fetchApi } = httpRequest();
@@ -42,6 +45,7 @@ const chartData = ({
       authentication: user.token,
     }).then((response_value: any) => {
       const response = JSON.parse(response_value);
+      console.log("response", response);
       fruitProductionChart &&
         setFruitProductionData(response.data.fruitproduction.original);
       proteinLactoseChart &&
@@ -56,12 +60,14 @@ const chartData = ({
         setCCPFollowUpData(response.data.ccpfollowups.original);
       staffingProductionDataChart &&
         setStaffingOfProductionData(response.data.staffingproduction.original);
+      oeeFollowUpDataChart &&
+        setOEEFollowUpData(response.data.oeefollowups.original);
     });
   };
 
   useEffect(() => {
     fetchData(
-      "get_all_chart_data?deviationcomplaints=" +
+      "get_all_chart_data?paginate=all&deviationcomplaints=" +
         deviationComplaintsDataChart +
         "&fruitproduction=" +
         fruitProductionChart +
@@ -74,7 +80,9 @@ const chartData = ({
         "&ccpfollowups=" +
         ccpFollowUpDataChart +
         "&staffingproduction=" +
-        staffingProductionDataChart
+        staffingProductionDataChart +
+        "&oeefollowups=" +
+        oeeFollowUpDataChart
     );
   }, []);
 
@@ -86,6 +94,7 @@ const chartData = ({
     headMidRiffData,
     ccpFollowUpData,
     staffingProductionData,
+    oeeFollowUpData,
   };
 };
 export default chartData;

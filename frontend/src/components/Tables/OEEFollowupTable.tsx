@@ -11,15 +11,13 @@ import Badge from "../Badges/Badge";
 import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
 
-const DrillSamples = () => {
-  const { fetchApi } = httpRequest();
-  const [drillSamplesData, setDrillSamplesData] = useState([]);
+const OEEFollowup = () => {
+  const [oeeFollowUps, setOEEFollowUps] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { isLoading, setIsLoading, Spinner } = SpinnerObject();
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
-
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
 
@@ -28,20 +26,21 @@ const DrillSamples = () => {
     allRequest({
       event: null,
       action_url:
-        `drillsamples?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
+        `oeefollowups?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
       contentType: "application/json", //Content Type
       authentication: user.token,
       setIsLoading,
-      setReturnData: setDrillSamplesData,
+      setReturnData: setOEEFollowUps,
     });
   }, [currentPage]);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
+
   return (
     <>
       <ModalUIComponent />
@@ -50,125 +49,137 @@ const DrillSamples = () => {
         {!isLoading && (
           <div className="px-4 py-4">
             <PaginateSpanHeader
-              totalPageItemCount={drillSamplesData.to}
-              TotalItemCount={drillSamplesData.total}
+              totalPageItemCount={oeeFollowUps.to}
+              TotalItemCount={oeeFollowUps.total}
             />
           </div>
         )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 text-sm text-black dark:text-white xl:pl-3">
+              <tr className="bg-gray-2 dark:bg-meta-4 text-center">
+                <th className="py-4 px-3 text-xs font-bold text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("slaughter_number")}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("date")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("week")}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("number_of_planned_break")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("slaughter_house")}
+                {/* <th className="text-xs font-bold text-black dark:text-white">
+                  {t("planned_break_in_min")}
+                </th> */}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("number_of_meal_break")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("product")}
+                {/* <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("meal_breaks_in_min")}
+                </th> */}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("down_time")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("slaughter_date")}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("run_rate_in_ppm")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("kind_of_animal")}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("quality")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("aerobic")} <br />
-                  <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.aerobicConstantLimit}
-                  </span>
+                {/* <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("rejected_piece")}
+                </th> */}
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("planned_production_time")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
-                  {t("enterobacta")} <br />
-                  <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.enterobactaConstantLimit}
-                  </span>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("operating_time")}
                 </th>
-                <th className="py-2 px-2 text-sm text-black dark:text-white">
+
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("availability")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("performance")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("quality")}
+                </th>
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
+                  {t("overall_oee")}
+                </th>
+                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {drillSamplesData?.data?.length > 0 &&
-                drillSamplesData?.data?.map((input: any, key) => (
-                  <tr key={key}>
+              {oeeFollowUps?.data?.length > 0 &&
+                oeeFollowUps?.data.map((input: any, key) => (
+                  <tr key={key} className="text-center">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {drillSamplesData.from + key}
+                      {oeeFollowUps.from + key}
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {input.date}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
+                      <p className="text-xs text-black dark:text-white">
+                        {input.number_of_planned_break +
+                          " x " +
+                          input.default_planned_break_in_min}
+                      </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
-                        {input.slaughter_number}
+                      <h5 className="text-xs text-black dark:text-white">
+                        {input.number_of_meal_break +
+                          " x " +
+                          input.default_meal_break_in_min}
                       </h5>
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
-                        {input.week}
+
+                    <td className="border-b text-center border-[#eee] py-2 px-2 dark:border-strokedark">
+                      <h5 className="text-xs text-black dark:text-white">
+                        {input.down_time_in_min}
                       </h5>
                     </td>
+                    <td className="border-b text-center border-[#eee] py-2 px-2 dark:border-strokedark">
+                      <h5 className="text-xs text-black dark:text-white">
+                        {t(input.run_rate_in_ppm)}
+                      </h5>
+                    </td>
+
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {input.slaughter_house}
+                      <p className="text-xs text-black dark:text-white">
+                        <b>{input.total_quality_piece}</b>
+
+                        {" [Rejected =" +
+                          input.rejected_piece +
+                          ", Good=" +
+                          input.good_piece +
+                          "]"}
                       </p>
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {t(input.product.name_key)}
-                      </p>
+
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.planned_production_time}
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {input.slaughter_date}
-                      </p>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.operating_time}
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {t(input.animal.name_key)}
-                      </p>
+
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.availability + "%"}
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">{input.aerobic}</span>
-                        <br />
-                        {parseFloat(input.aerobic) >
-                          constant.aerobicConstantLimit && (
-                          <Badge
-                            type="danger"
-                            value={t(constant.unApprovedText)}
-                          />
-                        )}
-                        {parseFloat(input.aerobic) <=
-                          constant.aerobicConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
-                        )}
-                      </p>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.performance + "%"}
                     </td>
-                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white flex">
-                        <span className="text-xs mr-1">
-                          {input.enterobacta}
-                        </span>
-                        <br />
-                        {parseFloat(input.enterobacta) >
-                          constant.enterobactaConstantLimit && (
-                          <Badge
-                            type="danger"
-                            value={t(constant.unApprovedText)}
-                          />
-                        )}
-                        {parseFloat(input.enterobacta) <=
-                          constant.enterobactaConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
-                        )}
-                      </p>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.quality + "%"}
+                    </td>
+                    <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark text-xs text-black dark:text-white">
+                      {input.overall_oee + "%"}
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
@@ -178,9 +189,9 @@ const DrillSamples = () => {
                             setOpenModal(true),
                               setModalQueryData({
                                 modalType: "form",
-                                modalSize: "lg",
+                                modalSize: "2xl",
                                 modalData: {
-                                  form: "EditDrillSample",
+                                  form: "EditOEEFollowUp",
                                   data: input,
                                 },
                               });
@@ -214,21 +225,25 @@ const DrillSamples = () => {
                                 modalSize: "sm",
                                 modalData: {
                                   index: key,
-                                  endPoint: "drillsamples/" + input.id,
+                                  endPoint: "oeefollowups/" + input.id,
                                   action: "DELETE",
                                   token: user.token,
                                   title:
-                                    t(input.product.name_key) +
-                                    ", - " +
-                                    t("aerobic") +
+                                    t("availability") +
+                                    "= " +
+                                    input.availability * 100 +
+                                    "% " +
+                                    t("performance") +
                                     " = " +
-                                    input.aerobic +
-                                    " ," +
-                                    t("enterobacta") +
+                                    input.availability * 100 +
+                                    "% " +
+                                    t("overall_oee") +
                                     " = " +
-                                    t(input.enterobacta),
-                                  data: drillSamplesData,
-                                  setData: setDrillSamplesData,
+                                    input.overall_oee * 100 +
+                                    "%",
+
+                                  data: oeeFollowUps,
+                                  setData: setOEEFollowUps,
                                 },
                               });
                           }}
@@ -264,22 +279,22 @@ const DrillSamples = () => {
                   </tr>
                 ))}
 
-              {!isLoading && drillSamplesData?.data?.length == 0 && (
+              {!isLoading && oeeFollowUps?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={10}
+                    colSpan={19}
                   >
                     {t("no_record_found")}
                   </td>
                 </tr>
               )}
 
-              {isLoading && drillSamplesData?.data?.length == 0 && (
+              {isLoading && oeeFollowUps?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
-                    colSpan={11}
+                    colSpan={19}
                   >
                     <Spinner /> Loading...
                   </td>
@@ -291,15 +306,15 @@ const DrillSamples = () => {
             {!isLoading && (
               <div className="px-4 py-4">
                 <PaginateSpanHeader
-                  totalPageItemCount={drillSamplesData.to}
-                  TotalItemCount={drillSamplesData.total}
+                  totalPageItemCount={oeeFollowUps.to}
+                  TotalItemCount={oeeFollowUps.total}
                 />
               </div>
             )}
             <Spinner />
             <Paginate
-              currentPage={drillSamplesData.current_page}
-              totalPages={drillSamplesData.last_page}
+              currentPage={oeeFollowUps.current_page}
+              totalPages={oeeFollowUps.last_page}
               onPageChange={handlePageChange}
             />
           </div>
@@ -309,4 +324,4 @@ const DrillSamples = () => {
   );
 };
 
-export default DrillSamples;
+export default OEEFollowup;

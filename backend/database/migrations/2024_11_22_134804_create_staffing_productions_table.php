@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('operator_staff')->nullable()->default(0);
             $table->integer('total_hours')->nullable()->default(0);
             $table->integer('production_quantity')->nullable()->default(0);
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

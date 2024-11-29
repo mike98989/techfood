@@ -7,7 +7,7 @@ export const API = "api/";
 export const STORAGE = "storage/";
 export const BASE_URL = PROTOCOL + URL;
 export const FRONT_END_BASE_URL = "localhost/";
-
+export const PAGINATE_ITEM_COUNT = 50;
 export const constant = {
   approvedText: "satisfactory",
   unApprovedText: "actions_required",
@@ -19,3 +19,26 @@ export const constant = {
   enterobactaConstantLimit: 2,
   staphylococcusConstantLimit: 2,
 };
+
+export const colors = [
+  "#808000", // Olive
+  "#008080", // Teal
+  "#800080", // Purple
+  "#FFA500", // Orange
+  "#008000", // Green
+  "#000080", // Navy
+  "#FFC0CB", // Pink
+  "#FFD700", // Gold
+  "#A52A2A", // Brown
+  "#5F9EA0", // Cadet Blue
+  "#D2691E", // Chocolate
+  "#9ACD32", // Yellow Green
+  "#4682B4", // Steel Blue
+  "#FF0000", // Red
+  "#00FF00", // Lime
+  "#0000FF", // Blue
+  "#FFFF00", // Yellow
+  "#FF00FF", // Magenta
+  "#00FFFF", // Cyan
+  "#800000", // Maroon
+];

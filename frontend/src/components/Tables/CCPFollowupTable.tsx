@@ -8,7 +8,8 @@ import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
-import { constant } from "../../Utils/Constants";
+import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import PaginationObject from "../Pagination/Paginate";
 
 const CCPFollowup = () => {
   const [ccpFollowUps, setCcpFollowUps] = useState([]);
@@ -17,6 +18,8 @@ const CCPFollowup = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
+  const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
+    PaginationObject();
 
   //const { MessageBox, setFormMessage } = formReturnMessage();
 
@@ -24,7 +27,8 @@ const CCPFollowup = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "ccpfollowups", // End Point
+      action_url:
+        `ccpfollowups?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -33,13 +37,25 @@ const CCPFollowup = () => {
       setIsLoading,
       setReturnData: setCcpFollowUps,
     });
-  }, []);
+  }, [currentPage]);
+
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
       <ModalUIComponent />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {!isLoading && (
+          <div className="px-4 py-4">
+            <PaginateSpanHeader
+              totalPageItemCount={ccpFollowUps.to}
+              TotalItemCount={ccpFollowUps.total}
+            />
+          </div>
+        )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -104,11 +120,11 @@ const CCPFollowup = () => {
               </tr>
             </thead>
             <tbody>
-              {ccpFollowUps?.length > 0 &&
-                ccpFollowUps.map((input: any, key) => (
+              {ccpFollowUps?.data?.length > 0 &&
+                ccpFollowUps.data.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {key + 1}
+                      {ccpFollowUps.from + key}
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-xs text-black dark:text-white">
@@ -222,7 +238,7 @@ const CCPFollowup = () => {
                                 modalType: "form",
                                 modalSize: "lg",
                                 modalData: {
-                                  form: "EditHeadMidriff",
+                                  form: "EditCCPFollowUp",
                                   data: input,
                                 },
                               });
@@ -302,7 +318,7 @@ const CCPFollowup = () => {
                   </tr>
                 ))}
 
-              {!isLoading && ccpFollowUps?.length == 0 && (
+              {!isLoading && ccpFollowUps?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -313,7 +329,7 @@ const CCPFollowup = () => {
                 </tr>
               )}
 
-              {isLoading && ccpFollowUps?.length == 0 && (
+              {isLoading && ccpFollowUps?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -325,6 +341,22 @@ const CCPFollowup = () => {
               )}
             </tbody>
           </table>
+          <div className="pl-3 pt-2">
+            {!isLoading && (
+              <div className="px-4 py-4">
+                <PaginateSpanHeader
+                  totalPageItemCount={ccpFollowUps.to}
+                  TotalItemCount={ccpFollowUps.total}
+                />
+              </div>
+            )}
+            <Spinner />
+            <Paginate
+              currentPage={ccpFollowUps.current_page}
+              totalPages={ccpFollowUps.last_page}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
     </>

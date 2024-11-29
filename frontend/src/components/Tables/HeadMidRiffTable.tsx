@@ -8,7 +8,8 @@ import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
-import { constant } from "../../Utils/Constants";
+import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import PaginationObject from "../Pagination/Paginate";
 
 const HeadMidriff = () => {
   const [headMidriffData, setHeadMidriffData] = useState([]);
@@ -17,6 +18,8 @@ const HeadMidriff = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
+  const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
+    PaginationObject();
 
   //const { MessageBox, setFormMessage } = formReturnMessage();
 
@@ -24,7 +27,8 @@ const HeadMidriff = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "headmidriffs", // End Point
+      action_url:
+        `headmidriffs?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -33,13 +37,24 @@ const HeadMidriff = () => {
       setIsLoading,
       setReturnData: setHeadMidriffData,
     });
-  }, []);
+  }, [currentPage]);
 
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
   return (
     <>
       <ModalUIComponent />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {!isLoading && (
+          <div className="px-4 py-4">
+            <PaginateSpanHeader
+              totalPageItemCount={headMidriffData.to}
+              TotalItemCount={headMidriffData.total}
+            />
+          </div>
+        )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -89,11 +104,11 @@ const HeadMidriff = () => {
               </tr>
             </thead>
             <tbody>
-              {headMidriffData?.length > 0 &&
-                headMidriffData.map((input: any, key) => (
+              {headMidriffData?.data?.length > 0 &&
+                headMidriffData?.data?.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {key + 1}
+                      {headMidriffData.from + key}
                     </td>
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
                       <h5 className="text-sm text-black dark:text-white">
@@ -276,7 +291,7 @@ const HeadMidriff = () => {
                   </tr>
                 ))}
 
-              {!isLoading && headMidriffData?.length == 0 && (
+              {!isLoading && headMidriffData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -287,7 +302,7 @@ const HeadMidriff = () => {
                 </tr>
               )}
 
-              {isLoading && headMidriffData?.length == 0 && (
+              {isLoading && headMidriffData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -299,6 +314,22 @@ const HeadMidriff = () => {
               )}
             </tbody>
           </table>
+          <div className="pl-3 pt-2">
+            {!isLoading && (
+              <div className="px-4 py-4">
+                <PaginateSpanHeader
+                  totalPageItemCount={headMidriffData.to}
+                  TotalItemCount={headMidriffData.total}
+                />
+              </div>
+            )}
+            <Spinner />
+            <Paginate
+              currentPage={headMidriffData.current_page}
+              totalPages={headMidriffData.last_page}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
     </>

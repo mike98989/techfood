@@ -19,5 +19,7 @@ const LazyComponentMap: Record<string, React.LazyExoticComponent<any>> = {
     () => import("../pages/Form/Edit/EditStaffingProduction")
   ),
   EditDrillSample: lazy(() => import("../pages/Form/Edit/EditDrillSample")),
+  //EditCCPFollowUp: lazy(() => import("../pages/Form/Edit/EditCCPFollowUp")),
+  EditOEEFollowUp: lazy(() => import("../pages/Form/Edit/EditOEEFollowUp")),
 };
 export default LazyComponentMap;

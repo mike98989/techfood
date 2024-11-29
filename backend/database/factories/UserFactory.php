@@ -21,7 +21,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected static $counter = 1; // Counter for auto-incrementing username
+    protected static $counter = 21; // Counter for auto-incrementing username
     public function definition(): array
     {
         

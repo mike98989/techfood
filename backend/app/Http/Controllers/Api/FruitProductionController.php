@@ -14,8 +14,15 @@ class FruitProductionController extends Controller
 {
     public function index(Request $request)
     {
+        $paginate = $request->paginate;
         $user = $request->user();
-        $data =  FruitProduction::where('user_id',$user->id)->orderBy('created_at', 'desc')->with('status_type')->with('section')->with('cause')->with('deviation')->get();
+        $data =  FruitProduction::where('user_id',$user->id)->orderBy('created_at', 'desc')->with('status_type')->with('section')->with('cause')->with('deviation');
+
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $data = $data->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+            
         return response()->json(['data'=>$data],200);
     }
 

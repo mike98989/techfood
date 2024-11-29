@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $headmidriff = $param = $request->input('headmidriff');
         $ccpfollowup = $param = $request->input("ccpfollowups");
         $staffingproduction = $param = $request->input("staffingproduction");
+        $oeefollowup = $param = $request->input("oeefollowups");
         $deviaitonComplaintController = new DeviationComplaintController;
         $fruitProductionController = new FruitProductionController;
         $proteinLactosWaterController = new LabInputsController;
@@ -26,6 +27,7 @@ class DashboardController extends Controller
         $headMidRiffController = new SlaughterHeadMeatMidriffController;
         $ccpFollowUpController = new CCPFollowUpController;
         $staffingProductionController = new StaffingProductionController;
+        $oeeFollowUpController = new OEEFollowUpController;
         $data = [
                 'deviationcomplaints' => $deviation_complaint=='true' ? $deviaitonComplaintController->index($request):null,
                 'fruitproduction' => $fruit_production=='true' ? $fruitProductionController->index($request):null,
@@ -34,6 +36,7 @@ class DashboardController extends Controller
                 'headmidriff' => $headmidriff=='true' ? $headMidRiffController->index($request):null,
                 'ccpfollowups' => $ccpfollowup=='true' ? $ccpFollowUpController->index($request):null,
                 'staffingproduction' => $staffingproduction=='true' ? $staffingProductionController->index($request):null,
+                'oeefollowups' => $oeefollowup=='true' ? $oeeFollowUpController->index($request):null,
                 
         ];
 

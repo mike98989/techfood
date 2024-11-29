@@ -16,9 +16,11 @@ import FruitProduction from "./pages/FruitProduction";
 import DrillSamples from "./pages/DrillSamples";
 import HeadMidriff from "./pages/HeadMidRiff";
 import CCPFollowUp from "./pages/CcpFollowup";
+import OEEFollowUpEfficiency from "./pages/OEEFollowup";
 import StaffingProduction from "./pages/StaffingProduction";
 import NewStaffingProduction from "./pages/Form/NewStaffingProduction";
 import NewCCPFollowUp from "./pages/Form/NewCCPFollowUp";
+import NewOEEFollowUp from "./pages/Form/NewOEEFollowUp";
 import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
 import DeviationComplaints from "./pages/DeviationComplaints";
@@ -32,6 +34,7 @@ import DeviationComplaintMainChart from "./pages/Charts/DeviationComplaintChartP
 import HeadMidriffMainChart from "./pages/Charts/HeadMidChartPage";
 import CCPFollowUpMainChart from "./pages/Charts/CCPFollowUpChartPage";
 import StaffingProductionMainChart from "./pages/Charts/StaffingProductionChartPage";
+import OEEFollowUpMainChart from "./pages/Charts/OEEFollowUpChartPage";
 
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
@@ -374,6 +377,38 @@ function App() {
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
                         <StaffingProductionMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* OEE Followup and Efficiency */}
+                <Route path="oee_and_efficiency">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <OEEFollowUpEfficiency />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewOEEFollowUp />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <OEEFollowUpMainChart />
                       </DefaultLayout>
                     }
                   ></Route>

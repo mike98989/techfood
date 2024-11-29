@@ -7,6 +7,8 @@ import { ReusableMethods } from "../../methods/ReusableMethods";
 import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
+import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import PaginationObject from "../Pagination/Paginate";
 
 const DeviationComplaintsWater = () => {
   const { fetchApi } = httpRequest();
@@ -16,6 +18,8 @@ const DeviationComplaintsWater = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
+  const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
+    PaginationObject();
 
   //const { MessageBox, setFormMessage } = formReturnMessage();
 
@@ -23,7 +27,10 @@ const DeviationComplaintsWater = () => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "deviationcomplaints", // End Point
+      action_url:
+        `deviationcomplaints?paginate=` +
+        PAGINATE_ITEM_COUNT +
+        `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -32,13 +39,24 @@ const DeviationComplaintsWater = () => {
       setIsLoading,
       setReturnData: setDeviationComplaintsData,
     });
-  }, []);
+  }, [currentPage]);
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
       <ModalUIComponent />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {!isLoading && (
+          <div className="px-4 py-4">
+            <PaginateSpanHeader
+              totalPageItemCount={deviationComplaintsData.to}
+              TotalItemCount={deviationComplaintsData.total}
+            />
+          </div>
+        )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -77,11 +95,11 @@ const DeviationComplaintsWater = () => {
               </tr>
             </thead>
             <tbody>
-              {deviationComplaintsData?.length > 0 &&
-                deviationComplaintsData.map((input: any, key) => (
+              {deviationComplaintsData?.data?.length > 0 &&
+                deviationComplaintsData?.data?.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {key + 1}
+                      {deviationComplaintsData.from + key}
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
@@ -212,7 +230,7 @@ const DeviationComplaintsWater = () => {
                   </tr>
                 ))}
 
-              {!isLoading && deviationComplaintsData?.length == 0 && (
+              {!isLoading && deviationComplaintsData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -223,7 +241,7 @@ const DeviationComplaintsWater = () => {
                 </tr>
               )}
 
-              {isLoading && deviationComplaintsData?.length == 0 && (
+              {isLoading && deviationComplaintsData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -235,6 +253,22 @@ const DeviationComplaintsWater = () => {
               )}
             </tbody>
           </table>
+          <div className="pl-3 pt-2">
+            {!isLoading && (
+              <div className="px-4 py-4">
+                <PaginateSpanHeader
+                  totalPageItemCount={deviationComplaintsData.to}
+                  TotalItemCount={deviationComplaintsData.total}
+                />
+              </div>
+            )}
+            <Spinner />
+            <Paginate
+              currentPage={deviationComplaintsData.current_page}
+              totalPages={deviationComplaintsData.last_page}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
     </>
