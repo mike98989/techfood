@@ -9,17 +9,16 @@ use App\Http\Controllers\Controller;
 
 class LabInputsController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index(Request $request)
     {
+        $paginate = $request->paginate;
         $user = $request->user();
-        $data =  LabInputs::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
+        $data =  LabInputs::where('user_id',$user->id)->orderBy('created_at', 'desc');
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $data = $data->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
         return response()->json(['data'=>$data],201);
         
     }
@@ -104,7 +103,7 @@ class LabInputsController extends Controller
         
         $labinput->update($validatedData);
 
-        return response()->json(["message"=>"Recordss updated successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_save_response","status"=>'1'],201);
     }
     
 

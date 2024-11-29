@@ -249,9 +249,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="1"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                                 className="feather feather-droplet"
                               >
                                 <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
@@ -275,9 +275,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="1"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                                 className="feather feather-thermometer"
                               >
                                 <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
@@ -301,7 +301,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="1"
+                                strokeWidth="1"
                               >
                                 <path d="M12 2L2 22h20L12 2zm0 15v-2h-2v2h2zm0-4V7h-2v6h2z" />
                               </svg>
@@ -325,7 +325,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
-                                stroke-width="1"
+                                strokeWidth="1"
                               >
                                 <path d="M10 2C6.69 2 4 4.69 4 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM16 12l1.5 1.5-3 3-1.5-1.5 3-3z" />
                               </svg>
@@ -342,6 +342,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1"
+                              >
+                                <path d="M10 2C6.69 2 4 4.69 4 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM16 12l1.5 1.5-3 3-1.5-1.5 3-3z" />
+                              </svg>
+
                               {t("slaughtered_head_meat_midriff")}
                             </NavLink>
                           </li>
@@ -354,6 +366,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                              >
+                                <path d="M12 2C7.03 2 3 6.03 3 11s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zM7.5 12c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm9 0c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5z" />
+                              </svg>
+
                               {t("staffing_of_production")}
                             </NavLink>
                           </li>
@@ -366,18 +390,55 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-activity"
+                              >
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                              </svg>
+
                               {t("ccp_follow_up")}
                             </NavLink>
                           </li>
 
                           <li>
                             <NavLink
-                              to="oee_and_efficiency"
+                              to="/oee_and_efficiency"
                               className={`
                                 ${activeMenu === "oee_and_efficiency" ? "text-white" : ""}
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-git-commit"
+                              >
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="1.05" y1="12" x2="7" y2="12"></line>
+                                <line
+                                  x1="17.01"
+                                  y1="12"
+                                  x2="22.96"
+                                  y2="12"
+                                ></line>
+                              </svg>
+
                               {t("oee_and_efficiency")}
                             </NavLink>
                           </li>

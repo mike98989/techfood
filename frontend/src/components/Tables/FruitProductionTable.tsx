@@ -8,6 +8,8 @@ import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessa
 import Badge from "../Badges/Badge";
 import AlertModal from "..//Modals/AlertModals";
 import { useTranslation } from "react-i18next";
+import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import PaginationObject from "../Pagination/Paginate";
 
 const FruitProductionTable = () => {
   const { fetchApi } = httpRequest();
@@ -17,14 +19,18 @@ const FruitProductionTable = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
-
+  const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
+    PaginationObject();
   //const { MessageBox, setFormMessage } = formReturnMessage();
 
   useEffect(() => {
     setIsLoading(true);
     allRequest({
       event: null,
-      action_url: "fruitproduction", // End Point
+      action_url:
+        `fruitproduction?paginate=` +
+        PAGINATE_ITEM_COUNT +
+        `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -33,12 +39,22 @@ const FruitProductionTable = () => {
       setIsLoading,
       setReturnData: setFruitProductionData,
     });
-  }, []);
-
+  }, [currentPage]);
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
   return (
     <>
       <ModalUIComponent />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {!isLoading && (
+          <div className="px-4 py-4">
+            <PaginateSpanHeader
+              totalPageItemCount={fruitProductionData.to}
+              TotalItemCount={fruitProductionData.total}
+            />
+          </div>
+        )}
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -49,9 +65,7 @@ const FruitProductionTable = () => {
                 <th className="py-2 px-2 font-medium text-black dark:text-white">
                   {t("date")}
                 </th>
-                {/* <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
-                  {t("month")}
-                </th> */}
+
                 <th className="min-w-[150px] py-2 px-2 font-medium text-black dark:text-white">
                   {t("section")}
                 </th>
@@ -70,11 +84,11 @@ const FruitProductionTable = () => {
               </tr>
             </thead>
             <tbody>
-              {fruitProductionData?.length > 0 &&
-                fruitProductionData.map((input: any, key) => (
+              {fruitProductionData?.data?.length > 0 &&
+                fruitProductionData?.data.map((input: any, key) => (
                   <tr key={key}>
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
-                      {key + 1}
+                      {fruitProductionData.from + key}
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
@@ -82,11 +96,7 @@ const FruitProductionTable = () => {
                         {input.date.split("T")[0]}
                       </p>
                     </td>
-                    {/* <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
-                        {input.date.split("T")[0]}
-                      </p>
-                    </td> */}
+
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-sm text-black dark:text-white">
                         {t(input.section.name_key)}
@@ -201,7 +211,7 @@ const FruitProductionTable = () => {
                   </tr>
                 ))}
 
-              {!isLoading && fruitProductionData?.length == 0 && (
+              {!isLoading && fruitProductionData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -212,7 +222,7 @@ const FruitProductionTable = () => {
                 </tr>
               )}
 
-              {isLoading && fruitProductionData?.length == 0 && (
+              {isLoading && fruitProductionData?.data?.length == 0 && (
                 <tr>
                   <td
                     className="text-md text-center border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3"
@@ -224,6 +234,22 @@ const FruitProductionTable = () => {
               )}
             </tbody>
           </table>
+          <div className="pl-3 pt-2">
+            {!isLoading && (
+              <div className="px-4 py-4">
+                <PaginateSpanHeader
+                  totalPageItemCount={fruitProductionData.to}
+                  TotalItemCount={fruitProductionData.total}
+                />
+              </div>
+            )}
+            <Spinner />
+            <Paginate
+              currentPage={fruitProductionData.current_page}
+              totalPages={fruitProductionData.last_page}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
     </>

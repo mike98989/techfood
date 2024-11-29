@@ -17,8 +17,14 @@ class DeviationComplaintController extends Controller
 {
     public function index(Request $request)
     {
+        $paginate = $request->paginate;
         $user = $request->user();
-        $data =  DeviationComplaint::where('user_id',$user->id)->with('deviation')->with('section')->with('code')->with('location')->with('risk_category')->with('code')->with('product')->orderBy('created_at', 'desc')->get();
+        $data =  DeviationComplaint::where('user_id',$user->id)->with('deviation')->with('section')->with('code')->with('location')->with('risk_category')->with('code')->with('product')->orderBy('created_at', 'desc');
+
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $data = $data->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
         return response()->json(['data'=>$data],200);
     }
 

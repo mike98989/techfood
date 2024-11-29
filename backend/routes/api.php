@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OEEFollowUpController;
 use App\Http\Controllers\Api\StaffingProductionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,14 +36,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('fruitproduction', FruitProductionController::class);
     //////// API resource for deviation complaints
     Route::apiResource('deviationcomplaints', DeviationComplaintController::class); 
-    //////// API resource for Laboratory Inputs
+    //////// API resource for Drill Samples
     Route::apiResource('drillsamples', DrillSampleController::class);
-    //////// API resource for Laboratory Inputs
+    //////// API resource for Head MidRiffs
     Route::apiResource('headmidriffs', SlaughterHeadMeatMidriffController::class);
-    //////// API resource for Laboratory Inputs
+    //////// API resource for CCP Follow Ups
     Route::apiResource('ccpfollowups', CCPFollowUpController::class);
-    //////// API resource for Laboratory Inputs
+    //////// API resource for Staffing of Production
     Route::apiResource('staffingproduction', StaffingProductionController::class);
+    //////// API resource for OEE Follow Ups
+    Route::apiResource('oeefollowups', OEEFollowUpController::class);
 
     //////User Signout
     Route::post('/auth/signout', [AuthController::class, 'signout'])->name('user.logout');
