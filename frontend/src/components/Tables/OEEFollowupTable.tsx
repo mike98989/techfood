@@ -115,7 +115,10 @@ const OEEFollowup = () => {
             <tbody>
               {oeeFollowUps?.data?.length > 0 &&
                 oeeFollowUps?.data.map((input: any, key) => (
-                  <tr key={key} className="text-center">
+                  <tr
+                    key={key}
+                    className="text-center even:bg-gray-2 dark:even:bg-boxdark"
+                  >
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {oeeFollowUps.from + key}
                     </td>

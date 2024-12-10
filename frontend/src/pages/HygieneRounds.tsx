@@ -1,10 +1,10 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-import StaffingProduction from "../components/Tables/StaffingProductionTable";
+import DailyHygieneRounds from "../components/Tables/DailyHygieneRoundsTable";
 import { useTranslation } from "react-i18next";
 
 const StaffingOfProduction = () => {
   const { t } = useTranslation();
-  const pageTitle = t("staffing_of_production");
+  const pageTitle = t("daily_hygiene_rounds");
   return (
     <>
       <Breadcrumb
@@ -13,7 +13,7 @@ const StaffingOfProduction = () => {
         pageTitle={pageTitle}
       />
       <div className="">
-        <StaffingProduction />
+        <DailyHygieneRounds />
       </div>
     </>
   );

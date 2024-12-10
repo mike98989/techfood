@@ -12,6 +12,7 @@ const chartData = ({
   ccpFollowUpDataChart,
   staffingProductionDataChart,
   oeeFollowUpDataChart,
+  hygieneRoundsDataChart,
 }: {
   proteinLactoseChart: boolean;
   fruitProductionChart: boolean;
@@ -21,6 +22,7 @@ const chartData = ({
   ccpFollowUpDataChart: boolean;
   staffingProductionDataChart: boolean;
   oeeFollowUpDataChart: boolean;
+  hygieneRoundsDataChart: boolean;
 }) => {
   const [proteinLactoseData, setProteinLactoseData] = useState([]);
   const [fruitProductionData, setFruitProductionData] = useState([]);
@@ -30,7 +32,7 @@ const chartData = ({
   const [headMidRiffData, setHeadMidRiffData] = useState([]);
   const [staffingProductionData, setStaffingOfProductionData] = useState([]);
   const [oeeFollowUpData, setOEEFollowUpData] = useState([]);
-
+  const [hygieneRoundsData, setHygieneRoundsData] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const { fetchApi } = httpRequest();
   const { allRequest } = ReusableMethods();
@@ -62,6 +64,8 @@ const chartData = ({
         setStaffingOfProductionData(response.data.staffingproduction.original);
       oeeFollowUpDataChart &&
         setOEEFollowUpData(response.data.oeefollowups.original);
+      hygieneRoundsDataChart &&
+        setHygieneRoundsData(response.data.hygienerounds.original);
     });
   };
 
@@ -82,7 +86,9 @@ const chartData = ({
         "&staffingproduction=" +
         staffingProductionDataChart +
         "&oeefollowups=" +
-        oeeFollowUpDataChart
+        oeeFollowUpDataChart +
+        "&hygienerounds=" +
+        hygieneRoundsDataChart
     );
   }, []);
 
@@ -95,6 +101,7 @@ const chartData = ({
     ccpFollowUpData,
     staffingProductionData,
     oeeFollowUpData,
+    hygieneRoundsData,
   };
 };
 export default chartData;

@@ -200,6 +200,7 @@ export default function StaffingProduction(props: any) {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="supervisor"
                       defaultValue={values.supervisor}
                       placeholder={t("supervisor")}
@@ -213,6 +214,7 @@ export default function StaffingProduction(props: any) {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="quality_control"
                       defaultValue={values.quality_control}
                       placeholder={t("control")}
@@ -231,6 +233,7 @@ export default function StaffingProduction(props: any) {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="operator_staff"
                       defaultValue={values.operator_staff}
                       placeholder={t("operator_staff")}
@@ -247,6 +250,7 @@ export default function StaffingProduction(props: any) {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       value={totalHours}
                       onChange={(e) => {
                         setTotalHours(e.target.value);
@@ -270,6 +274,7 @@ export default function StaffingProduction(props: any) {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       defaultValue={values.production_quantity}
                       onChange={(e) => {
                         setValues((prev) => {

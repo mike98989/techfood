@@ -4,7 +4,7 @@ import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import SpinnerObject from "../../../components/Spinner/Spinner";
-import { constant } from "../../../Utils/Constants";
+import { colors, constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -21,14 +21,12 @@ interface ChartProps {
 const computeChart = (data: any, t: any) => {
   if (data) {
     const inputdata = data.sort((a, b) => a.week - b.week);
-
-    console.log("inputdata", inputdata);
     const resultMap = new Map();
     const year_week: any = [];
     const productionValues: any = [];
     const efficiencyValues: any = [];
     const productivityValues: any = [];
-
+    const workedHoursValues: any = [];
     //const currentYear = new Date().getFullYear(); // Get the current year
     for (let i = 0; i < inputdata.length; i++) {
       const year_week = inputdata[i].year + "- wk " + inputdata[i].week;
@@ -38,42 +36,34 @@ const computeChart = (data: any, t: any) => {
           productionValues: 0,
           efficiencyValues: 0,
           productivityValues: 0,
+          totalWorkersCount: 0,
+          totalWorkHours: 0,
+          totalProductionQuantity: 0,
         });
       }
 
-      //   acc[key].efficiency = parseFloat(
-      //     (
-      //       acc[key].sum_all_production_quantity /
-      //       acc[key].sum_total_number_of_workers
-      //     ).toFixed(1)
-      //   ); //// Round up to 1 decimal place
-
-      //   acc[key].productivity = parseFloat(
-      //     (
-      //       acc[key].sum_all_production_quantity /
-      //       acc[key].sum_all_weekly_total_hours
-      //     ).toFixed(1)
-      //   ); //// Round up to 1 decimal place
-
       const dateEntry = resultMap.get(year_week);
       dateEntry.productionValues += inputdata[i].production_quantity;
-      /////Calculatate efficiency, and productivity
-      const total_workers =
+      dateEntry.totalWorkersCount +=
         inputdata[i].supervisor * 1 +
         inputdata[i].quality_control * 1 +
         inputdata[i].operator_staff * 1;
 
+      dateEntry.totalWorkHours += inputdata[i].total_hours * 1;
+
+      dateEntry.totalProductionQuantity += inputdata[i].production_quantity * 1;
+      /////Calculatate efficiency, and productivity
       const total_work_hours = inputdata[i].total_hours * 1;
 
-      dateEntry.efficiencyValues += Math.floor(
-        (inputdata[i].production_quantity * 1) / total_workers
-      );
+      dateEntry.efficiencyValues = (
+        (dateEntry.totalProductionQuantity * 1) /
+        dateEntry.totalWorkersCount /
+        100
+      ).toFixed(1);
+
       dateEntry.productivityValues += Math.floor(
         (inputdata[i].production_quantity * 1) / total_work_hours
       );
-
-      //dateEntry.efficiencyValues += inputdata[i].production_quantity;
-      //   dateEntry.productionValues += inputdata[i].production_quantity;
     }
 
     // Convert the Map to an array of objects
@@ -81,12 +71,18 @@ const computeChart = (data: any, t: any) => {
       resultMap,
       ([
         year_week,
-        { productionValues, efficiencyValues, productivityValues },
+        {
+          productionValues,
+          efficiencyValues,
+          productivityValues,
+          totalWorkHours,
+        },
       ]) => ({
         year_week,
         productionValues,
         efficiencyValues,
         productivityValues,
+        totalWorkHours,
       })
     );
 
@@ -96,6 +92,7 @@ const computeChart = (data: any, t: any) => {
       productionValues.push(value.productionValues);
       efficiencyValues.push(value.efficiencyValues);
       productivityValues.push(value.productivityValues);
+      workedHoursValues.push(value.totalWorkHours);
     });
 
     // Set processed value for chat
@@ -109,10 +106,14 @@ const computeChart = (data: any, t: any) => {
     let processedProductivityData = [
       { name: t("productivity"), data: productivityValues },
     ];
+    let processedWorkedHoursData = [
+      { name: t("total_work_hours"), data: workedHoursValues },
+    ];
     return [
       processedProductionData,
       processedEfficiencynData,
       processedProductivityData,
+      processedWorkedHoursData,
       year_week,
     ];
   }
@@ -122,20 +123,16 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
   const [filteredChartData, setFilteredChartData] = useState([]);
   const [startDate, setStartData] = useState("");
   const [endDate, setEndData] = useState("");
-  const { isDateInRange, allRequest, getWeekNumber } = ReusableMethods();
   const { setIsLoading, Spinner } = SpinnerObject();
   const [chartType, setChartType] = useState("bar");
   const [chartStacked, setChartStacked] = useState(false);
   const [firstDate, setFirstDate] = useState(false);
   const [lastDate, setLastDate] = useState(false);
-  const [queryParams, setQuetyParams] = useState({});
+  const [queryParams] = useState({});
   const { t } = useTranslation();
   const [year_weeks, setYearWeeks] = useState([]);
-  const [monthsChart2, setMonthsChart2] = useState([]);
-  const [returnDataArray, setReturnDataArray] = useState([]);
   const user = useSelector((state: any) => state.user.value);
-  const [parameterValue, setParameterValue] = useState("");
-
+  const { getWeekNumber } = ReusableMethods();
   const [productionSeries, setProductionSeries] = useState<ChartOneState>({
     series: [],
   });
@@ -143,6 +140,9 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
     series: [],
   });
   const [productivitySeries, setProductivitySeries] = useState<ChartOneState>({
+    series: [],
+  });
+  const [workedHoursSeries, setWorkedHoursSeries] = useState<ChartOneState>({
     series: [],
   });
 
@@ -181,7 +181,10 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
       setProductivitySeries({
         series: productionEfficiencyProductivityMatch[2],
       });
-      setYearWeeks(productionEfficiencyProductivityMatch[3]);
+      setWorkedHoursSeries({
+        series: productionEfficiencyProductivityMatch[3],
+      });
+      setYearWeeks(productionEfficiencyProductivityMatch[4]);
     }
   }, [filteredChartData, chartType]);
 
@@ -210,11 +213,37 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
     }
   }, [startDate, endDate, queryParams]);
 
-  const ChartOptions1: ApexOptions = {
+  const ChartProductionOptions: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.staffProductionOutputLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("total_production") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.staffProductionOutputLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     //colors: ["#3C50E0", "#80CAEE"],
     colors: ["#006400", "#f84c0b"], // Array of colors
@@ -272,11 +301,37 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
     },
   };
 
-  const ChartOptions2: ApexOptions = {
+  const ChartEfficiencyOptions: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.staffProductionEfficiencyLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("efficiency") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.staffProductionEfficiencyLimit +
+              " %)",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     colors: ["#3C50E0", "#80CAEE"],
     //colors: ["#006400", "#f84c0b"], // Array of colors
@@ -339,13 +394,101 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
     //   },
   };
 
-  const ChartOptions3: ApexOptions = {
+  const ChartProductivityOption: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
     },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.staffProductionProductivityLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("productivity") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.staffProductionProductivityLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
+    },
     colors: ["#f84c0b", "#f84c0b"],
+    //colors: ["#006400", "#f84c0b"], // Array of colors
+    chart: {
+      type: chartType,
+      fontFamily: "Satoshi, sans-serif",
+      stacked: chartStacked,
+      toolbar: {
+        show: true,
+      },
+    },
+
+    stroke: {
+      width: [2, 2],
+      curve: "straight",
+    },
+
+    grid: {
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    markers: {
+      size: 4,
+      colors: "#fff",
+      //strokeColors: ["#3056D3", "#80CAEE"],
+      strokeColors: ["#006400", "#f84c0b", "#F7DC6F", "#D4AC0D"], // Array of colors
+      strokeWidth: 3,
+      strokeOpacity: 0.9,
+      strokeDashArray: 0,
+      fillOpacity: 1,
+      discrete: [],
+      hover: {
+        size: undefined,
+        sizeOffset: 5,
+      },
+    },
+    xaxis: {
+      categories: year_weeks,
+      labels: {
+        show: true, // Hides the X-axis labels
+        //format: "MM dd, yyyy",
+      },
+      tickAmount: 10, // Number of labels on x-axis to control grouping interval
+    },
+  };
+
+  const ChartWorkHoursOption: ApexOptions = {
+    legend: {
+      show: true,
+      position: "bottom",
+      horizontalAlign: "center",
+    },
+    colors: colors,
     //colors: ["#006400", "#f84c0b"], // Array of colors
     chart: {
       type: chartType,
@@ -486,7 +629,7 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions1}
+            options={ChartProductionOptions}
             series={productionSeries.series}
             type={chartType}
             height={320}
@@ -500,12 +643,12 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
             </span>
 
             <p className=" text-cyan-900 dark:text-white font-thin">
-              {t("efficiency")}
+              {t("efficiency")} %
             </p>
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions2}
+            options={ChartEfficiencyOptions}
             series={efficiencySeries.series}
             type={chartType}
             height={320}
@@ -521,13 +664,32 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
             </span>
 
             <p className=" text-cyan-900 dark:text-white font-thin">
-              {t("productivity")}
+              {t("productivity")} %
             </p>
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions3}
+            options={ChartProductivityOption}
             series={productivitySeries.series}
+            type={chartType}
+            height={320}
+          />
+        </div>
+
+        <div className="md:w-1/2 text-center justify-center ">
+          <div className="flex w-full text-center justify-center content-center self-center items-center my-3">
+            <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
+              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
+            </span>
+
+            <p className=" text-cyan-900 dark:text-white font-thin">
+              {t("total_work_time_in_min")}
+            </p>
+          </div>
+          <ReactApexChart
+            key={"1"}
+            options={ChartWorkHoursOption}
+            series={workedHoursSeries.series}
             type={chartType}
             height={320}
           />

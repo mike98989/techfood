@@ -90,6 +90,7 @@ const FormLayout = () => {
                     <input
                       type="text"
                       name="reference_number"
+                      required
                       placeholder="Enter Reference Number"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
@@ -102,6 +103,7 @@ const FormLayout = () => {
                     <input
                       type="text"
                       name="title"
+                      required
                       placeholder="Enter Reference Number"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
@@ -114,7 +116,8 @@ const FormLayout = () => {
                     <input
                       type="date"
                       name="occurance_date"
-                      placeholder="Enter Reference Number"
+                      required
+                      placeholder={t("enter") + " " + t("occurance_date")}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
                   </div>

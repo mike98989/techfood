@@ -101,22 +101,22 @@ const ProteinLactoseWater = () => {
               {proteinLactosWaterData?.data?.length > 0 &&
                 proteinLactosWaterData?.data?.map((input: any, key) => (
                   // <tr key={key} className="even:bg-gray-2">
-                  <tr key={key}>
+                  <tr key={key} className="even:bg-gray-2 dark:even:bg-boxdark">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {key + proteinLactosWaterData.from}
                     </td>
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
+                      <h5 className="text-xs font-bold text-black dark:text-white">
                         {input.PO_number}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
+                      <p className="text-xs  text-black dark:text-white">
                         {input.result_date}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
-                      <p className="text-sm text-black dark:text-white">
+                      <p className="text-xs text-black dark:text-white">
                         {input.batch_number}
                       </p>
                     </td>

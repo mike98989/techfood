@@ -255,3 +255,7 @@ span.flatpickr-weekday,
   background-color: rgba(0, 0, 0, 0.8); /* Black with 50% opacity */
   z-index: 5000; /* Ensure it is above other elements */
 }
+
+.file_input {
+  @apply h-8;
+}

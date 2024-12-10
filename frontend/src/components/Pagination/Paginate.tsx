@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 const PaginationObject = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { t } = useTranslation();
   const Paginate = ({ currentPage, totalPages, onPageChange }) => {
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     return (
@@ -81,19 +84,19 @@ const PaginationObject = () => {
   const PaginateSpanHeader = ({ totalPageItemCount, TotalItemCount }) => {
     return (
       <span className="text-sm text-gray-700 dark:text-gray-400">
-        Showing{" "}
+        {t("showing") + " "}
         <span className="font-semibold text-gray-900 dark:text-white">
           {currentPage}
         </span>{" "}
-        to{" "}
+        {t("to")}{" "}
         <span className="font-semibold text-gray-900 dark:text-white">
           {totalPageItemCount}
         </span>{" "}
-        of{" "}
+        {t("of") + " "}{" "}
         <span className="font-semibold text-gray-900 dark:text-white">
           {TotalItemCount}
         </span>{" "}
-        Entries
+        {t("entries") + " "}
       </span>
     );
   };

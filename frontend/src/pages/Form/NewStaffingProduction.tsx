@@ -81,7 +81,7 @@ export default function StaffingProduction() {
               id="new_staffing_production"
               className="pb-5 items-center justify-center"
             >
-              <div className="px-6.5">
+              <div className="px-6.5 pt-5">
                 <Spinner />
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-2/6">
@@ -171,11 +171,9 @@ export default function StaffingProduction() {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="supervisor"
                       placeholder={t("supervisor")}
-                      //   onBlur={(e) =>
-                      //     setWeek(getWeekNumber(new Date(e.target.value)))
-                      //   }
                       onChange={(e) => computTotalWorkHours(e, "supervisor")}
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
@@ -186,14 +184,12 @@ export default function StaffingProduction() {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="quality_control"
                       onChange={(e) =>
                         computTotalWorkHours(e, "quality_control")
                       }
                       placeholder={t("control")}
-                      //   onBlur={(e) =>
-                      //     setWeek(getWeekNumber(new Date(e.target.value)))
-                      //   }
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
                   </div>
@@ -203,6 +199,7 @@ export default function StaffingProduction() {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="operator_staff"
                       placeholder={t("operator_staff")}
                       onChange={(e) =>
@@ -218,13 +215,11 @@ export default function StaffingProduction() {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       value={totalHours}
                       onChange={(e) => setTotalHours(e.target.value)}
                       name="total_hours"
                       placeholder={t("total_hours")}
-                      //   onBlur={(e) =>
-                      //     setWeek(getWeekNumber(new Date(e.target.value)))
-                      //   }
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
                   </div>
@@ -235,11 +230,8 @@ export default function StaffingProduction() {
                     </label>
                     <input
                       type="number"
+                      min="0"
                       name="production_quantity"
-                      placeholder={t("total_production")}
-                      //   onBlur={(e) =>
-                      //     setWeek(getWeekNumber(new Date(e.target.value)))
-                      //   }
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm"
                     />
                   </div>

@@ -59,26 +59,26 @@ const FruitProductionTable = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 font-medium text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 text-xs text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("date")}
                 </th>
 
-                <th className="min-w-[150px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="min-w-[150px] py-2 px-2 text-xs text-black dark:text-white">
                   {t("section")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="min-w-[120px] py-2 px-2 text-xs text-black dark:text-white">
                   {t("cause")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="min-w-[120px] py-2 px-2 text-xs text-black dark:text-white">
                   {t("status")}
                 </th>
-                <th className="min-w-[120px] py-2 px-2 font-medium text-black dark:text-white">
+                <th className="min-w-[120px] py-2 px-2 text-xs text-black dark:text-white">
                   {t("deviation_type")}
                 </th>
-                <th className="py-2 px-2 font-medium text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
@@ -86,7 +86,7 @@ const FruitProductionTable = () => {
             <tbody>
               {fruitProductionData?.data?.length > 0 &&
                 fruitProductionData?.data.map((input: any, key) => (
-                  <tr key={key}>
+                  <tr key={key} className="even:bg-gray-2 dark:even:bg-boxdark">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {fruitProductionData.from + key}
                     </td>

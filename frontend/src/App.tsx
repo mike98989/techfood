@@ -18,6 +18,7 @@ import HeadMidriff from "./pages/HeadMidRiff";
 import CCPFollowUp from "./pages/CcpFollowup";
 import OEEFollowUpEfficiency from "./pages/OEEFollowup";
 import StaffingProduction from "./pages/StaffingProduction";
+import HygieneRounds from "./pages/HygieneRounds";
 import NewStaffingProduction from "./pages/Form/NewStaffingProduction";
 import NewCCPFollowUp from "./pages/Form/NewCCPFollowUp";
 import NewOEEFollowUp from "./pages/Form/NewOEEFollowUp";
@@ -25,8 +26,10 @@ import NewProteinLactosWater from "./pages/Form/NewProteinLactoseWater";
 import NewFruitProduction from "./pages/Form/NewFruitProduction";
 import DeviationComplaints from "./pages/DeviationComplaints";
 import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
+import NewHygieneRound from "./pages/Form/NewHygieneRound";
 import NewDrillSample from "./pages/Form/NewDrillSample";
 import NewHeadMidriff from "./pages/Form/NewHeadMidriff";
+import NewHMapDetectedBacteria from "./pages/Form/NewMapDetectedBacteria";
 import ProteinLactoseMainChart from "./pages/Charts/ProteinLactoseWaterChartPage";
 import DrillSampleMainChart from "./pages/Charts/DrillSampleChartPage";
 import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
@@ -35,7 +38,8 @@ import HeadMidriffMainChart from "./pages/Charts/HeadMidChartPage";
 import CCPFollowUpMainChart from "./pages/Charts/CCPFollowUpChartPage";
 import StaffingProductionMainChart from "./pages/Charts/StaffingProductionChartPage";
 import OEEFollowUpMainChart from "./pages/Charts/OEEFollowUpChartPage";
-
+import HygieneRoundsMainChart from "./pages/Charts/HygieneRoundsChartPage";
+import MapDetectedBacteria from "./pages/MapDetectedBacteria";
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -133,16 +137,6 @@ function App() {
             </ContentLayout>
           }
         />
-
-        {/* <Route
-          path="/auth/signup"
-          element={
-            <ContentLayout>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
-            </ContentLayout>
-          }
-        /> */}
 
         {/* Protected routes */}
         <Route
@@ -412,6 +406,102 @@ function App() {
                       </DefaultLayout>
                     }
                   ></Route>
+                </Route>
+
+                {/* Daily Hygiene Round */}
+                <Route path="daily_hygiene_rounds">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HygieneRounds />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewHygieneRound />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HygieneRoundsMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+                </Route>
+
+                {/* Suggestions for maps with detected Bacteria */}
+                <Route path="map_detected_bacteria">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <MapDetectedBacteria />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewHMapDetectedBacteria />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  {/* <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HygieneRoundsMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route> */}
+                </Route>
+
+                {/* Suggestions for maps with detected Bacteria */}
+                <Route path="map_detected_bacteria">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <MapDetectedBacteria />
+                      </DefaultLayout>
+                    }
+                  />
+                  <Route
+                    path="new"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <NewHMapDetectedBacteria />
+                      </DefaultLayout>
+                    }
+                  ></Route>
+
+                  {/* <Route
+                    path="chart"
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <HygieneRoundsMainChart />
+                      </DefaultLayout>
+                    }
+                  ></Route> */}
                 </Route>
               </Routes>
             </ProtectedRoute>

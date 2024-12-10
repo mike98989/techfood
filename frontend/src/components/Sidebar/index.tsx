@@ -445,23 +445,63 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                           <li>
                             <NavLink
-                              to="#"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              to="/daily_hygiene_rounds"
+                              className={`
+                                ${activeMenu === "daily_hygiene_rounds" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
                             >
-                              {t("microbiological_sample")}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                              >
+                                <path d="M20 2H4c-1.1 0-1.99.89-1.99 1.99L2 20c0 1.1.89 1.99 1.99 1.99H20c1.1 0 1.99-.89 1.99-1.99V4c0-1.1-.89-1.99-1.99-1.99zM12 14c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+                              </svg>
+
+                              {t("daily_hygiene_rounds")}
                             </NavLink>
                           </li>
 
                           <li>
                             <NavLink
-                              to="#"
+                              to="/map_detected_bacteria"
                               className={
                                 "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }
                             >
-                              {t("daily_hygiene_rounds")}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-map-pin"
+                              >
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                              </svg>
+
+                              {t("map_detected_bacteria")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/followup_of_productivity"
+                              className={
+                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
+                              }
+                            >
+                              {t("followup_of_productivity")}
                             </NavLink>
                           </li>
                         </ul>

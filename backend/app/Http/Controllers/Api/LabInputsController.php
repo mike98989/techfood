@@ -113,6 +113,6 @@ class LabInputsController extends Controller
     public function destroy(LabInputs $labinput)
     {
         $labinput->delete();
-        return response()->json(["message"=>"Resource deleted successfully","status"=>'1'],201);
+        return response()->json(["message"=>"success_delete_response","status"=>'1'],201);
     }
 }

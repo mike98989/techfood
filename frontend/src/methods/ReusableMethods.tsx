@@ -127,7 +127,12 @@ export const ReusableMethods = () => {
           status: "success",
         });
         if (response.status == "1") {
-          document.getElementById(formId)?.reset();
+          if (!formData) {
+            document.getElementById(formId)?.reset();
+          } else {
+            const formElement = document.getElementById(formId);
+            if (formElement) formElement.style.display = "none";
+          }
         }
       })
       .catch((error) => {
