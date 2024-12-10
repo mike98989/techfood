@@ -37,7 +37,7 @@ export default function NewOEEFollowUp() {
   const [values, setValues] = useState(initialNumberOfPersonnel);
 
   const { t } = useTranslation();
-  const pageTitle = t("oee_follow_up_title");
+  const pageTitle = t("oee_and_efficiency");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -133,7 +133,7 @@ export default function NewOEEFollowUp() {
                 <span className="font-medium">{t("oee_factor")}</span>
               </div>
               <div className="lg:flex flex-row ">
-                <div className="lg:w-1/3 flex">
+                <div className="lg:w-2/3 flex">
                   <div>
                     <ul className="mt-1.5 list-none list-inside">
                       <li className="flex flex-row">
@@ -320,6 +320,7 @@ export default function NewOEEFollowUp() {
                     <input
                       type="date"
                       name="date"
+                      required
                       placeholder={t("date")}
                       //onChange={(e) => handleChange(e)}
                       defaultValue={values.total_working_hours_daily}

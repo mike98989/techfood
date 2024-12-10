@@ -64,32 +64,32 @@ const DeviationComplaintsWater = () => {
                 <th className="py-4 px-3 font-thin text-sm text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("header")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("date")}
                 </th>
 
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("deviation_type")}/{t("code")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("product")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("article")} {t("number")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("batch_number")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("location") + "/" + t("line")}
                 </th>
-                <th className="py-2 px-2 font-medium text-sm text-black dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("section")}
                 </th>
-                <th className="py-2 px-2 font-medium text-black text-sm dark:text-white">
+                <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
@@ -97,13 +97,13 @@ const DeviationComplaintsWater = () => {
             <tbody>
               {deviationComplaintsData?.data?.length > 0 &&
                 deviationComplaintsData?.data?.map((input: any, key) => (
-                  <tr key={key}>
+                  <tr key={key} className="even:bg-gray-2 dark:even:bg-boxdark">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {deviationComplaintsData.from + key}
                     </td>
 
                     <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                      <h5 className="text-sm text-black dark:text-white">
+                      <h5 className="text-sm font-bold text-black dark:text-white">
                         {input.reference_number + " - " + input.title}
                       </h5>
                     </td>

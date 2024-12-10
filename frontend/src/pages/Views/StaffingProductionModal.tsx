@@ -252,7 +252,7 @@ export default function StaffingProductionModal(props: any) {
                   </th>
                   <th>
                     {weekData.reduce(
-                      (sum, item) => sum + (item.operator || 0),
+                      (sum, item) => sum + (item.operator_staff || 0),
                       0
                     )}
                   </th>
@@ -262,6 +262,7 @@ export default function StaffingProductionModal(props: any) {
                       0
                     )}
                   </th>
+                  <th></th>
                 </tr>
               </tbody>
             </table>

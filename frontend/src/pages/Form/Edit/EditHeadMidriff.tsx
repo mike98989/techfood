@@ -156,7 +156,7 @@ const EditHeadMidriff = (props: any) => {
                     <input
                       type="number"
                       name="week"
-                      min="0"
+                      min="1"
                       defaultValue={formData.week}
                       onChange={handleChange}
                       //onChange={(e) => setFormattedDate(e.target.value)}

@@ -122,7 +122,7 @@ const CCPFollowup = () => {
             <tbody>
               {ccpFollowUps?.data?.length > 0 &&
                 ccpFollowUps.data.map((input: any, key) => (
-                  <tr key={key}>
+                  <tr key={key} className="even:bg-gray-2 dark:even:bg-boxdark">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {ccpFollowUps.from + key}
                     </td>

@@ -1,4 +1,6 @@
 import React, { lazy, Suspense, ReactNode } from "react";
+import EditHygieneRounds from "../pages/Form/Edit/EditHygieneRound";
+import EditMapDetectedBacteria from "../pages/Form/Edit/EditMapDetectedBacteria";
 
 // Create a map of components using React.lazy
 const LazyComponentMap: Record<string, React.LazyExoticComponent<any>> = {
@@ -21,5 +23,9 @@ const LazyComponentMap: Record<string, React.LazyExoticComponent<any>> = {
   EditDrillSample: lazy(() => import("../pages/Form/Edit/EditDrillSample")),
   //EditCCPFollowUp: lazy(() => import("../pages/Form/Edit/EditCCPFollowUp")),
   EditOEEFollowUp: lazy(() => import("../pages/Form/Edit/EditOEEFollowUp")),
+  EditHygieneRounds: lazy(() => import("../pages/Form/Edit/EditHygieneRound")),
+  EditMapDetectedBacteria: lazy(
+    () => import("../pages/Form/Edit/EditMapDetectedBacteria")
+  ),
 };
 export default LazyComponentMap;

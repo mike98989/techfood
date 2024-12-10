@@ -75,7 +75,7 @@ export default function CCPFollowUp() {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex border-b justify-between  border-stroke py-2 px-3 dark:border-strokedark">
             <h3 className="text-md left-content uppercase text-black dark:text-white items-start">
-              {t("heading_ccp_follow_up")}
+              {t("ccp_follow_up_title")}
             </h3>
           </div>
 

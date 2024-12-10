@@ -59,46 +59,46 @@ const HeadMidriff = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="py-4 px-3 text-sm font-bold text-black dark:text-white xl:pl-3">
+                <th className="py-4 px-3 text-xs font-bold text-black dark:text-white xl:pl-3">
                   #
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("slaughter_number")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("week")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("slaughter_house")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("product")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("slaughter_date")}
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("kind_of_animal")}
                 </th>
                 <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("aerobic")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
+                  <span className="text-xs text-cyan-800 dark:text-white">
                     {t("limit") + " = " + constant.aerobicConstantLimit}
                   </span>
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("e_coli")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
+                  <span className="text-xs text-cyan-800 dark:text-white">
                     {t("limit") + " = " + constant.ecoliConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("staphylococcus")} <br />
-                  <span className="text-sm text-cyan-800 dark:text-white">
+                  <span className="text-xs text-cyan-800 dark:text-white">
                     {t("limit") + " = " + constant.staphylococcusConstantLimit}
                   </span>
                 </th>
-                <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
+                <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("actions")}
                 </th>
               </tr>
@@ -106,7 +106,7 @@ const HeadMidriff = () => {
             <tbody>
               {headMidriffData?.data?.length > 0 &&
                 headMidriffData?.data?.map((input: any, key) => (
-                  <tr key={key}>
+                  <tr key={key} className="even:bg-gray-2 dark:even:bg-boxdark">
                     <td className="text-sm border-b border-[#eee] py-3 px-2 pl-1 dark:border-strokedark xl:pl-3">
                       {headMidriffData.from + key}
                     </td>

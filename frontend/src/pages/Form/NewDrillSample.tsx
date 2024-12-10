@@ -262,6 +262,7 @@ export default function NewDrillSample() {
                       </label>
                       <input
                         type="number"
+                        min="1"
                         name="slaughter_number[]"
                         required
                         value={drill.slaughter_number}
@@ -282,6 +283,7 @@ export default function NewDrillSample() {
                       </label>
                       <input
                         type="number"
+                        min="1"
                         name="week[]"
                         required
                         value={drill.week}
@@ -304,6 +306,7 @@ export default function NewDrillSample() {
                       </label>
                       <input
                         type="number"
+                        min="1"
                         id="small-input"
                         name="slaughter_house[]"
                         required

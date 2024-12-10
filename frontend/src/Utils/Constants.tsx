@@ -18,6 +18,13 @@ export const constant = {
   aerobicConstantLimit: 7,
   enterobactaConstantLimit: 2,
   staphylococcusConstantLimit: 2,
+  staffProductionEfficiencyLimit: 4,
+  staffProductionProductivityLimit: 25,
+  staffProductionOutputLimit: 7000,
+  OEEAvailabilityLimit: 70,
+  OEEPerformanceLimit: 70,
+  OEEQualityLimit: 80,
+  OEEOverAllLimit: 50,
 };
 
 export const colors = [

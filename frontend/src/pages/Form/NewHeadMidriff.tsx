@@ -62,7 +62,7 @@ export default function NewHeadMidriff() {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex border-b justify-between  border-stroke py-2 px-3 dark:border-strokedark">
             <h3 className="text-md left-content uppercase text-black dark:text-white items-start">
-              {t("heading_slaughter_head_mid_riff")}
+              {t("slaughtered_head_meat_midriff")}
             </h3>
           </div>
 
@@ -336,6 +336,7 @@ export default function NewHeadMidriff() {
                       <input
                         type="number"
                         name="slaughter_number[]"
+                        min="1"
                         required
                         value={headmidriff.slaughter_number}
                         onChange={(e) =>
@@ -356,6 +357,7 @@ export default function NewHeadMidriff() {
                       </label>
                       <input
                         type="number"
+                        min="1"
                         name="week[]"
                         required
                         value={headmidriff.week}
@@ -378,6 +380,7 @@ export default function NewHeadMidriff() {
                       </label>
                       <input
                         type="number"
+                        min="1"
                         id="small-input"
                         name="slaughter_house[]"
                         required

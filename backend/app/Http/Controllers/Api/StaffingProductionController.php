@@ -38,7 +38,7 @@ class StaffingProductionController extends Controller
         $statusCode = 200;
         $messageStatus='1';
         }else{
-        $message = "Data already exist for this day and week! ";
+        $message = "data_exist_for_week";
         $messageStatus='2'; 
         $statusCode = 422;  
         }

@@ -20,7 +20,10 @@ interface ChartProps {
 
 const computeChart = (data: any, t: any) => {
   if (data) {
-    const inputdata = data.sort((a, b) => a.date - b.date);
+    const inputdata = data.sort(
+      (a: any, b: any) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
 
     //console.log("inputdata", inputdata);
     const resultMap = new Map();
@@ -194,11 +197,37 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     }
   }, [startDate, endDate, queryParams]);
 
-  const ChartOptions1: ApexOptions = {
+  const ChartAvailabilityOptions: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.OEEAvailabilityLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("availability") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.OEEAvailabilityLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     //colors: ["#3C50E0", "#80CAEE"],
     colors: ["#006400", "#f84c0b"], // Array of colors
@@ -256,11 +285,37 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     },
   };
 
-  const ChartOptions2: ApexOptions = {
+  const ChartPerformanceOption: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.OEEPerformanceLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("performance") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.OEEPerformanceLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     colors: ["#3C50E0", "#80CAEE"],
     //colors: ["#006400", "#f84c0b"], // Array of colors
@@ -323,11 +378,37 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     //   },
   };
 
-  const ChartOptions3: ApexOptions = {
+  const ChartQualityOption: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.OEEQualityLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("performance") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.OEEQualityLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     colors: ["#f84c0b", "#f84c0b"],
     //colors: ["#006400", "#f84c0b"], // Array of colors
@@ -385,11 +466,37 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     },
   };
 
-  const ChartOptions4: ApexOptions = {
+  const ChartOEEOverallOption: ApexOptions = {
     legend: {
       show: true,
       position: "bottom",
       horizontalAlign: "center",
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: constant.OEEOverAllLimit, // Threshold value
+          borderColor: "#000000",
+          strokeDashArray: 4, // Optional: makes the line dashed
+          opacity: 0.8, // Optional: sets line opacity
+          label: {
+            borderColor: "#000000",
+            style: {
+              color: "white",
+              background: "#000000",
+            },
+            text:
+              t("overall_oee") +
+              " " +
+              t("limit") +
+              " (" +
+              constant.OEEOverAllLimit +
+              ")",
+            position: "right", // Positions label on the left side
+            offsetX: 0,
+          },
+        },
+      ],
     },
     colors: colors,
     //colors: ["#F7DC6F", "#f84c0b"],
@@ -533,7 +640,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions1}
+            options={ChartAvailabilityOptions}
             series={availabilitySeries.series}
             type={chartType}
             height={320}
@@ -552,7 +659,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions2}
+            options={ChartPerformanceOption}
             series={performanceSeries.series}
             type={chartType}
             height={320}
@@ -573,7 +680,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions3}
+            options={ChartQualityOption}
             series={qualitySeries.series}
             type={chartType}
             height={320}
@@ -586,13 +693,11 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
             </span>
 
-            <p className=" text-cyan-900 dark:text-white font-thin">
-              {t("overall_oee")}(%)
-            </p>
+            <p className=" text-cyan-900 dark:text-white font-thin">OEE (%)</p>
           </div>
           <ReactApexChart
             key={"1"}
-            options={ChartOptions4}
+            options={ChartOEEOverallOption}
             series={overallOEESeries.series}
             type={chartType}
             height={320}

@@ -30,17 +30,7 @@ const processData = (dataArray: any[], t: any) => {
     let waterValue: any[] = [];
     let months: any[] = [];
     for (let i = 0; i < data.length; i++) {
-      //const dateToCheck = new Date(data[i].date);
-      //let year_month = data[i].date;
-      //year_month = year_month.substring(0, 7);
-
-      // const month_value =
-      //   dateToCheck.toLocaleString("default", { month: "short" }) +
-      //   " " +
-      //   dateToCheck.getFullYear().toString().slice(-2);
-      //// If the month is not in the month array, then add a month
       !months.includes(data[i].date) && (months = [...months, data[i].date]);
-
       data[i].protein_value != null &&
         (proteinValue = [...proteinValue, data[i].protein_value]);
       data[i].lactose_value != null &&
@@ -59,6 +49,143 @@ const processData = (dataArray: any[], t: any) => {
       processedWaterData,
       months,
     ];
+  }
+};
+
+const computeChartWithKeys = (inputdata: any, t: any) => {
+  //const { getWeekNumber } = ReusableMethods();
+  if (inputdata) {
+    const data = inputdata.sort(
+      (a: any, b: any) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    const keys = [
+      "ham",
+      "sternum",
+      "front_leg",
+      "belly_cut",
+      "back",
+      "neck",
+      "flank",
+      "ribs",
+      "inside",
+      "hind_leg",
+    ];
+
+    const monitoring = keys.reduce((acc, key) => {
+      acc[key] = data.reduce((sum, obj) => {
+        // Check condition before adding to sum
+        if (obj["verify_or_monitor"] === "1") {
+          return sum + (obj[key] || 0);
+        }
+        return sum;
+      }, 0);
+      return acc;
+    }, {});
+
+    const verification = keys.reduce((acc, key) => {
+      acc[key] = data.reduce((sum, obj) => {
+        // Check condition before adding to sum
+        if (obj["verify_or_monitor"] === "2") {
+          return sum + (obj[key] || 0);
+        }
+        return sum;
+      }, 0);
+      return acc;
+    }, {});
+    console.log("monitoring", monitoring);
+
+    const verification_keys = Object.keys(verification);
+    const monitor_keys = Object.keys(monitoring);
+
+    const verification_data = Object.values(verification);
+    const monitor_data = Object.values(monitoring);
+
+    // Calculate the percentage of each value (relative to the total sum)
+    const totalMonitoringValue = monitor_data.reduce(
+      (acc, val) => acc + val,
+      0
+    );
+    const monitoringPercentageValues = monitor_data.map((value) =>
+      Math.round((value / totalMonitoringValue) * 100)
+    );
+
+    let processedVMonitoringData = [
+      { name: t("monitoring"), data: monitor_data },
+      // {
+      //   name: "Percentage",
+      //   data: monitoringPercentageValues, // Percentage data for the right Y-axis
+      //   yAxisIndex: 1, // This tells ApexCharts to use the second Y-axis
+      // },
+    ];
+    let processedVerificationData = [
+      { name: t("verification"), data: verification_data },
+    ];
+
+    return [
+      processedVMonitoringData,
+      processedVerificationData,
+      verification_keys,
+      monitor_keys,
+    ];
+
+    // console.log("monitoring ", monitoring);
+    // console.log("verification", verification);
+    //const currentYear = new Date().getFullYear(); // Get the current year
+    // for (let i = 0; i < data.length; i++) {
+    //   //// Check the date
+    //   const dateToCheck = new Date(data[i].date);
+    //   /////// If the date is this year
+    //   //if (dateToCheck.getFullYear() === currentYear) {
+    //   //const month = dateToCheck.getMonth() + 1; //// Get the month
+
+    //   //console.log("month", month + "-" + week);
+    //   if (!resultMap.has(month_week)) {
+    //     resultMap.set(month_week, {
+    //       goodVerification: 0,
+    //       //badVefiried: 0,
+    //       goodMonitoring: 0,
+    //       //badMonitoring: 0,
+    //     });
+    //   }
+    //   const dateEntry = resultMap.get(month_week);
+
+    //   /////// If the verify_or_monitor value is 1, increase the good monitoring value
+    //   if (data[i].verify_or_monitor == 1) {
+    //     dateEntry.goodMonitoring += 1;
+    //   }
+
+    //   /////// If the verify_or_monitor value is 1, increase the good monitoring value
+    //   if (data[i].verify_or_monitor == 2) {
+    //     dateEntry.goodVerification += 1;
+    //   }
+    // }
+
+    // Convert the Map to an array of objects
+    // const resultArray = Array.from(
+    //   resultMap,
+    //   ([month_week, { goodVerification, goodMonitoring }]) => ({
+    //     month_week,
+    //     goodVerification,
+    //     goodMonitoring,
+    //   })
+    // );
+
+    // Using forEach to loop through the Map
+    // resultArray.forEach((value) => {
+    //   months_week.push(value.month_week);
+    //   goodVerificationValues.push(value.goodVerification);
+    //   goodMonitoringValues.push(value.goodMonitoring);
+    // });
+
+    // Set processed value for chat
+    //let processedProteinData: any[] = [];
+    // let processedVerificationMonitoringData = [
+    //   { name: t("verification"), data: moni },
+    //   { name: t("monitoring"), data: goodMonitoringValues },
+    // ];
+    //console.log("LactoseSeries", processedLactoseData);
+    //return [processedVerificationMonitoringData, months_week];
   }
 };
 
@@ -155,10 +282,19 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
   const [returnDataArray, setReturnDataArray] = useState([]);
   const user = useSelector((state: any) => state.user.value);
   const [parameterValue, setParameterValue] = useState("");
-
+  const [keys, setKeys] = useState({});
   const [trackingSeries, setTrackingSeries] = useState<ChartOneState>({
     series: [],
   });
+  const [verifyTrackingSeriesWithKeys, setVerifyTrackingSeriesWithKeys] =
+    useState<ChartOneState>({
+      series: [],
+    });
+
+  const [monitorTrackingSeriesWithKeys, setMonitorTrackingSeriesWithKeys] =
+    useState<ChartOneState>({
+      series: [],
+    });
 
   useEffect(() => {
     setChartData(props.chartData.data);
@@ -187,7 +323,6 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
       });
     };
     fetchData("drill_sample_form_related_data", setReturnDataArray);
-
     setIsLoading(false);
   }, [props]);
 
@@ -198,7 +333,7 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
   useEffect(() => {
     if (filteredChartData) {
       let verifyMonitorLimitMatch: any = [];
-      //let verifyMonitorLimitMatch: any = [];
+      let verifyMonitorLimitMatchWithKeys: any = {};
 
       chartData &&
         (verifyMonitorLimitMatch = computeChart(
@@ -207,7 +342,22 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
           getWeekNumber
         ));
 
+      console.log("console1", verifyMonitorLimitMatch);
+      chartData &&
+        (verifyMonitorLimitMatchWithKeys = computeChartWithKeys(
+          filteredChartData,
+          t
+        ));
+
+      console.log("console", verifyMonitorLimitMatchWithKeys[0]);
       setTrackingSeries({ series: verifyMonitorLimitMatch[0] });
+      setMonitorTrackingSeriesWithKeys({
+        series: verifyMonitorLimitMatchWithKeys[0],
+      });
+      setVerifyTrackingSeriesWithKeys({
+        series: verifyMonitorLimitMatchWithKeys[1],
+      });
+      setKeys(verifyMonitorLimitMatchWithKeys[2]);
       setMonths(verifyMonitorLimitMatch[1]);
     }
   }, [filteredChartData, chartType]);
@@ -304,6 +454,100 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
     //       format: "MMM dd, yyyy", // Format for tooltip date
     //     },
     //   },
+  };
+
+  const ChartOptionsWithKeys: ApexOptions = {
+    legend: {
+      show: true,
+      position: "bottom",
+      horizontalAlign: "center",
+    },
+    //colors: ["#3C50E0", "#80CAEE"],
+    colors: ["#006400", "#f84c0b"], // Array of colors
+    chart: {
+      type: chartType,
+      fontFamily: "Satoshi, sans-serif",
+      stacked: chartStacked,
+      toolbar: {
+        show: true,
+      },
+    },
+
+    stroke: {
+      width: [2, 2],
+      curve: "straight",
+    },
+
+    grid: {
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories: keys,
+      labels: {
+        show: true, // Hides the X-axis labels
+        //format: "MM dd, yyyy",
+      },
+      //tickAmount: 10, // Number of labels on x-axis to control grouping interval
+    },
+  };
+
+  const ChartOptionsWithKeys2: ApexOptions = {
+    legend: {
+      show: true,
+      position: "bottom",
+      horizontalAlign: "center",
+    },
+    //colors: ["#3C50E0", "#80CAEE"],
+    colors: ["#f84c0b", "#006400"], // Array of colors
+    chart: {
+      type: chartType,
+      fontFamily: "Satoshi, sans-serif",
+      stacked: true,
+      toolbar: {
+        show: true,
+      },
+    },
+
+    stroke: {
+      width: [2, 2],
+      curve: "straight",
+    },
+
+    grid: {
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories: keys,
+      labels: {
+        show: true, // Hides the X-axis labels
+        //format: "MM dd, yyyy",
+      },
+      //tickAmount: 10, // Number of labels on x-axis to control grouping interval
+    },
   };
 
   // const handleReset = () => {
@@ -440,45 +684,32 @@ const CCPFollowUpChart1: React.FC<ChartProps> = (props: any) => {
             height={320}
           />
         </div>
+      </div>
 
-        {/* <div
-          id="chartOne"
-          className="md:ml-3 md:w-3/6 text-center justify-center"
-        >
-          <div className="flex w-full text-center justify-center content-center self-center items-center my-3">
-            <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
-            </span>
-
-            <p className=" text-cyan-900 dark:text-white font-thin">
-              {t("lactose")}
-            </p>
+      <div className="md:flex md:flex-row w-full">
+        <div className="md:w-full md:flex text-center justify-center ">
+          <div className="w-1/2 text-center justify-center content-center self-center items-center my-3">
+            {t("verification")}
+            <ReactApexChart
+              key={"1"}
+              options={ChartOptionsWithKeys}
+              series={verifyTrackingSeriesWithKeys.series}
+              type={chartType}
+              height={320}
+            />
           </div>
-          <ReactApexChart
-            options={lactoseChartOptions}
-            series={lactoseSeries.series}
-            type={chartType}
-            height={320}
-          />
-        </div> */}
 
-        {/* <div id="chartOne" className="md:ml-2 md:w-3/6">
-          <div className="flex w-full text-center justify-center content-center self-center items-center my-3">
-            <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
-            </span>
-
-            <p className=" text-cyan-900 dark:text-white font-thin">
-              {t("water")}
-            </p>
+          <div className="w-1/2 text-center justify-center content-center self-center items-center my-3">
+            {t("monitoring")}
+            <ReactApexChart
+              key={"1"}
+              options={ChartOptionsWithKeys2}
+              series={monitorTrackingSeriesWithKeys.series}
+              type={chartType}
+              height={320}
+            />
           </div>
-          <ReactApexChart
-            options={waterChartOptions}
-            series={waterSeries.series}
-            type={chartType}
-            height={320}
-          />
-        </div> */}
+        </div>
       </div>
     </div>
   );

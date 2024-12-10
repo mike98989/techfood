@@ -68,12 +68,17 @@ const AlertModal = () => {
                         setIsLoading(false);
                         if (response.status == "1") {
                           setOpenModal(false);
-                          modalQueryData.modalData.setData((data: any) =>
-                            data.filter(
+                          modalQueryData.modalData.setData((data: any) => {
+                            const previousData = { ...data };
+                            previousData.data = previousData.data.filter(
                               (value: any, i: any) =>
                                 i !== modalQueryData.modalData.index
-                            )
-                          );
+                            );
+                            previousData.total -= 1;
+                            previousData.to -= 1;
+                            console.log(previousData);
+                            return previousData;
+                          });
                         }
                       });
                     }}

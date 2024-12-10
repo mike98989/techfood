@@ -168,6 +168,10 @@ const StaffingProduction = () => {
                 </td>
 
                 <td className="text-xs font-bold text-black dark:text-white items-center py-4 px-3 xl:pl-3 border-b border-[#eee] dark:border-strokedark">
+                  {t("total_workers")}
+                </td>
+
+                <td className="text-xs font-bold text-black dark:text-white items-center py-4 px-3 xl:pl-3 border-b border-[#eee] dark:border-strokedark">
                   {t("total_hours")}
                 </td>
                 <td className="text-xs font-bold text-black dark:text-white items-center py-4 px-3 xl:pl-3 border-b border-[#eee] dark:border-strokedark">
@@ -186,7 +190,7 @@ const StaffingProduction = () => {
                 sortedStaffingProduction.map((input: any, index: any) => (
                   <tr
                     key={index}
-                    className="border-b border-[#eee] dark:border-strokedark"
+                    className="border-b border-[#eee] dark:border-strokedark even:bg-gray-2 dark:even:bg-boxdark"
                   >
                     <td className="text-xs text-black dark:text-white items-center  py-4 px-3 xl:pl-3">
                       {index + 1}
@@ -242,6 +246,9 @@ const StaffingProduction = () => {
                     <td className="text-xs text-black dark:text-white  items-center py-4 px-3 xl:pl-3">
                       {input.percent_operator_staff_hours}%
                     </td>
+                    <td className="text-xs text-black dark:text-white items-center py-4 px-3 xl:pl-3">
+                      {input.sum_total_number_of_workers}
+                    </td>
 
                     <td className="text-xs text-black dark:text-white items-center py-4 px-3 xl:pl-3">
                       {input.sum_all_weekly_total_hours}
@@ -250,10 +257,10 @@ const StaffingProduction = () => {
                       {input.sum_all_production_quantity}
                     </td>
                     <td className="text-xs text-black dark:text-white items-center py-4 px-3 xl:pl-3">
-                      {input.efficiency}
+                      {(input.efficiency / 100).toFixed(1)} %
                     </td>
                     <td className="text-xs text-black dark:text-white items-center py-4 px-3 xl:pl-3">
-                      {input.productivity}
+                      {input.productivity}%
                     </td>
                   </tr>
                 ))}

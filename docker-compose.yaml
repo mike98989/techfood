@@ -87,6 +87,8 @@ services:
       - backend
     networks:
       - app-network
+    volumes:
+      - ./backend:/var/www/backend
 volumes:
   mysql_data:
 

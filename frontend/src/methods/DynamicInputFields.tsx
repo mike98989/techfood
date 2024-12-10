@@ -73,7 +73,7 @@ export const DynamicInputFields = () => {
   const handleAddBatch = (poIndex: number) => {
     setPoNumbers((prev) => {
       const updatedPoNumbers = [...prev];
-      console.log(updatedPoNumbers);
+
       updatedPoNumbers[poIndex] = {
         ...updatedPoNumbers[poIndex], // Ensure you're not mutating the original state
         batches: [
@@ -140,7 +140,6 @@ export const DynamicInputFields = () => {
       } else {
         updatedPoNumbers[poIndex][field] = value; // Update PO Number field
       }
-      console.log("updated", updatedPoNumbers);
       return updatedPoNumbers;
     });
   };
@@ -321,7 +320,7 @@ export const DynamicInputFieldsCCPFollowUp = () => {
     CCPFollowUp.percent = Math.ceil(
       (CCPFollowUp.total / CCPFollowUp.slaughtered_total) * 100
     );
-    console.log("CCP", CCPFollowUp);
+
     return CCPFollowUp;
   };
 
@@ -468,7 +467,6 @@ export const DynamicInputFieldsDrillSamples = () => {
       totalEnterobactaCount: 0,
       totalCount: 0,
     };
-    console.log("initialValues", resultCount);
     inputedValues.map((drill, index) => {
       //// Aerobic
       if (drill.aerobic != "") {
@@ -495,7 +493,6 @@ export const DynamicInputFieldsDrillSamples = () => {
         }
       }
     });
-    console.log("compute", resultCount);
     setComputValues(resultCount);
   };
 
@@ -592,7 +589,6 @@ export const DynamicInputFieldsHeadMidRiff = () => {
       totalStaphylococcusCount: 0,
       totalCount: 0,
     };
-    console.log("initialValues", resultCount);
     inputedValues.map((headmidriff, index) => {
       //// Aerobic
       if (headmidriff.aerobic != "") {
@@ -635,7 +631,6 @@ export const DynamicInputFieldsHeadMidRiff = () => {
         }
       }
     });
-    console.log("compute", resultCount);
     setComputValues(resultCount);
   };
 
@@ -647,5 +642,67 @@ export const DynamicInputFieldsHeadMidRiff = () => {
     handleRemoveRow,
     clearStateData,
     handleCompute,
+  };
+};
+
+///////Dynamic input field for map detected bacteria
+export const DynamicInputFieldsMapDetectedBacteria = () => {
+  const [detectedBacteria, setDetectedBacteria] = useState<any[]>([
+    {
+      date: "",
+      data: [],
+      coordinateId: "",
+    },
+  ]);
+
+  const handleInputChange = ({
+    bacteriaIndex,
+    dataIndex,
+    field,
+    value,
+  }: {
+    bacteriaIndex: number;
+    dataIndex?: number | null;
+    field: string;
+    value: string;
+  }) => {
+    setDetectedBacteria((prev) => {
+      const updatedPoNumbers = [...prev];
+      if (dataIndex != null) {
+        updatedPoNumbers[bacteriaIndex].data[dataIndex][field] = value;
+      } else {
+        updatedPoNumbers[bacteriaIndex][field] = value; // Update PO Number field
+      }
+
+      return updatedPoNumbers;
+    });
+  };
+
+  const handleChartCoordinatesOptionChange = (id, coordinates) => {
+    const filtered = coordinates.filter(
+      (value: object, i: any) => value.id == id
+    );
+    return filtered;
+  };
+
+  const handleUpdateDetectedBacteriaRow = (coordinates: any) => {
+    setDetectedBacteria((prev) => {
+      const updatedBacteriaData = [...prev];
+      updatedBacteriaData[0] = {
+        ...updatedBacteriaData[0], // Ensure you're not mutating the original state
+        data: coordinates.map((value, i) => ({
+          label: value.label,
+          number_detected: "",
+        })),
+      };
+      return updatedBacteriaData;
+    });
+  };
+
+  return {
+    detectedBacteria,
+    handleUpdateDetectedBacteriaRow,
+    handleInputChange,
+    handleChartCoordinatesOptionChange,
   };
 };
