@@ -150,7 +150,7 @@ const EditFruitProduction = (props: any) => {
                     onChange={handleChange}
                   >
                     <option value="">--Select--</option>
-                    {returnDataArray.fruits?.original.data.map(
+                    {returnDataArray.sections?.original.data.map(
                       (value: any, key) => (
                         <option key={key} value={value.id}>
                           {t(value.name_key)}

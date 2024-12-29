@@ -28,10 +28,10 @@ const formReturnMessage = () => {
             </svg>
             <span className="sr-only">Info</span>
             {/* <div>
-              <span className="font-medium"></span> {formMessage.message}
+              <span className="font-medium"></span> {t(formMessage.message)}
             </div> */}
 
-            <div dangerouslySetInnerHTML={{ __html: formMessage.message }} />
+            <div dangerouslySetInnerHTML={{ __html: t(formMessage.message) }} />
           </div>
         )}
 

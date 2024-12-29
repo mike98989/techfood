@@ -22,6 +22,39 @@ class OEEFollowUpController extends Controller
         
     }
 
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+
+        $oeefollowup =  OEEFollowUp::where('user_id',$user->id)->orderBy('date', 'desc');
+
+        //// Search by range of dates
+        $oeefollowup = $oeefollowup->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('date',[$request->start_date,$request->end_date]):$query->where('date','>',$request->start_date);
+        });
+
+        //// Search by avaibility greater than the value
+        $oeefollowup = $oeefollowup->when($request->availability && $request->availability!='', function ($query) use ($request) {
+            return $query->where('availability',$request->operator,$request->availability);
+        });
+
+        //// Search by section
+        $oeefollowup = $oeefollowup->when($request->performance && $request->performance!='', function ($query) use ($request) {
+            return $query->where('performance',$request->operator,$request->performance);
+        });
+
+        //// Search by Deviation Type
+        $oeefollowup = $oeefollowup->when($request->quality && $request->quality!='', function ($query) use ($request) {
+            return $query->where('quality',$request->operator,$request->quality);
+        });
+
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $oeefollowup = $oeefollowup->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$oeefollowup],201);
+    }
 
     public function store(Request $request)
     {

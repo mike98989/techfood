@@ -162,7 +162,7 @@ export default function FruitProduction() {
                           }
                         >
                           <option value="">--{t("select")}--</option>
-                          {returnDataArray.fruits?.original.data.map(
+                          {returnDataArray.sections?.original.data.map(
                             (value: any, key: any) => (
                               <option key={key} value={value.id}>
                                 {t(value.name_key)}

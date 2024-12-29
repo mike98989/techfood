@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
-import { constant } from "../../Utils/Constants";
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 export default function NewDrillSample() {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -17,6 +17,7 @@ export default function NewDrillSample() {
   const pageTitle = t("drill_samples_in_slaughter");
   const { allRequest } = ReusableMethods();
   const [returnDataArray, setReturnDataArray] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
 
   const {
     drillSamples,
@@ -45,6 +46,11 @@ export default function NewDrillSample() {
     };
     fetchData("drill_sample_form_related_data", setReturnDataArray);
   }, []);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   return (
     <>
@@ -88,13 +94,13 @@ export default function NewDrillSample() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.aerobicConstantLimit}
+                    settings.aerobicConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countAerobicValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -110,7 +116,7 @@ export default function NewDrillSample() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countAerobicInvalid}
                     <span className="ml-1">Percent</span> =
@@ -147,13 +153,13 @@ export default function NewDrillSample() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.enterobactaConstantLimit}
+                    settings.enterobactaConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countEnterobactaValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -169,7 +175,7 @@ export default function NewDrillSample() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countEnterobactaInvalid}
                     <span className="ml-1">Percent</span> =
@@ -229,7 +235,7 @@ export default function NewDrillSample() {
                       {drill.aerobic != "" && (
                         <>
                           {parseFloat(drill.aerobic) * 1 <
-                          constant.aerobicConstantLimit * 1 ? (
+                          settings.aerobicConstantLimit * 1 ? (
                             <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1"></div>
                           ) : (
                             <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1"></div>
@@ -243,7 +249,7 @@ export default function NewDrillSample() {
                       {drill.enterobacta != "" && (
                         <>
                           {parseFloat(drill.enterobacta) * 1 <
-                          constant.enterobactaConstantLimit * 1 ? (
+                          settings.enterobactaConstantLimit * 1 ? (
                             <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                           ) : (
                             <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>

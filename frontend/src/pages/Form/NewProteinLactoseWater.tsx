@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DynamicInputFields } from "../../methods/DynamicInputFields"; // Import the hook
 import { ReusableMethods } from "../../methods/ReusableMethods";
 import SpinnerObject from "../../components/Spinner/Spinner";
@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
-import { constant } from "../../Utils/Constants";
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 export default function NewProteinLactoseWater() {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -15,6 +15,8 @@ export default function NewProteinLactoseWater() {
   const { MessageBox, setFormMessage } = formReturnMessage();
   const { t } = useTranslation();
   const pageTitle = t("protein_lactose_water");
+  const { settings, setSettings } = DynamicInputFieldsSettings();
+
   const {
     poNumbers,
     computeValues,
@@ -25,12 +27,11 @@ export default function NewProteinLactoseWater() {
     handleInputChange,
     handleCompute,
   } = DynamicInputFields();
-  //const { countValid, countInValid, totalCount } = proteinChartValues;
-  // const proteinConstant = {
-  //   constants: 72.5,
-  //   approvedText: "Tillfredställande",
-  //   unApprovedText: "Åtgärder krävs",
-  // };
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   return (
     <>
@@ -45,6 +46,7 @@ export default function NewProteinLactoseWater() {
         showNewButton={false}
         pageTitle={pageTitle}
       />
+
       <div className="grid grid-cols-1 md:grid-cols-[100%] gap-4">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex border-b justify-between  border-stroke py-2 px-3 dark:border-strokedark">
@@ -74,13 +76,13 @@ export default function NewProteinLactoseWater() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.proteinConstantLimit}
+                    settings.proteinConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countProteinValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -96,7 +98,7 @@ export default function NewProteinLactoseWater() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countProteinInvalid}
                     <span className="ml-1">Percent</span> =
@@ -133,13 +135,13 @@ export default function NewProteinLactoseWater() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.lactoseConstantLimit}
+                    settings.lactoseConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countLactoseValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -155,7 +157,7 @@ export default function NewProteinLactoseWater() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countLactoseInvalid}
                     <span className="ml-1">Percent</span> =
@@ -192,13 +194,13 @@ export default function NewProteinLactoseWater() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.waterConstantLimit}
+                    settings.waterConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countWaterValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -214,7 +216,7 @@ export default function NewProteinLactoseWater() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countWaterInvalid}
                     <span className="ml-1">Percent</span> =
@@ -319,8 +321,8 @@ export default function NewProteinLactoseWater() {
                           {/* Protein Value */}
                           {batch.proteinValue != "" && (
                             <>
-                              {parseInt(batch.proteinValue) * 1 >
-                              constant.proteinConstantLimit * 1 ? (
+                              {parseFloat(batch.proteinValue) * 1 >
+                              settings.proteinConstantLimit * 1 ? (
                                 <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1"></div>
                               ) : (
                                 <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1"></div>
@@ -331,8 +333,8 @@ export default function NewProteinLactoseWater() {
                           {/* Lactose Value */}
                           {batch.lactoseValue != "" && (
                             <>
-                              {parseInt(batch.lactoseValue) * 1 >
-                              constant.lactoseConstantLimit * 1 ? (
+                              {parseFloat(batch.lactoseValue) * 1 >
+                              settings.lactoseConstantLimit * 1 ? (
                                 <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                               ) : (
                                 <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
@@ -343,8 +345,8 @@ export default function NewProteinLactoseWater() {
                           {/* Water Value */}
                           {batch.waterValue != "" && (
                             <>
-                              {parseInt(batch.waterValue) * 1 >
-                              constant.waterConstantLimit * 1 ? (
+                              {parseFloat(batch.waterValue) * 1 >
+                              settings.waterConstantLimit * 1 ? (
                                 <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                               ) : (
                                 <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>

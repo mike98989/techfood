@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
-import SpinnerObject from "../../../components/Spinner/Spinner";
+// import SpinnerObject from "../../../components/Spinner/Spinner";
 import { constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -148,7 +148,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
   const [filteredChartData, setFilteredChartData] = useState([]);
   const [startDate, setStartData] = useState("");
   const [endDate, setEndData] = useState("");
-  const { setIsLoading, Spinner } = SpinnerObject();
+  // const { setIsLoading, Spinner } = SpinnerObject();
   const [chartType, setChartType] = useState("bar");
   const [chartStacked, setChartStacked] = useState(false);
   const [firstDate, setFirstDate] = useState(false);
@@ -176,12 +176,8 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
       firstDate && setFirstDate(firstDate.slaughter_date);
       lastDate && setLastDate(lastDate.slaughter_date);
     }
-    setIsLoading(false);
+    //setIsLoading(false);
   }, [props]);
-
-  useEffect(() => {
-    setIsLoading(true);
-  }, []);
 
   useEffect(() => {
     if (filteredChartData) {
@@ -227,8 +223,6 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
 
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-3 pt-3.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-3.5 xl:col-span-12">
-      <Spinner />
-
       {/* Satisfactory and not satisfactory chart */}
       <div className="md:flex md:flex-row w-full">
         <div className="md:w-full ">

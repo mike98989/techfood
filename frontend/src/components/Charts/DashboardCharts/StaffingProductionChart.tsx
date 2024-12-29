@@ -129,11 +129,11 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
   useEffect(() => {
     setChartData(props.chartData.data);
     setFilteredChartData(props.chartData.data);
-    setIsLoading(false);
+    //setIsLoading(false);
   }, [props]);
 
   useEffect(() => {
-    setIsLoading(true);
+    //setIsLoading(true);
   }, []);
 
   useEffect(() => {
@@ -248,7 +248,7 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
               </span>
               <div className="w-full flex flex-row">
                 <div className="w-2/3 text-cyan-900 dark:text-white font-thin">
-                  {t("oee_and_efficiency")} -{" "}
+                  {t("staffing_of_production")} -{" "}
                   {t(parameterValue == "" ? "Availability" : parameterValue)}
                 </div>
                 <div className="w-1/2 text-cyan-900 dark:text-white font-thin">

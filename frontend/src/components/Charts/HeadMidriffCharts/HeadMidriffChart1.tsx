@@ -4,9 +4,9 @@ import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import SpinnerObject from "../../../components/Spinner/Spinner";
-import { constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
 
 interface ChartOneState {
   series: {
@@ -60,7 +60,7 @@ const processData = (dataArray: any[], t: any) => {
   }
 };
 
-const computeChart = (inputdata: any, t: any) => {
+const computeChart = (inputdata: any, t: any, settings: any) => {
   if (inputdata) {
     const data = inputdata.sort(
       (a: any, b: any) =>
@@ -99,25 +99,25 @@ const computeChart = (inputdata: any, t: any) => {
       }
       const dateEntry = resultMap.get(month);
 
-      /////// If the aerobic value is less than the constant increament good by 1 else increament bad by 1
-      if (data[i].aerobic < constant.aerobicConstantLimit) {
+      /////// If the aerobic value is less than the settings increament good by 1 else increament bad by 1
+      if (data[i].aerobic < settings.aerobicConstantLimit) {
         dateEntry.goodAerobic += 1;
-      } else if (data[i].aerobic > constant.aerobicConstantLimit) {
+      } else if (data[i].aerobic > settings.aerobicConstantLimit) {
         dateEntry.badAerobic += 1;
       }
 
-      /////// If the E coli value is less than the constant increament good by 1 else increament bad by 1
-      if (data[i].e_coli < constant.ecoliConstantLimit) {
+      /////// If the E coli value is less than the settings increament good by 1 else increament bad by 1
+      if (data[i].e_coli < settings.ecoliConstantLimit) {
         dateEntry.goodEcoli += 1;
-      } else if (data[i].e_coli > constant.ecoliConstantLimit) {
+      } else if (data[i].e_coli > settings.ecoliConstantLimit) {
         dateEntry.badEcoli += 1;
       }
 
-      /////// If the Staphylococcus value is less than the constant increament good by 1 else increament bad by 1
-      if (data[i].staphylococcus < constant.staphylococcusConstantLimit) {
+      /////// If the Staphylococcus value is less than the settings increament good by 1 else increament bad by 1
+      if (data[i].staphylococcus < settings.staphylococcusConstantLimit) {
         dateEntry.goodStaphylococcus += 1;
       } else if (
-        data[i].staphylococcus > constant.staphylococcusConstantLimit
+        data[i].staphylococcus > settings.staphylococcusConstantLimit
       ) {
         dateEntry.badStaphylococcus += 1;
       }
@@ -161,18 +161,18 @@ const computeChart = (inputdata: any, t: any) => {
     // Set processed value for chat
     //let processedProteinData: any[] = [];
     let processedAerobicData = [
-      { name: t(constant.approvedText), data: goodAerobicValues },
-      { name: t(constant.unApprovedText), data: badAerobicValues },
+      { name: t(settings.approvedText), data: goodAerobicValues },
+      { name: t(settings.unApprovedText), data: badAerobicValues },
     ];
 
     let processedEcoliData = [
-      { name: t(constant.approvedText), data: goodEcoliValues },
-      { name: t(constant.unApprovedText), data: badEcoliValues },
+      { name: t(settings.approvedText), data: goodEcoliValues },
+      { name: t(settings.unApprovedText), data: badEcoliValues },
     ];
 
     let processedStaphylococcusData = [
-      { name: t(constant.approvedText), data: goodStaphylococcusValue },
-      { name: t(constant.unApprovedText), data: badStaphylococcusValue },
+      { name: t(settings.approvedText), data: goodStaphylococcusValue },
+      { name: t(settings.unApprovedText), data: badStaphylococcusValue },
     ];
 
     //console.log("LactoseSeries", processedLactoseData);
@@ -202,6 +202,8 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
   const { t } = useTranslation();
   const [months, setMonths] = useState([]);
   const [monthsChart2, setMonthsChart2] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
+
   const [aerobicSeries, setAerobicSeries] = useState<ChartOneState>({
     series: [],
   });
@@ -263,6 +265,11 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
   }, []);
 
   useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
+  useEffect(() => {
     if (filteredChartData) {
       let aerobicEcoliStaphylococcusLimitMatch: any = [];
       let aerobicEcoliStaphylococcusValueMatch: any = [];
@@ -270,7 +277,8 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
       chartData &&
         (aerobicEcoliStaphylococcusLimitMatch = computeChart(
           filteredChartData,
-          t
+          t,
+          settings
         ));
       chartData &&
         (aerobicEcoliStaphylococcusValueMatch = processData(
@@ -606,7 +614,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.aerobicConstantLimit, // Threshold value
+          y: settings.aerobicConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -621,7 +629,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.aerobicConstantLimit +
+              settings.aerobicConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -665,7 +673,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.ecoliConstantLimit, // Threshold value
+          y: settings.ecoliConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -680,7 +688,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.ecoliConstantLimit +
+              settings.ecoliConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -724,7 +732,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.staphylococcusConstantLimit, // Threshold value
+          y: settings.staphylococcusConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -739,7 +747,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.staphylococcusConstantLimit +
+              settings.staphylococcusConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,

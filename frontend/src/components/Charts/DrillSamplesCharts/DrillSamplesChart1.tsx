@@ -4,9 +4,9 @@ import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import SpinnerObject from "../../../components/Spinner/Spinner";
-import { constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
 
 interface ChartOneState {
   series: {
@@ -57,7 +57,7 @@ const processData = (dataArray: any[], t: any) => {
   }
 };
 
-const computeChart = (inputdata: any, t: any) => {
+const computeChart = (inputdata: any, t: any, settings: any) => {
   if (inputdata) {
     const data = inputdata.sort(
       (a: any, b: any) =>
@@ -92,17 +92,17 @@ const computeChart = (inputdata: any, t: any) => {
       }
       const dateEntry = resultMap.get(month);
 
-      /////// If the aerobic value is less than the constant increament good by 1 else increament bad by 1
-      if (data[i].aerobic < constant.aerobicConstantLimit) {
+      /////// If the aerobic value is less than the settings increament good by 1 else increament bad by 1
+      if (data[i].aerobic < settings.aerobicConstantLimit) {
         dateEntry.goodAerobic += 1;
-      } else if (data[i].aerobic > constant.aerobicConstantLimit) {
+      } else if (data[i].aerobic > settings.aerobicConstantLimit) {
         dateEntry.badAerobic += 1;
       }
 
-      /////// If the E coli value is less than the constant increament good by 1 else increament bad by 1
-      if (data[i].enterobacta < constant.enterobactaConstantLimit) {
+      /////// If the E coli value is less than the settings increament good by 1 else increament bad by 1
+      if (data[i].enterobacta < settings.enterobactaConstantLimit) {
         dateEntry.goodEnterobacta += 1;
-      } else if (data[i].enterobacta > constant.enterobactaConstantLimit) {
+      } else if (data[i].enterobacta > settings.enterobactaConstantLimit) {
         dateEntry.badEnterobacta += 1;
       }
     }
@@ -134,13 +134,13 @@ const computeChart = (inputdata: any, t: any) => {
     // Set processed value for chat
     //let processedProteinData: any[] = [];
     let processedAerobicData = [
-      { name: t(constant.approvedText), data: goodAerobicValues },
-      { name: t(constant.unApprovedText), data: badAerobicValues },
+      { name: t(settings.approvedText), data: goodAerobicValues },
+      { name: t(settings.unApprovedText), data: badAerobicValues },
     ];
 
     let processedEnterobactaData = [
-      { name: t(constant.approvedText), data: goodEnterobactaValues },
-      { name: t(constant.unApprovedText), data: badEnterobactaValues },
+      { name: t(settings.approvedText), data: goodEnterobactaValues },
+      { name: t(settings.unApprovedText), data: badEnterobactaValues },
     ];
 
     //console.log("LactoseSeries", processedLactoseData);
@@ -165,6 +165,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
   const { t } = useTranslation();
   const [months, setMonths] = useState([]);
   const [monthsChart2, setMonthsChart2] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
   const [aerobicSeries, setAerobicSeries] = useState<ChartOneState>({
     series: [],
   });
@@ -218,12 +219,21 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
   }, []);
 
   useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
+  useEffect(() => {
     if (filteredChartData) {
       let aerobicEnterobactaLimitMatch: any = [];
       let aerobicEnterobactaValueMatch: any = [];
 
       chartData &&
-        (aerobicEnterobactaLimitMatch = computeChart(filteredChartData, t));
+        (aerobicEnterobactaLimitMatch = computeChart(
+          filteredChartData,
+          t,
+          settings
+        ));
       chartData &&
         (aerobicEnterobactaValueMatch = processData(filteredChartData, t));
       //value[0] && (setState({ series: value[0] }), setMonths(value[1]));
@@ -467,7 +477,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.aerobicConstantLimit, // Threshold value
+          y: settings.aerobicConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -482,7 +492,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.aerobicConstantLimit +
+              settings.aerobicConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -526,7 +536,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.enterobactaConstantLimit, // Threshold value
+          y: settings.enterobactaConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -541,7 +551,7 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.enterobactaConstantLimit +
+              settings.enterobactaConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,

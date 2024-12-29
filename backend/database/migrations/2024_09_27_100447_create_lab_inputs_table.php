@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("PO_number");
             $table->string("batch_number");
-            $table->integer("protein_value")->nullable();
-            $table->integer("lactose_value")->nullable();
-            $table->integer("water_value")->nullable();
+            $table->float("protein_value")->nullable();
+            $table->float("lactose_value")->nullable();
+            $table->float("water_value")->nullable();
             $table->date("result_date");
             $table->integer("status")->default("1");
             $table->timestamps();

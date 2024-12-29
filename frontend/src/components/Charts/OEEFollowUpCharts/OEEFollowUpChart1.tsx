@@ -4,9 +4,10 @@ import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import SpinnerObject from "../../../components/Spinner/Spinner";
-import { constant, colors } from "../../../Utils/Constants";
+import { colors } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
 
 interface ChartOneState {
   series: {
@@ -119,6 +120,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
   const [queryParams, setQuetyParams] = useState({});
   const { t } = useTranslation();
   const [dates, setDates] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
   //   const [monthsChart2, setMonthsChart2] = useState([]);
   //   const [returnDataArray, setReturnDataArray] = useState([]);
   const user = useSelector((state: any) => state.user.value);
@@ -156,6 +158,11 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
   useEffect(() => {
     setIsLoading(true);
   }, []);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   useEffect(() => {
     if (filteredChartData) {
@@ -206,7 +213,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.OEEAvailabilityLimit, // Threshold value
+          y: settings.OEEAvailabilityLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -221,7 +228,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.OEEAvailabilityLimit +
+              settings.OEEAvailabilityLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -294,7 +301,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.OEEPerformanceLimit, // Threshold value
+          y: settings.OEEPerformanceLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -309,7 +316,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.OEEPerformanceLimit +
+              settings.OEEPerformanceLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -387,7 +394,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.OEEQualityLimit, // Threshold value
+          y: settings.OEEQualityLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -402,7 +409,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.OEEQualityLimit +
+              settings.OEEQualityLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -475,7 +482,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.OEEOverAllLimit, // Threshold value
+          y: settings.OEEOverAllLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -490,7 +497,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.OEEOverAllLimit +
+              settings.OEEOverAllLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,

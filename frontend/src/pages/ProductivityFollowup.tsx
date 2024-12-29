@@ -1,10 +1,10 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-import OEEFollowUpTable from "../components/Tables/OEEFollowupTable";
+import ProductivityFollowUpTable from "../components/Tables/ProductivityFollowupTable";
 import { useTranslation } from "react-i18next";
 
-const OEEFollowup = () => {
+const ProductivityFollowUp = () => {
   const { t } = useTranslation();
-  const pageTitle = t("oee_and_efficiency");
+  const pageTitle = t("followup_of_productivity");
   return (
     <>
       <Breadcrumb
@@ -13,10 +13,10 @@ const OEEFollowup = () => {
         pageTitle={pageTitle}
       />
       <div className="">
-        <OEEFollowUpTable />
+        <ProductivityFollowUpTable />
       </div>
     </>
   );
 };
 
-export default OEEFollowup;
+export default ProductivityFollowUp;

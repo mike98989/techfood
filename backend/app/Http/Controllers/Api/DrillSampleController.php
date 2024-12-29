@@ -24,6 +24,41 @@ class DrillSampleController extends Controller
         
     }
 
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+
+        $drillSample =  DrillSample::where('user_id',$user->id)->with('animal')->with('product')->orderBy('created_at', 'desc');
+
+        //// Search by range of dates to filter out date of arrival into the custodial center
+        $drillSample = $drillSample->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('slaughter_date',[$request->start_date,$request->end_date]):$query->where('slaughter_date','>',$request->start_date);
+        });
+
+        //// Search by Limit for satisfactory or not satisfactory
+        $drillSample = $drillSample->when($request->satisfactory_or_not, function ($query) use ($request) {
+            $column_and_limit = explode('-',$request->column);
+            $column=$column_and_limit[0];
+            $limit=(float) $column_and_limit[1];
+            $satisfactory_or_not = trim($request->satisfactory_or_not);
+            
+            if($satisfactory_or_not === "-1"){ ////Satisfactory is 1 and -1 is not satisfactory
+                $compare = ">";
+            }else{
+                $compare = "<=";
+            }
+            return $query->where($column,$compare,$limit);
+        });
+
+     
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $drillSample = $drillSample->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$drillSample],201);
+    }
+
     public function getProducts()
     {
         $data =  DrillSampleProducts::where('status','1')->orderBy('name', 'asc')->get();

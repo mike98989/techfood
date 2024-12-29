@@ -7,9 +7,11 @@ import { ReusableMethods } from "../../methods/ReusableMethods";
 import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
-import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import { PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
 import Badge from "../Badges/Badge";
+import SearchObject from "../Search/SearchComponent";
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 const ProteinLactoseWater = () => {
   const { fetchApi } = httpRequest();
@@ -21,14 +23,37 @@ const ProteinLactoseWater = () => {
   const { t } = useTranslation();
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
-  //const { MessageBox, setFormMessage } = formReturnMessage();
+  const { settings, setSettings, handleInputChange } =
+    DynamicInputFieldsSettings();
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "fruit_production_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: true,
+    aerobicEnterobactaLimit: false,
+    aerobicEcoliStaphylococcusLimit: false,
+    causes: false,
+    statuses: false,
+    deviationTypes: false,
+    sections: false,
+    products: false,
+    dangers: false,
+    oee: false,
+    locations: false,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("labinputs");
 
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `labinputs?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -38,7 +63,18 @@ const ProteinLactoseWater = () => {
       setReturnData: setProteinLactosWaterData,
     });
   }, [currentPage]);
+
+  useEffect(() => {
+    searchData?.data && setProteinLactosWaterData(searchData);
+  }, [searchData]);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
 
@@ -55,6 +91,8 @@ const ProteinLactoseWater = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
+
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -75,21 +113,21 @@ const ProteinLactoseWater = () => {
                   {t("protein_value")}
                   <br />
                   <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.proteinConstantLimit}
+                    {t("limit") + " = " + settings.proteinConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("lactose_value")}
                   <br />
                   <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.lactoseConstantLimit}
+                    {t("limit") + " = " + settings.lactoseConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-sm text-black dark:text-white">
                   {t("water_value")}
                   <br />
                   <span className="text-sm text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.waterConstantLimit}
+                    {t("limit") + " = " + settings.waterConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-sm text-black dark:text-white">
@@ -125,15 +163,15 @@ const ProteinLactoseWater = () => {
                         {input.protein_value}
 
                         {parseFloat(input.protein_value) <
-                          constant.proteinConstantLimit && (
+                          settings.proteinConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.protein_value) >=
-                          constant.proteinConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.proteinConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>
@@ -142,15 +180,15 @@ const ProteinLactoseWater = () => {
                         {input.lactose_value}
 
                         {parseFloat(input.lactose_value) <
-                          constant.lactoseConstantLimit && (
+                          settings.lactoseConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.lactose_value) >=
-                          constant.lactoseConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.lactoseConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>
@@ -159,15 +197,15 @@ const ProteinLactoseWater = () => {
                         {input.water_value}
 
                         {parseFloat(input.water_value) <
-                          constant.waterConstantLimit && (
+                          settings.waterConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.water_value) >=
-                          constant.waterConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.waterConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>

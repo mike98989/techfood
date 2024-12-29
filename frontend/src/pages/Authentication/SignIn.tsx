@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LogoDark from "../../images/logo/techfood-logo.svg";
 import Logo from "../../images/logo/logo.svg";
@@ -13,7 +13,8 @@ const SignIn: React.FC = () => {
   const { userLogin } = ReusableMethods();
   const { setIsLoading, Spinner } = SpinnerObject();
   const { MessageBox, setFormMessage } = formReturnMessage();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -57,7 +58,7 @@ const SignIn: React.FC = () => {
                   //event.preventDefault();
                   userLogin({
                     event,
-                    action_url: "auth/signin", // End Point
+                    action_url: "auth/wordpress_signin", // End Point or signin, wordpress_signin
                     method: "POST", // Method
                     formId: "login", /// Form Id
                     formData: "", ///Form Data is empty because I used the form ID to grab the data instead
@@ -107,14 +108,51 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       required
                       placeholder={t("password_placeholder")}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-success focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-success"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span className="absolute right-4 top-4 flex flex-row">
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white mr-3 cursor-pointer"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {!showPassword && (
+                          <>
+                            <path
+                              stroke="currentColor"
+                              strokeWidth="0.8"
+                              d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                            />
+                            <path
+                              stroke="currentColor"
+                              strokeWidth="0.8"
+                              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                            />
+                          </>
+                        )}
+                        {showPassword && (
+                          <>
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="0.8"
+                              d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                            />
+                          </>
+                        )}
+                      </svg>
+
                       <svg
                         className="fill-current"
                         width="22"
