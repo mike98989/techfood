@@ -505,7 +505,7 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
         <div className="md:w-full text-center justify-center ">
           <div className="flex w-full">
             <div className="mb-3 w-full flex flex-row mt-2">
-              <span className="mt-1 mr-2 ml-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
+              <span className="mt-1 ml-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
                 <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-cyan-700"></span>
               </span>
               <div className="w-full flex flex-row">

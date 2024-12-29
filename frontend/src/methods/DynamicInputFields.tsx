@@ -402,6 +402,7 @@ export const DynamicInputFieldsDrillSamples = () => {
     pieces_date: "",
     animal_id: "",
     aerobic: "",
+    enterobacta: "",
     e_coli: "",
   };
 
@@ -705,4 +706,386 @@ export const DynamicInputFieldsMapDetectedBacteria = () => {
     handleInputChange,
     handleChartCoordinatesOptionChange,
   };
+};
+
+///////Dynamic input field for productivity followup
+export const DynamicInputFieldsProductivityFollowUp = () => {
+  const year = new Date();
+  const [productivityFollowUp, setProductivityFollowUp] = useState<any[]>([
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "monday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "tuesday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "wednesday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "thursday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "friday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "saturday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+    {
+      week: 0,
+      year: year.getFullYear(),
+      day: "sunday",
+      pork: 0,
+      lamb: 0,
+      beef: 0,
+      available_production_hours: 0,
+      output_per_day: 0,
+      total_target_per_day: 0,
+      accumulated: 0,
+      weekly_target: 0,
+      average_rate: constant.productivityAverageRate,
+      output_per_day_per_time: 0,
+      ack_target_qty: 0,
+      ack_output_qty: 0,
+      ack_target_time: 0,
+      ack_output_time: 0,
+      output_percent: 0,
+      deviation_from_contract_qty: 0,
+      deviation_from_contract_time: 0,
+    },
+  ]);
+
+  const handleInputChange = ({
+    inputIndex,
+    field,
+    value,
+  }: {
+    inputIndex: number;
+    field: string;
+    value: string;
+  }) => {
+    setProductivityFollowUp((prev) => {
+      const updatedProductivity = [...prev];
+      updatedProductivity[inputIndex][field] = value;
+
+      ////// Set Week
+      if (
+        field == "week" ||
+        field == "year" ||
+        field == "weekly_rate" ||
+        field == "average_rate" ||
+        field == "accumulated"
+      ) {
+        updatedProductivity.forEach((item) => {
+          item[field] = parseInt(value);
+          item["weekly_target"] =
+            field == "accumulated" && updatedProductivity[0].weekly_target;
+        });
+      } else {
+        updatedProductivity[inputIndex][field] = value;
+      }
+
+      /////// Updated Available Production Hours
+      updatedProductivity[inputIndex]["available_production_hours"] =
+        productivityFollowUp[inputIndex].total_available_hours * 1 >=
+          productivityFollowUp[inputIndex].maintenance_hours * 1 &&
+        productivityFollowUp[inputIndex].total_available_hours * 1 -
+          productivityFollowUp[inputIndex].maintenance_hours * 1;
+
+      /////// Update Total target per day;
+      updatedProductivity[inputIndex]["total_target_per_day"] = Math.round(
+        updatedProductivity[inputIndex]["available_production_hours"] *
+          updatedProductivity[inputIndex]["average_rate"]
+      );
+
+      /////// Update Output per day;
+      updatedProductivity[inputIndex]["output_per_day"] =
+        productivityFollowUp[inputIndex].lamb * 1 +
+        productivityFollowUp[inputIndex].beef * 1 +
+        productivityFollowUp[inputIndex].pork * 1;
+
+      // /////// Update weekly target;
+      updatedProductivity[0]["weekly_target"] =
+        updatedProductivity[0]["accumulated"] * 1 +
+        updatedProductivity.reduce(
+          (acc, cur) =>
+            acc +
+            Number(cur.total_target_per_day ? cur.total_target_per_day : 0),
+          0
+        );
+      ////////Set all other values for weekly target to be same as the first day
+      updatedProductivity.forEach((item) => {
+        item["weekly_target"] = updatedProductivity[0].weekly_target;
+      });
+
+      // updatedProductivity[inputIndex]["weekly_target"] = updatedProductivity[0][
+      //   "total_target_per_day"
+      // ]
+      //   ? updatedProductivity[0]["accumulated"] * 1 +
+      //     updatedProductivity[0]["total_target_per_day"] * 1
+      //   : 0 + updatedProductivity[1]["total_target_per_day"]
+      //     ? updatedProductivity[1]["total_target_per_day"]
+      //     : 0 + updatedProductivity[2]["total_target_per_day"]
+      //       ? updatedProductivity[2]["total_target_per_day"]
+      //       : 0 + updatedProductivity[3]["total_target_per_day"]
+      //         ? updatedProductivity[3]["total_target_per_day"]
+      //         : 0 + updatedProductivity[4]["total_target_per_day"]
+      //           ? updatedProductivity[4]["total_target_per_day"]
+      //           : 0 + updatedProductivity[5]["total_target_per_day"]
+      //             ? updatedProductivity[5]["total_target_per_day"]
+      //             : 0 + updatedProductivity[6]["total_target_per_day"]
+      //               ? updatedProductivity[6]["total_target_per_day"]
+      //               : 0;
+
+      /////// Update Output per day per time;
+      updatedProductivity[inputIndex]["output_per_day_per_time"] = Math.trunc(
+        (updatedProductivity[inputIndex].lamb &&
+          updatedProductivity[inputIndex].lamb > 0 &&
+          updatedProductivity[inputIndex].lamb /
+            updatedProductivity[inputIndex]["average_rate"]) +
+          (updatedProductivity[inputIndex].beef &&
+            updatedProductivity[inputIndex].beef > 0 &&
+            updatedProductivity[inputIndex].beef /
+              updatedProductivity[inputIndex]["average_rate"]) +
+          (updatedProductivity[inputIndex].pork &&
+            updatedProductivity[inputIndex].pork > 0 &&
+            updatedProductivity[inputIndex].pork /
+              updatedProductivity[inputIndex]["average_rate"])
+      );
+
+      /////// Update ack_target_qty;
+      updatedProductivity[inputIndex]["ack_target_qty"] =
+        inputIndex > 0
+          ? updatedProductivity
+              .slice(0, inputIndex + 1)
+              .reduce(
+                (acc, cur) =>
+                  acc +
+                  Number(
+                    cur.total_target_per_day ? cur.total_target_per_day : 0
+                  ),
+                0
+              )
+          : updatedProductivity[inputIndex].total_target_per_day;
+
+      /////// Update ack_output_qty;
+      updatedProductivity[inputIndex]["ack_output_qty"] =
+        inputIndex > 0
+          ? updatedProductivity
+              .slice(0, inputIndex + 1)
+              .reduce(
+                (acc, cur) =>
+                  acc + Number(cur.output_per_day ? cur.output_per_day : 0),
+                0
+              )
+          : updatedProductivity[inputIndex].output_per_day;
+
+      /////// Update ack_target_time;
+      updatedProductivity[inputIndex]["ack_target_time"] =
+        inputIndex > 0
+          ? updatedProductivity
+              .slice(0, inputIndex + 1)
+              .reduce(
+                (acc, cur) =>
+                  acc +
+                  Number(
+                    cur.available_production_hours
+                      ? cur.available_production_hours
+                      : 0
+                  ),
+                0
+              )
+          : updatedProductivity[inputIndex].available_production_hours;
+
+      /////// Update ack_output_time;
+      updatedProductivity[inputIndex]["ack_output_time"] =
+        inputIndex > 0
+          ? updatedProductivity
+              .slice(0, inputIndex + 1)
+              .reduce(
+                (acc, cur) =>
+                  acc +
+                  Number(
+                    cur.output_per_day_per_time
+                      ? cur.output_per_day_per_time
+                      : 0
+                  ),
+                0
+              )
+          : updatedProductivity[inputIndex].output_per_day_per_time;
+
+      /////// Update output_percent;
+      updatedProductivity[inputIndex]["output_percent"] = Math.trunc(
+        ((updatedProductivity[inputIndex]?.ack_output_qty * 1) /
+          updatedProductivity[inputIndex]?.ack_target_qty -
+          1) *
+          100
+      );
+
+      console.log("percent", updatedProductivity[inputIndex]["output_percent"]);
+      /////// Update deviation_from_contract_qty;
+      updatedProductivity[inputIndex]["deviation_from_contract_qty"] =
+        updatedProductivity[inputIndex].output_per_day &&
+        Math.round(
+          Math.abs(
+            updatedProductivity[inputIndex].ack_output_qty -
+              updatedProductivity[inputIndex].ack_target_qty
+          )
+        );
+
+      /////// Update deviation_from_contract_time;
+      updatedProductivity[inputIndex]["deviation_from_contract_time"] =
+        !updatedProductivity[inputIndex].lamb
+          ? !updatedProductivity[inputIndex].lamb &&
+            !updatedProductivity[inputIndex].beef &&
+            !updatedProductivity[inputIndex].pork &&
+            0
+          : updatedProductivity[inputIndex].ack_output_time * 1 -
+            updatedProductivity[inputIndex].ack_target_time * 1;
+
+      //console.log("valuet", updatedProductivity);
+      return updatedProductivity;
+    });
+  };
+
+  return {
+    productivityFollowUp,
+    setProductivityFollowUp,
+    handleInputChange,
+  };
+};
+
+//////// Dynamic input field for Settings
+export const DynamicInputFieldsSettings = () => {
+  const [settings, setSettings] = useState(constant);
+
+  const handleInputChange = ({
+    field,
+    value,
+  }: {
+    field: any;
+    value: string;
+  }) => {
+    setSettings((prev) => {
+      const updatedValues = { ...prev };
+      updatedValues[field] = value; // Update PO Number field
+
+      return updatedValues;
+    });
+  };
+
+  return { settings, setSettings, handleInputChange };
 };

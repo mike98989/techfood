@@ -28,6 +28,41 @@ class DeviationComplaintController extends Controller
         return response()->json(['data'=>$data],200);
     }
 
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+        //$labinputs = new LabInputs;
+       
+        $deviationComplaint =  DeviationComplaint::where('user_id',$user->id)->with('deviation')->with('section')->with('code')->with('location')->with('risk_category')->with('code')->with('product')->orderBy('created_at', 'desc');
+
+        //// Search by range of dates
+        $deviationComplaint = $deviationComplaint->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('occurance_date',[$request->start_date,$request->end_date]):$query->where('occurance_date','>',$request->start_date);
+        });
+
+         //// Search by status
+         $deviationComplaint = $deviationComplaint->when($request->product && $request->product!='', function ($query) use ($request) {
+            return $query->where('product_id',$request->product);
+        });
+
+        //// Search by section
+        $deviationComplaint = $deviationComplaint->when($request->section && $request->section!='', function ($query) use ($request) {
+            return $query->where('section_id',$request->section);
+        });
+
+        //// Search by Deviation Type
+        $deviationComplaint = $deviationComplaint->when($request->deviation_type && $request->deviation_type!='', function ($query) use ($request) {
+            return $query->where('deviation_type_id',$request->deviation_type);
+        });
+     
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $deviationComplaint = $deviationComplaint->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$deviationComplaint],201);
+    }
+
     public function getDeviationTypesForDeviationComplaint()
     {
        

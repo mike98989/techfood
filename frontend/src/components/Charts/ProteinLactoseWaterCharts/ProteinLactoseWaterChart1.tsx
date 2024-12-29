@@ -4,8 +4,9 @@ import ReactApexChart from "react-apexcharts";
 import chartData from "../../../methods/chartData";
 import { ReusableMethods } from "../../../methods/ReusableMethods";
 import SpinnerObject from "../../../components/Spinner/Spinner";
-import { constant } from "../../../Utils/Constants";
 import { useTranslation } from "react-i18next";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
+import { useSelector } from "react-redux";
 
 interface ChartOneState {
   series: {
@@ -62,7 +63,7 @@ const processData = (dataArray: any[], t: any) => {
   }
 };
 
-const computeChart = (inputdata: any, t: any) => {
+const computeChart = (inputdata: any, t: any, settings: any) => {
   if (inputdata) {
     const data = inputdata.sort(
       (a: any, b: any) =>
@@ -102,30 +103,30 @@ const computeChart = (inputdata: any, t: any) => {
 
       ///////If the parameter is set to protein
       //if (parameter == "protein") {
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].protein_value > constant.proteinConstantLimit) {
+      /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+      if (data[i].protein_value > settings.proteinConstantLimit) {
         dateEntry.goodProtein += 1;
-      } else if (data[i].protein_value < constant.proteinConstantLimit) {
+      } else if (data[i].protein_value < settings.proteinConstantLimit) {
         dateEntry.badProtein += 1;
       }
       //}
 
       ///////If the parameter is set to lactose
       //if (parameter == "lactose") {
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].lactose_value > constant.lactoseConstantLimit) {
+      /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+      if (data[i].lactose_value > settings.lactoseConstantLimit) {
         dateEntry.goodLactose += 1;
-      } else if (data[i].lactose_value < constant.lactoseConstantLimit) {
+      } else if (data[i].lactose_value < settings.lactoseConstantLimit) {
         dateEntry.badLactose += 1;
       }
       //}
 
       ///////If the parameter is set to protein
       //if (parameter == "water") {
-      /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-      if (data[i].water_value > constant.waterConstantLimit) {
+      /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+      if (data[i].water_value > settings.waterConstantLimit) {
         dateEntry.goodWater += 1;
-      } else if (data[i].water_value < constant.waterConstantLimit) {
+      } else if (data[i].water_value < settings.waterConstantLimit) {
         dateEntry.badWater += 1;
       } //// Sort the map in ascending order
       //}
@@ -169,17 +170,17 @@ const computeChart = (inputdata: any, t: any) => {
     // Set processed value for chat
     //let processedProteinData: any[] = [];
     let processedProteinData = [
-      { name: t(constant.approvedText), data: goodProteinValues },
-      { name: t(constant.unApprovedText), data: badProteinValues },
+      { name: t(settings.approvedText), data: goodProteinValues },
+      { name: t(settings.unApprovedText), data: badProteinValues },
     ];
 
     let processedLactoseData = [
-      { name: t(constant.approvedText), data: goodLactoseValues },
-      { name: t(constant.unApprovedText), data: badLactoseValues },
+      { name: t(settings.approvedText), data: goodLactoseValues },
+      { name: t(settings.unApprovedText), data: badLactoseValues },
     ];
     let processedWaterData = [
-      { name: t(constant.approvedText), data: goodWaterValues },
-      { name: t(constant.unApprovedText), data: badWaterValues },
+      { name: t(settings.approvedText), data: goodWaterValues },
+      { name: t(settings.unApprovedText), data: badWaterValues },
     ];
     //console.log("LactoseSeries", processedLactoseData);
     return [
@@ -205,6 +206,8 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
   const { t } = useTranslation();
   const [months, setMonths] = useState([]);
   const [monthsChart2, setMonthsChart2] = useState([]);
+  const user = useSelector((state: any) => state.user.value);
+
   const [proteinSeries, setProteinSeries] = useState<ChartOneState>({
     series: [],
   });
@@ -229,6 +232,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
   const [waterSeriesChart2, setWaterSeriesChart2] = useState<ChartOneState>({
     series: [],
   });
+  const { settings, setSettings } = DynamicInputFieldsSettings();
 
   useEffect(() => {
     setChartData(props.chartData.data);
@@ -250,12 +254,21 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
   }, []);
 
   useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
+  useEffect(() => {
     if (filteredChartData) {
       let proteinlactosWaterLimitMatch: any = [];
       let proteinlactosWaterValueMatch: any = [];
 
       chartData &&
-        (proteinlactosWaterLimitMatch = computeChart(filteredChartData, t));
+        (proteinlactosWaterLimitMatch = computeChart(
+          filteredChartData,
+          t,
+          settings
+        ));
       chartData &&
         (proteinlactosWaterValueMatch = processData(filteredChartData, t));
       //value[0] && (setState({ series: value[0] }), setMonths(value[1]));
@@ -550,7 +563,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.proteinConstantLimit, // Threshold value
+          y: settings.proteinConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -565,7 +578,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.proteinConstantLimit +
+              settings.proteinConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -609,7 +622,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.lactoseConstantLimit, // Threshold value
+          y: settings.lactoseConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -624,7 +637,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.lactoseConstantLimit +
+              settings.lactoseConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
@@ -668,7 +681,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
     annotations: {
       yaxis: [
         {
-          y: constant.waterConstantLimit, // Threshold value
+          y: settings.waterConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -683,7 +696,7 @@ const ProteinLactoseWaterChart1: React.FC<ChartProps> = (props: any) => {
               " " +
               t("limit") +
               " (" +
-              constant.waterConstantLimit +
+              settings.waterConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,

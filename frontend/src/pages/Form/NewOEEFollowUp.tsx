@@ -76,11 +76,6 @@ export default function NewOEEFollowUp() {
           updatedValues.run_rate_in_ppm
       ).toFixed(2);
 
-      // const quality =
-      // parseFloat(
-      //   (good_piece / updatedValues.total_quality_piece) * 100
-      // ).toFixed(2) + "%";
-
       const quality = parseFloat(
         good_piece / updatedValues.total_quality_piece
       ).toFixed(2);
@@ -133,7 +128,7 @@ export default function NewOEEFollowUp() {
                 <span className="font-medium">{t("oee_factor")}</span>
               </div>
               <div className="lg:flex flex-row ">
-                <div className="lg:w-2/3 flex">
+                <div className="lg:w-2/4 flex">
                   <div>
                     <ul className="mt-1.5 list-none list-inside">
                       <li className="flex flex-row">
@@ -183,7 +178,7 @@ export default function NewOEEFollowUp() {
                     </ul>
                   </div>
                 </div>
-                <div className="lg:w-1/3 flex">
+                <div className="lg:w-2/4 flex">
                   <ul className="mt-1.5 list-none list-inside">
                     <li className="flex flex-row">
                       <svg

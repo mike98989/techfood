@@ -3,6 +3,8 @@ import { httpRequest } from "./Requests";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser, clearUser } from "./reducers/user";
+import { useSelector } from "react-redux";
+import { productIDs } from "../Utils/Constants";
 
 export const ReusableMethods = () => {
   const dispatch = useDispatch();
@@ -60,7 +62,9 @@ export const ReusableMethods = () => {
           navigate("/"); // or any other route
         } else {
           const error_value = action_url.includes("wordpress_signin")
-            ? response.error
+            ? response.message
+              ? response.message
+              : response.error
             : response.message;
           setReturnData({
             message: error_value,
@@ -70,7 +74,6 @@ export const ReusableMethods = () => {
       })
       .catch((error) => {
         if (error) {
-          console.log("error is", error);
           setIsLoading(false);
           const message = JSON.parse(error[0]);
           //setFormErrors(JSON.parse(message.message));
@@ -217,6 +220,17 @@ export const ReusableMethods = () => {
     return Math.ceil((days + startOfYear.getDay() + 1) / 7);
   };
 
+  const doesUserHaveProduct = (path: string) => {
+    const user = useSelector((state: any) => state.user.value);
+    const user_products = user.data.products
+      ? JSON.parse(user.data.products)
+      : [];
+
+    const pageID = productIDs[path]?.id;
+    const productExist = user_products.includes(pageID ? pageID : 0);
+    return productExist;
+  };
+
   return {
     userLogin,
     userLogout,
@@ -227,5 +241,6 @@ export const ReusableMethods = () => {
     isDateInRange,
     getUrlArray,
     getWeekNumber,
+    doesUserHaveProduct,
   };
 };

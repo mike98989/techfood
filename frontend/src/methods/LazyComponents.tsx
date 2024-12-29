@@ -1,11 +1,15 @@
 import React, { lazy, Suspense, ReactNode } from "react";
 import EditHygieneRounds from "../pages/Form/Edit/EditHygieneRound";
 import EditMapDetectedBacteria from "../pages/Form/Edit/EditMapDetectedBacteria";
+import ProductivityFollowUp from "../pages/ProductivityFollowup";
 
 // Create a map of components using React.lazy
 const LazyComponentMap: Record<string, React.LazyExoticComponent<any>> = {
   StaffingProductionModal: lazy(
     () => import("../pages/Views/StaffingProductionModal")
+  ),
+  ProductivityFollowUpModal: lazy(
+    () => import("../pages/Views/ProductivityFollowUpModal")
   ),
   EditFruitProduction: lazy(
     () => import("../pages/Form/Edit/EditFruitProduction")
@@ -19,6 +23,9 @@ const LazyComponentMap: Record<string, React.LazyExoticComponent<any>> = {
   ),
   EditStaffingProduction: lazy(
     () => import("../pages/Form/Edit/EditStaffingProduction")
+  ),
+  EditProductivityFollowUp: lazy(
+    () => import("../pages/Form/Edit/EditProductivityFollowUp")
   ),
   EditDrillSample: lazy(() => import("../pages/Form/Edit/EditDrillSample")),
   //EditCCPFollowUp: lazy(() => import("../pages/Form/Edit/EditCCPFollowUp")),

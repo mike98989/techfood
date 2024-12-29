@@ -23,6 +23,39 @@ class LabInputsController extends Controller
         
     }
 
+    
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+        //$labinputs = new LabInputs;
+        $labinputs =  LabInputs::where('user_id',$user->id)->where('status','1')->orderBy('created_at', 'desc');
+        //// Search by range of dates to filter out date of arrival into the custodial center
+        $labinputs = $labinputs->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('result_date',[$request->start_date,$request->end_date]):$query->where('result_date','>',$request->start_date);
+        });
+
+        //// Search by Limit for satisfactory or not satisfactory
+        $labinputs = $labinputs->when($request->satisfactory_or_not, function ($query) use ($request) {
+            $column_and_limit = explode('-',$request->column);
+            $column=$column_and_limit[0];
+            $limit=(float) $column_and_limit[1];
+            $satisfactory_or_not = trim($request->satisfactory_or_not);
+            
+            if($satisfactory_or_not === "-1"){ ////Satisfactory is 1 and -1 is not satisfactory
+                $compare = "<";
+            }else{
+                $compare = ">=";
+            }
+            return $query->where($column,$compare,$limit);
+        });
+        
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $labinputs = $labinputs->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$labinputs],201);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -41,9 +74,9 @@ class LabInputsController extends Controller
             '*.poNumber' => 'required|string',
             '*.batches' => 'required|array',
             '*.batches.*.batchNumber' => 'required|string',
-            '*.batches.*.proteinValue' => 'nullable|integer',
-            '*.batches.*.lactoseValue' => 'nullable|integer',
-            '*.batches.*.waterValue' => 'nullable|integer',
+            '*.batches.*.proteinValue' => 'nullable|numeric',
+            '*.batches.*.lactoseValue' => 'nullable|numeric',
+            '*.batches.*.waterValue' => 'nullable|numeric',
             '*.batches.*.derivedDate' => 'required|date',
         ]);
         $user = $request->user();

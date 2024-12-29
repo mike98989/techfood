@@ -2,8 +2,9 @@ import { ApexOptions } from "apexcharts";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
-import { constant } from "../../../Utils/Constants";
+import { useSelector } from "react-redux";
 import Badge from "../../Badges/Badge";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
 
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
@@ -49,6 +50,8 @@ const processData = (dataArray: any[], t: any) => {
 
 const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
   const [months, setMonths] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
+  const user = useSelector((state: any) => state.user.value);
   useEffect(() => {
     let value: any[] = [];
     chartData.data && (value = processData(chartData.data, t));
@@ -56,6 +59,11 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
     //console.log("Months", value[1]);
     setMonths(value[1]);
   }, [chartData]);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   const { t } = useTranslation();
   const [state, setState] = useState({
@@ -82,7 +90,7 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
     annotations: {
       yaxis: [
         {
-          y: constant.proteinConstantLimit, // Threshold value
+          y: settings.proteinConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -97,14 +105,14 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
               " " +
               t("limit") +
               " (" +
-              constant.proteinConstantLimit +
+              settings.proteinConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
           },
         },
         {
-          y: constant.lactoseConstantLimit, // Threshold value
+          y: settings.lactoseConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.8, // Optional: sets line opacity
@@ -119,14 +127,14 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
               " " +
               t("limit") +
               " (" +
-              constant.lactoseConstantLimit +
+              settings.lactoseConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,
           },
         },
         {
-          y: constant.waterConstantLimit, // Threshold value
+          y: settings.waterConstantLimit, // Threshold value
           borderColor: "#000000",
           strokeDashArray: 4, // Optional: makes the line dashed
           opacity: 0.3, // Optional: sets line opacity
@@ -141,7 +149,7 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
               " " +
               t("limit") +
               " (" +
-              constant.waterConstantLimit +
+              settings.waterConstantLimit +
               ")",
             position: "right", // Positions label on the left side
             offsetX: 0,

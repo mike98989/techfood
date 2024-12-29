@@ -30,15 +30,4 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       </Router>
     </Provider>
   </React.StrictMode>
-
-  // <Auth0Provider
-  //   domain="dev-b0aenrxoyo4blql5.us.auth0.com"
-  //   clientId="oogurvmi6xgwu1VDzhmQvzbS6xqdKypp"
-  //   authorizationParams={{
-  //     redirect_uri: window.location.origin + "/auth/signin",
-  //   }}
-  // >
-  //   <App />
-  //   {/* Other routes go here */}
-  // </Auth0Provider>
 );

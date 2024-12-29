@@ -8,8 +8,11 @@ import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
-import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import { PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
+import SearchObject from "../Search/SearchComponent";
+
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 const HeadMidriff = () => {
   const [headMidriffData, setHeadMidriffData] = useState([]);
@@ -18,17 +21,38 @@ const HeadMidriff = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
+  const { settings, setSettings } = DynamicInputFieldsSettings();
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
-
-  //const { MessageBox, setFormMessage } = formReturnMessage();
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "fruit_production_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: false,
+    aerobicEnterobactaLimit: false,
+    aerobicEcoliStaphylococcusLimit: true,
+    causes: false,
+    statuses: false,
+    deviationTypes: false,
+    sections: false,
+    products: false,
+    oee: false,
+    locations: true,
+    dangers: false,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("headmidriffs");
 
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `headmidriffs?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -39,7 +63,17 @@ const HeadMidriff = () => {
     });
   }, [currentPage]);
 
+  useEffect(() => {
+    searchData?.data && setHeadMidriffData(searchData);
+  }, [searchData]);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
   return (
@@ -55,6 +89,8 @@ const HeadMidriff = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
+
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -83,19 +119,19 @@ const HeadMidriff = () => {
                 <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("aerobic")} <br />
                   <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.aerobicConstantLimit}
+                    {t("limit") + " = " + settings.aerobicConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                   {t("e_coli")} <br />
                   <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.ecoliConstantLimit}
+                    {t("limit") + " = " + settings.ecoliConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-sm font-bold text-black dark:text-white">
                   {t("staphylococcus")} <br />
                   <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.staphylococcusConstantLimit}
+                    {t("limit") + " = " + settings.staphylococcusConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
@@ -145,15 +181,15 @@ const HeadMidriff = () => {
                         <span className="text-xs mr-1">{input.aerobic}</span>
                         <br />
                         {parseFloat(input.aerobic) >
-                          constant.aerobicConstantLimit && (
+                          settings.aerobicConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.aerobic) <=
-                          constant.aerobicConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.aerobicConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>
@@ -162,15 +198,15 @@ const HeadMidriff = () => {
                         <span className="text-xs mr-1">{input.e_coli}</span>
                         <br />
                         {parseFloat(input.e_coli) >
-                          constant.ecoliConstantLimit && (
+                          settings.ecoliConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.e_coli) <=
-                          constant.ecoliConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.ecoliConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>
@@ -181,15 +217,15 @@ const HeadMidriff = () => {
                         </span>
                         <br />
                         {parseFloat(input.staphylococcus) >
-                          constant.staphylococcusConstantLimit && (
+                          settings.staphylococcusConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.staphylococcus) <=
-                          constant.staphylococcusConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.staphylococcusConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>

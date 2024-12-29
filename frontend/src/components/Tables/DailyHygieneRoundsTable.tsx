@@ -9,6 +9,7 @@ import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
+import SearchObject from "../Search/SearchComponent";
 
 const DailyHygieneRounds = () => {
   const { fetchApi } = httpRequest();
@@ -20,17 +21,35 @@ const DailyHygieneRounds = () => {
   const { t } = useTranslation();
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
-
-  //const { MessageBox, setFormMessage } = formReturnMessage();
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "hygiene_round_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: false,
+    aerobicEnterobactaLimit: false,
+    aerobicEcoliStaphylococcusLimit: false,
+    causes: false,
+    statuses: false,
+    deviationTypes: false,
+    sections: true,
+    products: true,
+    oee: false,
+    dangers: true,
+    locations: true,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("hygienerounds");
 
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `hygienerounds?paginate=` +
-        PAGINATE_ITEM_COUNT +
-        `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -40,7 +59,13 @@ const DailyHygieneRounds = () => {
       setReturnData: setHygieneData,
     });
   }, [currentPage]);
+
+  useEffect(() => {
+    searchData?.data && setHygieneData(searchData);
+  }, [searchData]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
 
@@ -57,6 +82,7 @@ const DailyHygieneRounds = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>

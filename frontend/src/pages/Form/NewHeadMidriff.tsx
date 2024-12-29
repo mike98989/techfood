@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import formReturnMessage from "../../components/Forms/FormAlerts/formReturnMessage";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
-import { constant } from "../../Utils/Constants";
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 export default function NewHeadMidriff() {
   const { setIsLoading, Spinner } = SpinnerObject();
@@ -17,6 +17,7 @@ export default function NewHeadMidriff() {
   const pageTitle = t("slaughtered_head_meat_midriff");
   const { allRequest } = ReusableMethods();
   const [returnDataArray, setReturnDataArray] = useState([]);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
 
   const {
     headMidRiffs,
@@ -44,6 +45,11 @@ export default function NewHeadMidriff() {
     };
     fetchData("drill_sample_form_related_data", setReturnDataArray);
   }, []);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   return (
     <>
@@ -87,13 +93,13 @@ export default function NewHeadMidriff() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.aerobicConstantLimit}
+                    settings.aerobicConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countAerobicValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -109,7 +115,7 @@ export default function NewHeadMidriff() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countAerobicInvalid}
                     <span className="ml-1">Percent</span> =
@@ -146,13 +152,13 @@ export default function NewHeadMidriff() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.ecoliConstantLimit}
+                    settings.ecoliConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countEcoliValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -168,7 +174,7 @@ export default function NewHeadMidriff() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countEcoliInvalid}
                     <span className="ml-1">Percent</span> =
@@ -206,13 +212,13 @@ export default function NewHeadMidriff() {
                     " " +
                     t("limit") +
                     ": " +
-                    constant.staphylococcusConstantLimit}
+                    settings.staphylococcusConstantLimit}
                 </span>
 
                 <ul className="mt-1.5 list-none list-inside">
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2 mt-1"></div>
-                    {t(constant.approvedText)} |
+                    {t(settings.approvedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countStaphylococcusValid}{" "}
                     <span className="ml-1">Percent</span> =
@@ -228,7 +234,7 @@ export default function NewHeadMidriff() {
                   </li>
                   <li className="flex flex-row">
                     <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2 mt-1"></div>
-                    {t(constant.unApprovedText)} |
+                    {t(settings.unApprovedText)} |
                     <span className="ml-1">Total</span> =
                     {computeValues.countStaphylococcusInvalid}
                     <span className="ml-1">Percent</span> =
@@ -288,7 +294,7 @@ export default function NewHeadMidriff() {
                       {headmidriff.aerobic != "" && (
                         <>
                           {parseFloat(headmidriff.aerobic) * 1 <
-                          constant.aerobicConstantLimit * 1 ? (
+                          settings.aerobicConstantLimit * 1 ? (
                             <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1"></div>
                           ) : (
                             <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1"></div>
@@ -302,7 +308,7 @@ export default function NewHeadMidriff() {
                       {headmidriff.e_coli != "" && (
                         <>
                           {parseFloat(headmidriff.e_coli) * 1 <
-                          constant.ecoliConstantLimit * 1 ? (
+                          settings.ecoliConstantLimit * 1 ? (
                             <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                           ) : (
                             <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>
@@ -316,7 +322,7 @@ export default function NewHeadMidriff() {
                       {headmidriff.staphylococcus != "" && (
                         <>
                           {parseFloat(headmidriff.staphylococcus) * 1 <
-                          constant.staphylococcusConstantLimit * 1 ? (
+                          settings.staphylococcusConstantLimit * 1 ? (
                             <div className="h-3.5 w-3.5 rounded-full bg-green-500 me-1 mt-1 ml-2"></div>
                           ) : (
                             <div className="h-3.5 w-3.5 rounded-full bg-red-500 me-1 mt-1 ml-2"></div>

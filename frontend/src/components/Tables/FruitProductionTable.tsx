@@ -10,6 +10,7 @@ import AlertModal from "..//Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
+import SearchObject from "../Search/SearchComponent";
 
 const FruitProductionTable = () => {
   const { fetchApi } = httpRequest();
@@ -21,16 +22,32 @@ const FruitProductionTable = () => {
   const { t } = useTranslation();
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
-  //const { MessageBox, setFormMessage } = formReturnMessage();
-
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "fruit_production_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: false,
+    aerobicEnterobactaLimit: false,
+    aerobicEcoliStaphylococcusLimit: false,
+    causes: true,
+    statuses: true,
+    deviationTypes: true,
+    sections: true,
+    products: false,
+    oee: false,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("fruitproduction");
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `fruitproduction?paginate=` +
-        PAGINATE_ITEM_COUNT +
-        `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -40,7 +57,12 @@ const FruitProductionTable = () => {
       setReturnData: setFruitProductionData,
     });
   }, [currentPage]);
+  useEffect(() => {
+    searchData?.data && setFruitProductionData(searchData);
+  }, [searchData]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
   return (
@@ -55,6 +77,7 @@ const FruitProductionTable = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>

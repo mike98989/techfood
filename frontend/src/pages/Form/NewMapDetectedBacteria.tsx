@@ -12,7 +12,6 @@ import { useTranslation } from "react-i18next";
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import {
-  constant,
   PAGINATE_ITEM_COUNT,
   STORAGE,
   URL,

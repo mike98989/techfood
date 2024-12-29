@@ -14,6 +14,8 @@ const Chart: React.FC = () => {
     headMidRiffDataChart: false,
     ccpFollowUpDataChart: false,
     staffingProductionDataChart: false,
+    oeeFollowUpDataChart: false,
+    hygieneRoundsDataChart: false,
   });
 
   const { t } = useTranslation();
@@ -31,7 +33,6 @@ const Chart: React.FC = () => {
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <ChartOne chartData={proteinLactoseData} />
-        {/* <ChartTwo /> */}
       </div>
     </>
   );

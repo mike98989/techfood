@@ -56,35 +56,39 @@ const Breadcrumb = ({
         <ol className="inline-flex items-center mr-7 sm:mb-0 border-r border-r-cyan-600 pr-3">
           <li aria-current="page">
             <div className="flex items-center">
-              <NavLink
-                to={"/" + getUrlArray()[1] + "/chart"}
-                className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-              >
-                <button
-                  id="dropdownDatabase"
-                  data-dropdown-toggle="dropdown-database"
-                  className="inline-flex items-center text-sm font-normal text-center text-gray-900 rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:text-white text-cyan-800"
-                >
-                  <svg
-                    className="w-3 h-3 me-2 text-gray-800 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 16 20"
+              {/* Exempt the settings component and the map detected bacteria */}
+              {getUrlArray()[1] != "settings" &&
+                getUrlArray()[1] != "map_detected_bacteria" && (
+                  <NavLink
+                    to={"/" + getUrlArray()[1] + "/chart"}
+                    className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
                   >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.1"
-                      d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"
-                    />
-                  </svg>
-                  {t("view_chart")}
-                </button>
-              </NavLink>
+                    <button
+                      id="dropdownDatabase"
+                      data-dropdown-toggle="dropdown-database"
+                      className="inline-flex items-center text-sm font-normal text-center text-gray-900 rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:text-white text-cyan-800"
+                    >
+                      <svg
+                        className="w-3 h-3 me-2 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 16 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.1"
+                          d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"
+                        />
+                      </svg>
+                      {t("view_chart")}
+                    </button>
+                  </NavLink>
+                )}
             </div>
           </li>
         </ol>

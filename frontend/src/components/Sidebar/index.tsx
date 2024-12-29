@@ -239,14 +239,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               to="/protein_lactose_water"
                               className={`
                                 ${activeMenu === "protein_lactose_water" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                group relative flex items-center gap-1.5 text-md rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 28 28"
                                 fill="none"
                                 stroke="currentColor"
                                 strokeWidth="1"
@@ -255,9 +255,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 className="feather feather-droplet"
                               >
                                 <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                              </svg>
+                              </svg> */}
 
-                              {t("protein_lactose_water")}
+                              {t("heading_protein_lactose_water")}
                             </NavLink>
                           </li>
                           <li>
@@ -268,7 +268,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="18"
                                 height="18"
@@ -281,9 +281,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 className="feather feather-thermometer"
                               >
                                 <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
-                              </svg>
+                              </svg> */}
 
-                              {t("fruit_production")}
+                              {t("heading_fruit_production")}
                             </NavLink>
                           </li>
                           <li>
@@ -294,7 +294,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
@@ -304,9 +304,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                               >
                                 <path d="M12 2L2 22h20L12 2zm0 15v-2h-2v2h2zm0-4V7h-2v6h2z" />
-                              </svg>
+                              </svg> */}
 
-                              {t("deviation_complaints")}
+                              {t("heading_deviation_complaints")}
                             </NavLink>
                           </li>
 
@@ -318,7 +318,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -328,9 +328,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                               >
                                 <path d="M10 2C6.69 2 4 4.69 4 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM16 12l1.5 1.5-3 3-1.5-1.5 3-3z" />
-                              </svg>
+                              </svg> */}
 
-                              {t("drill_samples_in_slaughter")}
+                              {t("drill_samples_in_slaughter_title")}
                             </NavLink>
                           </li>
 
@@ -342,7 +342,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -352,9 +352,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                               >
                                 <path d="M10 2C6.69 2 4 4.69 4 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM16 12l1.5 1.5-3 3-1.5-1.5 3-3z" />
-                              </svg>
+                              </svg> */}
 
-                              {t("slaughtered_head_meat_midriff")}
+                              {t("slaughtered_head_meat_midriff_title")}
                             </NavLink>
                           </li>
 
@@ -366,7 +366,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -376,9 +376,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                               >
                                 <path d="M12 2C7.03 2 3 6.03 3 11s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zM7.5 12c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm9 0c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5z" />
-                              </svg>
+                              </svg> */}
 
-                              {t("staffing_of_production")}
+                              {t("staffing_of_production_title")}
                             </NavLink>
                           </li>
 
@@ -390,7 +390,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -403,9 +403,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 className="feather feather-activity"
                               >
                                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                              </svg>
+                              </svg> */}
 
-                              {t("ccp_follow_up")}
+                              {t("ccp_follow_up_title")}
                             </NavLink>
                           </li>
 
@@ -417,7 +417,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
                                 height="20"
@@ -437,9 +437,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                   x2="22.96"
                                   y2="12"
                                 ></line>
-                              </svg>
+                              </svg> */}
 
-                              {t("oee_and_efficiency")}
+                              {t("oee_and_efficiency_title")}
                             </NavLink>
                           </li>
 
@@ -451,7 +451,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
                               `}
                             >
-                              <svg
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="18"
                                 height="18"
@@ -461,9 +461,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                               >
                                 <path d="M20 2H4c-1.1 0-1.99.89-1.99 1.99L2 20c0 1.1.89 1.99 1.99 1.99H20c1.1 0 1.99-.89 1.99-1.99V4c0-1.1-.89-1.99-1.99-1.99zM12 14c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-                              </svg>
+                              </svg> */}
 
-                              {t("daily_hygiene_rounds")}
+                              {t("daily_hygiene_rounds_title")}
                             </NavLink>
                           </li>
 
@@ -474,7 +474,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
                               }
                             >
-                              <svg
+                              {t("map_detected_bacteria_title")}
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/followup_of_productivity"
+                              className={`
+                                ${activeMenu === "followup_of_productivity" ? "text-white" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                              `}
+                            >
+                              {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="18"
                                 height="18"
@@ -484,24 +496,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 strokeWidth="1"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="feather feather-map-pin"
+                                className="feather feather-maximize-2"
                               >
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                              </svg>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                              </svg> */}
 
-                              {t("map_detected_bacteria")}
-                            </NavLink>
-                          </li>
-
-                          <li>
-                            <NavLink
-                              to="/followup_of_productivity"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
-                            >
-                              {t("followup_of_productivity")}
+                              {t("followup_of_productivity_title")}
                             </NavLink>
                           </li>
                         </ul>
@@ -519,10 +522,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-thin text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("settings") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
+                  className={`
+                    ${activeMenu === "oee_and_efficiency" ? "text-white" : ""}
+                    group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                  `}
                 >
                   <svg
                     className="fill-current"

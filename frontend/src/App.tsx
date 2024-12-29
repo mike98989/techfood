@@ -5,6 +5,7 @@ import Loader from "./common/Loader";
 import PageTitle from "./components/PageTitle";
 import SignIn from "./pages/Authentication/SignIn";
 import SignUp from "./pages/Authentication/SignUp";
+import AuthorisedRoute from "./methods/AuthorisedRoute";
 // import Calendar from "./pages/Calendar";
 // import Chart from "./pages/Chart";
 import Index from "./pages/Dashboard/Index";
@@ -17,8 +18,10 @@ import DrillSamples from "./pages/DrillSamples";
 import HeadMidriff from "./pages/HeadMidRiff";
 import CCPFollowUp from "./pages/CcpFollowup";
 import OEEFollowUpEfficiency from "./pages/OEEFollowup";
+import ProductivityFollowUp from "./pages/ProductivityFollowup";
 import StaffingProduction from "./pages/StaffingProduction";
 import HygieneRounds from "./pages/HygieneRounds";
+import NewProductivityFollowUp from "./pages/Form/NewProductivityFollowUp";
 import NewStaffingProduction from "./pages/Form/NewStaffingProduction";
 import NewCCPFollowUp from "./pages/Form/NewCCPFollowUp";
 import NewOEEFollowUp from "./pages/Form/NewOEEFollowUp";
@@ -29,7 +32,7 @@ import NewDeviationComplaint from "./pages/Form/NewDeviationComplaints";
 import NewHygieneRound from "./pages/Form/NewHygieneRound";
 import NewDrillSample from "./pages/Form/NewDrillSample";
 import NewHeadMidriff from "./pages/Form/NewHeadMidriff";
-import NewHMapDetectedBacteria from "./pages/Form/NewMapDetectedBacteria";
+import NewMapDetectedBacteria from "./pages/Form/NewMapDetectedBacteria";
 import ProteinLactoseMainChart from "./pages/Charts/ProteinLactoseWaterChartPage";
 import DrillSampleMainChart from "./pages/Charts/DrillSampleChartPage";
 import FruitProductionMainChart from "./pages/Charts/FruitProductionChartPage";
@@ -39,7 +42,10 @@ import CCPFollowUpMainChart from "./pages/Charts/CCPFollowUpChartPage";
 import StaffingProductionMainChart from "./pages/Charts/StaffingProductionChartPage";
 import OEEFollowUpMainChart from "./pages/Charts/OEEFollowUpChartPage";
 import HygieneRoundsMainChart from "./pages/Charts/HygieneRoundsChartPage";
+import ProductivityMainChart from "./pages/Charts/ProductivityFollowUpChartPage";
 import MapDetectedBacteria from "./pages/MapDetectedBacteria";
+import Settings from "./pages/Settings";
+
 // import Alerts from "./pages/UiElements/Alerts";
 // import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -160,16 +166,21 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <ProteinLactoseWater />
+                        <AuthorisedRoute>
+                          <ProteinLactoseWater />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
+
                   <Route
                     path="new"
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewProteinLactosWater />
+                        <AuthorisedRoute>
+                          <NewProteinLactosWater />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -179,7 +190,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <ProteinLactoseMainChart />
+                        <AuthorisedRoute>
+                          <ProteinLactoseMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -192,7 +205,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <FruitProduction />
+                        <AuthorisedRoute>
+                          <FruitProduction />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -201,7 +216,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewFruitProduction />
+                        <AuthorisedRoute>
+                          <NewFruitProduction />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -211,7 +228,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <FruitProductionMainChart />
+                        <AuthorisedRoute>
+                          <FruitProductionMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -224,7 +243,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <DeviationComplaints />
+                        <AuthorisedRoute>
+                          <DeviationComplaints />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -233,7 +254,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewDeviationComplaint />
+                        <AuthorisedRoute>
+                          <NewDeviationComplaint />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -242,7 +265,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <DeviationComplaintMainChart />
+                        <AuthorisedRoute>
+                          <DeviationComplaintMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -255,7 +280,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <DrillSamples />
+                        <AuthorisedRoute>
+                          <DrillSamples />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -264,7 +291,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewDrillSample />
+                        <AuthorisedRoute>
+                          <NewDrillSample />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -274,7 +303,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <DrillSampleMainChart />
+                        <AuthorisedRoute>
+                          <DrillSampleMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -287,7 +318,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HeadMidriff />
+                        <AuthorisedRoute>
+                          <HeadMidriff />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -296,7 +329,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewHeadMidriff />
+                        <AuthorisedRoute>
+                          <NewHeadMidriff />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -306,7 +341,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HeadMidriffMainChart />
+                        <AuthorisedRoute>
+                          <HeadMidriffMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -319,7 +356,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <CCPFollowUp />
+                        <AuthorisedRoute>
+                          <CCPFollowUp />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -328,7 +367,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewCCPFollowUp />
+                        <AuthorisedRoute>
+                          <NewCCPFollowUp />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -338,7 +379,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <CCPFollowUpMainChart />
+                        <AuthorisedRoute>
+                          <CCPFollowUpMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -351,7 +394,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <StaffingProduction />
+                        <AuthorisedRoute>
+                          <StaffingProduction />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -360,7 +405,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewStaffingProduction />
+                        <AuthorisedRoute>
+                          <NewStaffingProduction />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -370,7 +417,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <StaffingProductionMainChart />
+                        <AuthorisedRoute>
+                          <StaffingProductionMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -383,7 +432,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <OEEFollowUpEfficiency />
+                        <AuthorisedRoute>
+                          <OEEFollowUpEfficiency />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -392,7 +443,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewOEEFollowUp />
+                        <AuthorisedRoute>
+                          <NewOEEFollowUp />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -402,7 +455,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <OEEFollowUpMainChart />
+                        <AuthorisedRoute>
+                          <OEEFollowUpMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -415,7 +470,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HygieneRounds />
+                        <AuthorisedRoute>
+                          <HygieneRounds />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -424,7 +481,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewHygieneRound />
+                        <AuthorisedRoute>
+                          <NewHygieneRound />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -434,7 +493,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HygieneRoundsMainChart />
+                        <AuthorisedRoute>
+                          <HygieneRoundsMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
@@ -447,7 +508,9 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <MapDetectedBacteria />
+                        <AuthorisedRoute>
+                          <MapDetectedBacteria />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -456,30 +519,24 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewHMapDetectedBacteria />
+                        <AuthorisedRoute>
+                          <NewMapDetectedBacteria />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
-
-                  {/* <Route
-                    path="chart"
-                    element={
-                      <DefaultLayout>
-                        <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HygieneRoundsMainChart />
-                      </DefaultLayout>
-                    }
-                  ></Route> */}
                 </Route>
 
-                {/* Suggestions for maps with detected Bacteria */}
-                <Route path="map_detected_bacteria">
+                {/* Follow up of productivity */}
+                <Route path="followup_of_productivity">
                   <Route
                     path=""
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <MapDetectedBacteria />
+                        <AuthorisedRoute>
+                          <ProductivityFollowUp />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   />
@@ -488,20 +545,36 @@ function App() {
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <NewHMapDetectedBacteria />
+                        <AuthorisedRoute>
+                          <NewProductivityFollowUp />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
                   ></Route>
-
-                  {/* <Route
+                  <Route
                     path="chart"
                     element={
                       <DefaultLayout>
                         <PageTitle title="Techfood Portal - Digital lab computations" />
-                        <HygieneRoundsMainChart />
+                        <AuthorisedRoute>
+                          <ProductivityMainChart />
+                        </AuthorisedRoute>
                       </DefaultLayout>
                     }
-                  ></Route> */}
+                  ></Route>
+                </Route>
+
+                {/* Settings */}
+                <Route path="settings">
+                  <Route
+                    path=""
+                    element={
+                      <DefaultLayout>
+                        <PageTitle title="Techfood Portal - Digital lab computations" />
+                        <Settings />
+                      </DefaultLayout>
+                    }
+                  />
                 </Route>
               </Routes>
             </ProtectedRoute>
@@ -509,119 +582,6 @@ function App() {
         />
       </Routes>
     </>
-
-    // <DefaultLayout>
-    //   <Routes>
-    //     <Route
-    //       index
-    //       element={
-    //         <>
-    //           <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <ECommerce />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/calendar"
-    //       element={
-    //         <>
-    //           <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Calendar />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/profile"
-    //       element={
-    //         <>
-    //           <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Profile />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/forms/form-elements"
-    //       element={
-    //         <>
-    //           <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <FormElements />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/forms/form-layout"
-    //       element={
-    //         <>
-    //           <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <FormLayout />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/tables"
-    //       element={
-    //         <>
-    //           <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Tables />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/settings"
-    //       element={
-    //         <>
-    //           <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Settings />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/chart"
-    //       element={
-    //         <>
-    //           <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Chart />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/ui/alerts"
-    //       element={
-    //         <>
-    //           <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Alerts />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/ui/buttons"
-    //       element={
-    //         <>
-    //           <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <Buttons />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/auth/signin"
-    //       element={
-    //         <>
-    //           <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <SignIn />
-    //         </>
-    //       }
-    //     />
-    //     <Route
-    //       path="/auth/signup"
-    //       element={
-    //         <>
-    //           <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-    //           <SignUp />
-    //         </>
-    //       }
-    //     />
-    //   </Routes>
-    // </DefaultLayout>
   );
 }
 

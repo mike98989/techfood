@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
 import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
+import SearchObject from "../Search/SearchComponent";
 
 const OEEFollowup = () => {
   const [oeeFollowUps, setOEEFollowUps] = useState([]);
@@ -20,13 +21,33 @@ const OEEFollowup = () => {
   const { t } = useTranslation();
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "fruit_production_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: false,
+    aerobicEnterobactaLimit: false,
+    aerobicEcoliStaphylococcusLimit: false,
+    causes: false,
+    statuses: false,
+    deviationTypes: false,
+    sections: false,
+    products: false,
+    oee: true,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("oeefollowups");
 
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `oeefollowups?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -37,7 +58,12 @@ const OEEFollowup = () => {
     });
   }, [currentPage]);
 
+  useEffect(() => {
+    searchData?.data && setOEEFollowUps(searchData);
+  }, [searchData]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
 
@@ -54,6 +80,7 @@ const OEEFollowup = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -156,12 +183,15 @@ const OEEFollowup = () => {
                     <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                       <p className="text-xs text-black dark:text-white">
                         <b>{input.total_quality_piece}</b>
+                        <br />
 
-                        {" [Rejected =" +
+                        {t("rejected") +
+                          " =" +
                           input.rejected_piece +
-                          ", Good=" +
-                          input.good_piece +
-                          "]"}
+                          ", " +
+                          t("good") +
+                          "=" +
+                          input.good_piece}
                       </p>
                     </td>
 

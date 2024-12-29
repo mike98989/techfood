@@ -28,6 +28,46 @@ class HygieneRoundsController extends Controller
         return response()->json(['data'=>$data],200);
     }
 
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+        
+        $hygieneRound =  HygieneRounds::where('user_id',$user->id)->with('deviation_type')->with('section')->with('deviation_code')->with('location')->with('risk_category')->with('deviation_code')->with('product')->with('danger')->orderBy('created_at', 'desc');
+
+        //// Search by range of dates
+        $hygieneRound = $hygieneRound->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('occurance_date',[$request->start_date,$request->end_date]):$query->where('occurance_date','>',$request->start_date);
+        });
+
+        //// Search by product
+        $hygieneRound = $hygieneRound->when($request->product && $request->product!='', function ($query) use ($request) {
+            return $query->where('product_id',$request->product);
+        });
+
+        //// Search by section
+        $hygieneRound = $hygieneRound->when($request->section && $request->section!='', function ($query) use ($request) {
+            return $query->where('section_id',$request->section);
+        });
+
+         //// Search by location
+         $hygieneRound = $hygieneRound->when($request->location && $request->location!='', function ($query) use ($request) {
+            return $query->where('location_id',$request->location);
+        });
+
+        //// Search by danger
+        $hygieneRound = $hygieneRound->when($request->danger && $request->danger!='', function ($query) use ($request) {
+        return $query->where('danger_id',$request->danger);
+        });
+
+
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $hygieneRound = $hygieneRound->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$hygieneRound],201);
+    }
+
     public function getDeviationTypesForHygieneRounds()
     {
        

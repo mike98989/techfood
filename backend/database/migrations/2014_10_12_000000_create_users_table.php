@@ -16,8 +16,10 @@ return new class extends Migration
             $table->integer('parent_id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('products');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->timestamp('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

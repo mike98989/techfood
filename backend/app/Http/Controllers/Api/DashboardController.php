@@ -22,6 +22,8 @@ class DashboardController extends Controller
         $staffingproduction = $param = $request->input("staffingproduction");
         $oeefollowup = $param = $request->input("oeefollowups");
         $hygienerounds = $param = $request->input("hygienerounds");
+        $productivityfollowups = $param = $request->input("productivityfollowups");
+
         $deviaitonComplaintController = new DeviationComplaintController;
         $fruitProductionController = new FruitProductionController;
         $proteinLactosWaterController = new LabInputsController;
@@ -31,6 +33,8 @@ class DashboardController extends Controller
         $staffingProductionController = new StaffingProductionController;
         $oeeFollowUpController = new OEEFollowUpController;
         $hygieneRoundsController = new HygieneRoundsController;
+        $productivityController = new ProductivityFollowUpController;
+        
         $data = [
                 'deviationcomplaints' => $deviation_complaint=='true' ? $deviaitonComplaintController->index($request):null,
                 'fruitproduction' => $fruit_production=='true' ? $fruitProductionController->index($request):null,
@@ -41,7 +45,7 @@ class DashboardController extends Controller
                 'staffingproduction' => $staffingproduction=='true' ? $staffingProductionController->index($request):null,
                 'oeefollowups' => $oeefollowup=='true' ? $oeeFollowUpController->index($request):null,
                 'hygienerounds' => $hygienerounds=='true' ? $hygieneRoundsController->index($request):null,
-                
+                'productivityfollowups' => $productivityfollowups=='true' ? $productivityController->index($request):null,
         ];
 
         return response()->json(['data'=>$data],200);

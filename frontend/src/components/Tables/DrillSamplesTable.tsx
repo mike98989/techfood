@@ -8,8 +8,10 @@ import formReturnMessage from "../Forms/FormAlerts/formReturnMessage";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 import Badge from "../Badges/Badge";
-import { constant, PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
+import { PAGINATE_ITEM_COUNT } from "../../Utils/Constants";
 import PaginationObject from "../Pagination/Paginate";
+import SearchObject from "../Search/SearchComponent";
+import { DynamicInputFieldsSettings } from "../../methods/DynamicInputFields";
 
 const DrillSamples = () => {
   const { fetchApi } = httpRequest();
@@ -19,16 +21,38 @@ const DrillSamples = () => {
   const { allRequest } = ReusableMethods();
   const { ModalUIComponent, setOpenModal, setModalQueryData } = AlertModal();
   const { t } = useTranslation();
-
   const { Paginate, currentPage, setCurrentPage, PaginateSpanHeader } =
     PaginationObject();
+  const { settings, setSettings } = DynamicInputFieldsSettings();
+  const { SearchComponent, searchData, searchParams } = SearchObject({
+    autoLoadApi: "fruit_production_form_related_data",
+    dateRange: true,
+    proteinLactoseWaterLimit: false,
+    aerobicEnterobactaLimit: true,
+    aerobicEcoliStaphylococcusLimit: false,
+    causes: false,
+    statuses: false,
+    deviationTypes: false,
+    sections: false,
+    products: false,
+    oee: false,
+    locations: false,
+    dangers: false,
+  });
+  const [queryParams, setQueryParams] = useState(
+    "?paginate=" + PAGINATE_ITEM_COUNT
+  );
+  const [endPoint, setEndPoint] = useState("drillsamples");
 
   useEffect(() => {
     setIsLoading(true);
+    let url = endPoint + queryParams;
+    if (searchParams) {
+      url = endPoint + "/search" + queryParams;
+    }
     allRequest({
       event: null,
-      action_url:
-        `drillsamples?paginate=` + PAGINATE_ITEM_COUNT + `&page=${currentPage}`, // End Point
+      action_url: url + `&page=${currentPage}`, // End Point
       method: "GET", // Method
       formId: "",
       formData: null,
@@ -39,9 +63,20 @@ const DrillSamples = () => {
     });
   }, [currentPage]);
 
+  useEffect(() => {
+    searchData?.data && setDrillSamplesData(searchData);
+  }, [searchData]);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
+
   const handlePageChange = (page: any) => {
+    searchParams && setQueryParams(searchParams);
     setCurrentPage(page);
   };
+
   return (
     <>
       <ModalUIComponent />
@@ -55,6 +90,7 @@ const DrillSamples = () => {
             />
           </div>
         )}
+        <SearchComponent endpoint={endPoint} />
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -83,13 +119,13 @@ const DrillSamples = () => {
                 <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("aerobic")} <br />
                   <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.aerobicConstantLimit}
+                    {t("limit") + " = " + settings.aerobicConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-xs text-black dark:text-white">
                   {t("enterobacta")} <br />
                   <span className="text-xs text-cyan-800 dark:text-white">
-                    {t("limit") + " = " + constant.enterobactaConstantLimit}
+                    {t("limit") + " = " + settings.enterobactaConstantLimit}
                   </span>
                 </th>
                 <th className="py-2 px-2 text-xs text-black dark:text-white">
@@ -139,15 +175,15 @@ const DrillSamples = () => {
                         <span className="text-xs mr-1">{input.aerobic}</span>
                         <br />
                         {parseFloat(input.aerobic) >
-                          constant.aerobicConstantLimit && (
+                          settings.aerobicConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.aerobic) <=
-                          constant.aerobicConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.aerobicConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>
@@ -158,15 +194,15 @@ const DrillSamples = () => {
                         </span>
                         <br />
                         {parseFloat(input.enterobacta) >
-                          constant.enterobactaConstantLimit && (
+                          settings.enterobactaConstantLimit && (
                           <Badge
                             type="danger"
-                            value={t(constant.unApprovedText)}
+                            value={t(settings.unApprovedText)}
                           />
                         )}
                         {parseFloat(input.enterobacta) <=
-                          constant.enterobactaConstantLimit && (
-                          <Badge type="1" value={t(constant.approvedText)} />
+                          settings.enterobactaConstantLimit && (
+                          <Badge type="1" value={t(settings.approvedText)} />
                         )}
                       </p>
                     </td>

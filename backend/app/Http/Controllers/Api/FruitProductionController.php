@@ -26,6 +26,45 @@ class FruitProductionController extends Controller
         return response()->json(['data'=>$data],200);
     }
 
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+        //$labinputs = new LabInputs;
+       
+        $fruitproduction =  FruitProduction::where('user_id',$user->id)->orderBy('created_at', 'desc')->with('status_type')->with('section')->with('cause')->with('deviation');
+
+        //// Search by range of dates
+        $fruitproduction = $fruitproduction->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('date',[$request->start_date,$request->end_date]):$query->where('date','>',$request->start_date);
+        });
+
+        //// Search by cause
+        $fruitproduction = $fruitproduction->when($request->cause && $request->cause!='', function ($query) use ($request) {
+            return $query->where('cause_id',$request->cause);
+        });
+
+         //// Search by status
+         $fruitproduction = $fruitproduction->when($request->status_id && $request->status_id!='', function ($query) use ($request) {
+            return $query->where('status',$request->status_id);
+        });
+
+        //// Search by section
+        $fruitproduction = $fruitproduction->when($request->section && $request->section!='', function ($query) use ($request) {
+            return $query->where('section_id',$request->section);
+        });
+
+        //// Search by Deviation Type
+        $fruitproduction = $fruitproduction->when($request->deviation_type && $request->deviation_type!='', function ($query) use ($request) {
+            return $query->where('deviation_type_id',$request->deviation_type);
+        });
+     
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $fruitproduction = $fruitproduction->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$fruitproduction],201);
+    }
 
     public function getFruits()
     {
@@ -104,7 +143,7 @@ class FruitProductionController extends Controller
         // Calling other methods and collecting their results
         // Return a consolidated response
         return response()->json(["data"=>[
-            'fruits' => $this->getFruits(),
+            'sections' => $this->getFruits(),
             'causes' => $this->getCauses(),
             'statuses' => $this->getStatus(),
             'deviation_types' => $this->getDeviationTypes(),

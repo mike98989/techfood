@@ -12,7 +12,7 @@ class CCPFollowUpController extends Controller
     {
         $paginate = $request->paginate;
         $user = $request->user();
-        $data =  CCPFollowUp::where('user_id',$user->id)->with('animal')->orderBy('created_at', 'desc');
+        $data =  CCPFollowUp::where('user_id',$user->id)->with('animal')->orderBy('date', 'desc');
 
          ///////// IF THE REQUEST NEEDS PAGINATION
          $data = $data->when($request->paginate, function($query) use($request,$paginate){
@@ -21,6 +21,25 @@ class CCPFollowUpController extends Controller
 
         return response()->json(['data'=>$data],201);
         
+    }
+
+    public function search(Request $request)
+    {
+        $paginate = $request->paginate;
+        $user = $request->user();
+
+        $ccpfollowup =  CCPFollowUp::where('user_id',$user->id)->with('animal')->orderBy('date', 'desc');
+
+        //// Search by range of dates to filter out date of arrival into the custodial center
+        $ccpfollowup = $ccpfollowup->when($request->start_date && $request->start_date!='', function ($query) use ($request) {
+            return $request->end_date && $request->end_date!='' ? $query->whereBetween('date',[$request->start_date,$request->end_date]):$query->where('date','>',$request->start_date);
+        });
+
+         ///////// IF THE REQUEST NEEDS PAGINATION
+         $ccpfollowup = $ccpfollowup->when($request->paginate, function($query) use($request,$paginate){
+            return $paginate!='all' ? $query->paginate($paginate) : $query->get();
+            });
+        return response()->json(['data'=>$ccpfollowup],201);
     }
 
     public function store(Request $request)

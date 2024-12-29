@@ -4,13 +4,19 @@ import ReactApexChart from "react-apexcharts";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { constant } from "../../../Utils/Constants";
 import Badge from "../../Badges/Badge";
+import { DynamicInputFieldsSettings } from "../../../methods/DynamicInputFields";
+
 interface ChartProps {
   chartData: any; // Make sure this matches the type of data you're passing
 }
 
-const computeChart = (inputdata: any, parameter: String, t: any) => {
+const computeChart = (
+  inputdata: any,
+  parameter: String,
+  t: any,
+  settings: any
+) => {
   if (inputdata) {
     const data = inputdata.sort(
       (a: any, b: any) =>
@@ -36,8 +42,8 @@ const computeChart = (inputdata: any, parameter: String, t: any) => {
 
         ///////If the parameter is set to protein
         if (parameter == "protein") {
-          /////// If the protein value is greater than the constant increament good by 1 else increament bad by 1
-          if (data[i].protein_value > constant.proteinConstantLimit) {
+          /////// If the protein value is greater than the settings increament good by 1 else increament bad by 1
+          if (data[i].protein_value > settings.proteinConstantLimit) {
             dateEntry.good += 1;
           } else {
             dateEntry.bad += 1;
@@ -46,8 +52,8 @@ const computeChart = (inputdata: any, parameter: String, t: any) => {
 
         ///////If the parameter is set to lactose
         if (parameter == "lactose") {
-          /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-          if (data[i].lactose_value > constant.lactoseConstantLimit) {
+          /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+          if (data[i].lactose_value > settings.lactoseConstantLimit) {
             dateEntry.good += 1;
           } else {
             dateEntry.bad += 1;
@@ -56,8 +62,8 @@ const computeChart = (inputdata: any, parameter: String, t: any) => {
 
         ///////If the parameter is set to water
         if (parameter == "water") {
-          /////// If the water value is greater than the constant increament good by 1 else increament bad by 1
-          if (data[i].water_value > constant.waterConstantLimit) {
+          /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+          if (data[i].water_value > settings.waterConstantLimit) {
             dateEntry.good += 1;
           } else {
             dateEntry.bad += 1;
@@ -83,8 +89,8 @@ const computeChart = (inputdata: any, parameter: String, t: any) => {
     // Set processed value for chat
     let processedData: any[] = [];
     processedData = [
-      { name: t(constant.approvedText), data: goodValues },
-      { name: t(constant.unApprovedText), data: badValues },
+      { name: t(settings.approvedText), data: goodValues },
+      { name: t(settings.unApprovedText), data: badValues },
     ];
     //setProteinChartValues(resultArray);
     return [processedData, months];
@@ -98,14 +104,22 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
   const [state, setState] = useState({ series: [] });
   const [parameter, setParameter] = useState("protein");
   const { t } = useTranslation();
-  const language = useSelector((state: any) => state.language.value);
+  //const language = useSelector((state: any) => state.language.value);
+  const { settings, setSettings } = DynamicInputFieldsSettings();
+  const user = useSelector((state: any) => state.user.value);
 
   useEffect(() => {
     let value: any[] = [];
-    chartData.data && (value = computeChart(chartData.data, parameter, t));
+    chartData.data &&
+      (value = computeChart(chartData.data, parameter, t, settings));
     value[0] && setState({ series: value[0] });
     value[1] && setMonths(value[1]);
   }, [chartData, parameter]);
+
+  useEffect(() => {
+    user.data?.settings &&
+      setSettings(JSON.parse(user.data?.settings.settings));
+  }, [user.data?.settings]);
 
   // useEffect(() => {
   //   // let value: any[] = [];
@@ -116,7 +130,7 @@ const ProteinLactoseWaterThresholdChart: React.FC<ChartProps> = ({
   //   if (language.language) {
   //     //handleReset();
   //     //console.log("currentState:", state);
-  //     //console.log("appproved", t(constant.approvedText));
+  //     //console.log("appproved", t(settings.approvedText));
   //     //console.log("newState:", state);
   //   }
   // }, [language.language]);
