@@ -31,56 +31,56 @@ const computeChart = (data: any, t: any, parameterValue: String) => {
       const currentYear = new Date().getFullYear(); // Get the current year
 
       /////// If the date is this year
-      if (inputdata[i].year == currentYear) {
-        //console.log("month", month + "-" + week);
-        if (!resultMap.has(year_week)) {
-          resultMap.set(year_week, {
-            dataValues: 0,
-            totalWorkersCount: 0,
-            totalProductionQuantity: 0,
-          });
-        }
-
-        const dateEntry = resultMap.get(year_week);
-        if (parameterValue == "total_production") {
-          dateEntry.dataValues += inputdata[i].production_quantity;
-        }
-
-        //const total_work_hours =
-        /////Calculatate efficiency, and productivity
-        if (parameterValue == "total_work_hours") {
-          dateEntry.dataValues += inputdata[i].total_hours * 1;
-        }
-
-        if (parameterValue == "efficiency") {
-          dateEntry.totalWorkersCount +=
-            inputdata[i].supervisor * 1 +
-            inputdata[i].quality_control * 1 +
-            inputdata[i].operator_staff * 1;
-
-          dateEntry.totalProductionQuantity +=
-            inputdata[i].production_quantity * 1;
-
-          dateEntry.dataValues = (
-            (dateEntry.totalProductionQuantity * 1) /
-            dateEntry.totalWorkersCount /
-            100
-          ).toFixed(1);
-        }
-        if (parameterValue == "productivity") {
-          dateEntry.dataValues += Math.floor(
-            (inputdata[i].production_quantity * 1) /
-              (inputdata[i].total_hours * 1)
-          );
-        }
-
-        if (parameterValue == "worked_hours") {
-          dateEntry.dataValues += Math.floor(
-            (inputdata[i].production_quantity * 1) /
-              (inputdata[i].total_hours * 1)
-          );
-        }
+      //if (inputdata[i].year == currentYear) {
+      //console.log("month", month + "-" + week);
+      if (!resultMap.has(year_week)) {
+        resultMap.set(year_week, {
+          dataValues: 0,
+          totalWorkersCount: 0,
+          totalProductionQuantity: 0,
+        });
       }
+
+      const dateEntry = resultMap.get(year_week);
+      if (parameterValue == "total_production") {
+        dateEntry.dataValues += inputdata[i].production_quantity;
+      }
+
+      //const total_work_hours =
+      /////Calculatate efficiency, and productivity
+      if (parameterValue == "total_work_hours") {
+        dateEntry.dataValues += inputdata[i].total_hours * 1;
+      }
+
+      if (parameterValue == "efficiency") {
+        dateEntry.totalWorkersCount +=
+          inputdata[i].supervisor * 1 +
+          inputdata[i].quality_control * 1 +
+          inputdata[i].operator_staff * 1;
+
+        dateEntry.totalProductionQuantity +=
+          inputdata[i].production_quantity * 1;
+
+        dateEntry.dataValues = (
+          (dateEntry.totalProductionQuantity * 1) /
+          dateEntry.totalWorkersCount /
+          100
+        ).toFixed(1);
+      }
+      if (parameterValue == "productivity") {
+        dateEntry.dataValues += Math.floor(
+          (inputdata[i].production_quantity * 1) /
+            (inputdata[i].total_hours * 1)
+        );
+      }
+
+      if (parameterValue == "worked_hours") {
+        dateEntry.dataValues += Math.floor(
+          (inputdata[i].production_quantity * 1) /
+            (inputdata[i].total_hours * 1)
+        );
+      }
+      //}
     }
 
     // Convert the Map to an array of objects
@@ -169,8 +169,10 @@ const staffingProductionChart: React.FC<ChartProps> = (props: any) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t(parameterValue) + " " + t("limit") + " (" + constantLimit + ")",

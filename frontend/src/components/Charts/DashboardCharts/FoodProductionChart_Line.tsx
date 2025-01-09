@@ -38,7 +38,8 @@ const formatDataForChart = (
   });
 
   // Loop through the data to collect occurrences and unique months
-  filtered.forEach((entry) => {
+  data.forEach((entry) => {
+    //filtered.forEach((entry) => {
     const date = new Date(entry.date);
     const month = date.toLocaleString("default", { month: "short" }); // "Nov" for November
 

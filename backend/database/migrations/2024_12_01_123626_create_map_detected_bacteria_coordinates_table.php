@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("image_path_id");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('image_path_id')->references('id')->on('map_detected_bacteria_image_path')->onDelete('cascade');
+            $table->string("title_translate_key");
             $table->string("title");
             $table->text("coordinates");
             $table->integer("status")->default(1);

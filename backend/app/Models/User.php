@@ -62,3 +62,8 @@ class User extends Authenticatable
 // UPDATE users
 // SET products = '[1895,1887,1885,1835,1881,1891,1889,1883,1899,1771]'
 // WHERE email LIKE '%student%';
+
+
+// UPDATE users
+// SET password = '$2y$10$9wHveX4/O.kNcBCP/IG/7OJfWaGnsiTVUIOqBQ5xumctKZ48yUB.q'
+// WHERE email LIKE '%student%';

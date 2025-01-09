@@ -668,14 +668,14 @@ export const DynamicInputFieldsMapDetectedBacteria = () => {
     value: string;
   }) => {
     setDetectedBacteria((prev) => {
-      const updatedPoNumbers = [...prev];
+      const updatedData = [...prev];
       if (dataIndex != null) {
-        updatedPoNumbers[bacteriaIndex].data[dataIndex][field] = value;
+        updatedData[bacteriaIndex].data[dataIndex][field] = value;
       } else {
-        updatedPoNumbers[bacteriaIndex][field] = value; // Update PO Number field
+        updatedData[bacteriaIndex][field] = value; // Update PO Number field
       }
 
-      return updatedPoNumbers;
+      return updatedData;
     });
   };
 
@@ -692,8 +692,7 @@ export const DynamicInputFieldsMapDetectedBacteria = () => {
       updatedBacteriaData[0] = {
         ...updatedBacteriaData[0], // Ensure you're not mutating the original state
         data: coordinates.map((value, i) => ({
-          label: value.label,
-          number_detected: "",
+          ecoli: value.ecoli,
         })),
       };
       return updatedBacteriaData;

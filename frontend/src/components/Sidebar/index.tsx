@@ -68,6 +68,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   ///////When the Menu/location is clicked
   useEffect(() => {
     const path = location.pathname.split("/");
+
     //alert(path[1]);
     setActiveMenu(path[1]);
     localStorage.setItem("activeMenu", path[1]);
@@ -76,7 +77,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-lime-950 duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -238,8 +239,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/protein_lactose_water"
                               className={`
-                                ${activeMenu === "protein_lactose_water" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 text-md rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu === "protein_lactose_water" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 text-md rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -264,8 +265,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/fruit_production"
                               className={`
-                                ${activeMenu === "fruit_production" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "fruit_production" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -290,8 +291,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/deviation_complaints"
                               className={`
-                                ${activeMenu === "deviation_complaints" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "deviation_complaints" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -314,8 +315,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/drill_samples"
                               className={`
-                                ${activeMenu === "drill_samples" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "drill_samples" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -338,8 +339,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/head_midriff"
                               className={`
-                                ${activeMenu === "head_midriff" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "head_midriff" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -362,8 +363,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/staffing_production"
                               className={`
-                                ${activeMenu === "staffing_production" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "staffing_production" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -386,8 +387,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/ccp_followup"
                               className={`
-                                ${activeMenu === "ccp_followup" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "ccp_followup" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -413,8 +414,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/oee_and_efficiency"
                               className={`
-                                ${activeMenu === "oee_and_efficiency" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "oee_and_efficiency" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -447,8 +448,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/daily_hygiene_rounds"
                               className={`
-                                ${activeMenu === "daily_hygiene_rounds" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "daily_hygiene_rounds" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -470,9 +471,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <NavLink
                               to="/map_detected_bacteria"
-                              className={
-                                "group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white"
-                              }
+                              className={`
+                                ${activeMenu == "map_detected_bacteria" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
+                              `}
                             >
                               {t("map_detected_bacteria_title")}
                             </NavLink>
@@ -482,8 +484,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <NavLink
                               to="/followup_of_productivity"
                               className={`
-                                ${activeMenu === "followup_of_productivity" ? "text-white" : ""}
-                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                                ${activeMenu == "followup_of_productivity" ? "text-teal-500" : ""}
+                                group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                               `}
                             >
                               {/* <svg
@@ -523,8 +525,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/settings"
                   className={`
-                    ${activeMenu === "oee_and_efficiency" ? "text-white" : ""}
-                    group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-bodydark2 duration-300 ease-in-out hover:text-white
+                    ${activeMenu === "oee_and_efficiency" ? "text-teal-500" : ""}
+                    group relative flex items-center gap-1.5 rounded-md px-3 font-thin text-white duration-300 ease-in-out hover:text-teal-500
                   `}
                 >
                   <svg

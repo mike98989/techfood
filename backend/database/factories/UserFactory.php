@@ -21,21 +21,22 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected static $counter = 72; // Counter for auto-incrementing username
+    protected static $counter = 71; // Counter for auto-incrementing username
     public function definition(): array
     {
         
         return [
             'name' => fake()->name(),
-            'parent_id' => rand(1,30),
+            'parent_id' => rand(1,1000),
             //'email' => fake()->unique()->safeEmail(),
-            'email' => 'student' . (self::$counter++) . '.uppsala@example.com', // Auto-incrementing email
+            'email' => 'student' . (self::$counter++) . '.trosa@techfood.se', // Auto-incrementing email
+            'products' =>'[1895,1887,1785, 1885,1835,1881,1891,1889,1883,1899,1771]',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      */

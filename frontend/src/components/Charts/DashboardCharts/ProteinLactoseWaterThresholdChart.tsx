@@ -32,44 +32,45 @@ const computeChart = (
       //// Check the date
       const dateToCheck = new Date(data[i].result_date);
       /////// If the date is this year
-      if (dateToCheck.getFullYear() === currentYear) {
-        //const month = dateToCheck.getMonth() + 1; //// Get the month
-        const month = dateToCheck.toLocaleString("default", { month: "short" });
-        if (!resultMap.has(month)) {
-          resultMap.set(month, { good: 0, bad: 0 });
-        }
-        const dateEntry = resultMap.get(month);
 
-        ///////If the parameter is set to protein
-        if (parameter == "protein") {
-          /////// If the protein value is greater than the settings increament good by 1 else increament bad by 1
-          if (data[i].protein_value > settings.proteinConstantLimit) {
-            dateEntry.good += 1;
-          } else {
-            dateEntry.bad += 1;
-          }
-        }
+      //if (dateToCheck.getFullYear() === currentYear) {
+      //const month = dateToCheck.getMonth() + 1; //// Get the month
+      const month = dateToCheck.toLocaleString("default", { month: "short" });
+      if (!resultMap.has(month)) {
+        resultMap.set(month, { good: 0, bad: 0 });
+      }
+      const dateEntry = resultMap.get(month);
 
-        ///////If the parameter is set to lactose
-        if (parameter == "lactose") {
-          /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
-          if (data[i].lactose_value > settings.lactoseConstantLimit) {
-            dateEntry.good += 1;
-          } else {
-            dateEntry.bad += 1;
-          }
-        }
-
-        ///////If the parameter is set to water
-        if (parameter == "water") {
-          /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
-          if (data[i].water_value > settings.waterConstantLimit) {
-            dateEntry.good += 1;
-          } else {
-            dateEntry.bad += 1;
-          } //// Sort the map in ascending order
+      ///////If the parameter is set to protein
+      if (parameter == "protein") {
+        /////// If the protein value is greater than the settings increament good by 1 else increament bad by 1
+        if (data[i].protein_value > settings.proteinConstantLimit) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
         }
       }
+
+      ///////If the parameter is set to lactose
+      if (parameter == "lactose") {
+        /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+        if (data[i].lactose_value > settings.lactoseConstantLimit) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
+        }
+      }
+
+      ///////If the parameter is set to water
+      if (parameter == "water") {
+        /////// If the water value is greater than the settings increament good by 1 else increament bad by 1
+        if (data[i].water_value > settings.waterConstantLimit) {
+          dateEntry.good += 1;
+        } else {
+          dateEntry.bad += 1;
+        } //// Sort the map in ascending order
+      }
+      //}
     }
 
     // Convert the Map to an array of objects

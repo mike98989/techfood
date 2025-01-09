@@ -91,7 +91,8 @@ const formatDataForChart = (
   // Get the current year
 
   // Loop through the data to collect occurrences and unique months
-  filtered.forEach((entry) => {
+  //filtered.forEach((entry) => {
+  data.forEach((entry) => {
     const date = new Date(entry.date);
     /////// If the date is this year
     const month = date.toLocaleString("default", { month: "short" }); // "Nov" for November

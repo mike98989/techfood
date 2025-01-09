@@ -69,57 +69,72 @@ export default function FruitProduction() {
     markers: {
       size: 5, // Adjust the size of the circles
     },
-    grid: {
-      padding: {
-        top: 5,
-        right: 40, // Add padding to the right
-        bottom: 5,
-        left: 20, // Add padding to the left
-      },
-    },
+
     dataLabels: {
       enabled: true, // Enable data labels
       formatter: function (val, { dataPointIndex, w }) {
         const point = w.config.series[0].data[dataPointIndex]; // Access the data object
-        const title = point.number_detected
-          ? point.label + ", " + point.number_detected
-          : point.label;
-        return title; // Display the `number_detected` value
+        const ecoli = point.ecoli ? `ecoli=${point.ecoli}` : "";
+        const enterobacta = point.enterobacta
+          ? `enterobacta=${point.enterobacta}`
+          : "";
+        const aeroba = point.aeroba ? `aeroba=${point.aeroba}` : "";
+        const staphylococcus = point.staphylococcus
+          ? `staphylococcus=${point.staphylococcus}`
+          : "";
+
+        // Combine the labels into an array, filtering out empty values
+        const labels = [ecoli, enterobacta, aeroba, staphylococcus].filter(
+          Boolean
+        );
+        console.log("labels", labels);
+        // Join labels with `\n` (which ApexCharts internally parses for SVG text)
+        return labels.join("\u000A");
       },
+      offsetY: -10, // Adjust vertical position if needed
 
       style: {
         fontSize: "12px",
-        fontFamily: "Arial, sans-serif",
-        fontWeight: "bold",
-        background: "rgba(255,255,255,0.8)", // Background color
-        color: "#000", // Text color
-        padding: "4px 8px", // Add padding to mimic a rectangular shape
-        border: "1px solid #ccc", // Add border for visual emphasis
-        borderRadius: "4px", // Slightly rounded corners
-      },
-      dropShadow: {
-        enabled: true,
-        top: 1,
-        left: 1,
-        blur: 1,
-        color: "#000",
-        opacity: 0.25,
+        colors: ["#D6EAF8"], // Set text color
       },
       background: {
         enabled: true,
+        foreColor: "#000", // Text color
+        padding: 10,
+        opacity: 0.7,
         borderRadius: 5,
+
+        borderColor: "#D6EAF8",
+        borderWidth: 1,
       },
+
+      //   style: {
+      //     fontSize: "12px",
+      //     fontFamily: "Arial, sans-serif",
+      //     fontWeight: "bold",
+      //     color: "#000", // Text color
+      //     padding: "4px 8px", // Add padding to mimic a rectangular shape
+      //     border: "1px solid #ccc", // Add border for visual emphasis
+      //     borderRadius: "4px", // Slightly rounded corners
+      //   },
+
+      //   background: {
+      //     enabled: true,
+      //     borderRadius: 5,
+      //   },
     },
+
     xaxis: {
       type: "category",
-      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Define the fixed categories
-      //   min: 0, // Set the minimum value
-      //   max: 10, // Set the maximum value
+      tickAmount: 10, // Number of ticks between min and max
+      min: 1, // Set the minimum value
+      max: 9, // Set the maximum value
       //   tickAmount: 9, // Number of ticks between min and max
-      title: {
-        text: "X-Axis",
+      axisTicks: {
+        show: false, // Hide x-axis ticks
       },
       labels: {
+        show: false, // Hide x-axis labels
         formatter: (value) => Math.round(value), // Ensure integer values are displayed
         style: {
           fontSize: "15px", // Larger font size
@@ -132,8 +147,14 @@ export default function FruitProduction() {
       min: 0, // Start x-axis from 0
       max: 10,
       tickAmount: 10, // Divide axis into equal parts
-      title: {
-        text: "Y-Axis",
+      labels: {
+        show: false, // Hide y-axis labels
+      },
+      axisBorder: {
+        show: false, // Hide y-axis border
+      },
+      axisTicks: {
+        show: false, // Hide y-axis ticks
       },
     },
   };
@@ -158,6 +179,24 @@ export default function FruitProduction() {
     // };
   };
 
+  const updateSeriesData = (dataIndex, field, value) => {
+    setSeriesData((prevState) => {
+      const updatedData = [...prevState.series[0].data]; // Shallow copy of the data array
+      updatedData[dataIndex] = {
+        ...updatedData[dataIndex],
+        [field]: value,
+      }; // Update specific point
+      return {
+        ...prevState,
+        series: [
+          {
+            ...prevState.series[0],
+            data: updatedData,
+          },
+        ],
+      };
+    });
+  };
   useEffect(() => {
     const fetchData = async (endpoint: string, returnStateObject: any) => {
       setIsLoading(true);
@@ -179,6 +218,7 @@ export default function FruitProduction() {
   useEffect(() => {
     if (selectedCoordinate[0]) {
       const selected = JSON.parse(selectedCoordinate[0]?.coordinates);
+      console.log("selected", selected);
       handleUpdateDetectedBacteriaRow(selected);
       handleChangeBackground(selectedCoordinate[0]?.image.path);
       if (selectedCoordinate[0]?.type == "map") {
@@ -186,8 +226,10 @@ export default function FruitProduction() {
           return {
             x: value.x_axis,
             y: value.y_axis,
-            number_detected: value.number_detected,
-            label: value.label,
+            // ecoli: parsedDetectedData[i]?.ecoli,
+            // enterobacta: parsedDetectedData[i]?.enterobacta,
+            // aeroba: parsedDetectedData[i]?.aeroba,
+            // staphylococcus: parsedDetectedData[i]?.staphylococcus,
           };
         });
 
@@ -228,6 +270,7 @@ export default function FruitProduction() {
               method="POST"
               className="pb-5 items-center justify-center"
             >
+              {/* {JSON.stringify(detectedBacteria)} */}
               {detectedBacteria.map((bacteria, bacteriaIndex) => (
                 <div
                   className="w-full border-whiten border-b py-2 px-2"
@@ -312,77 +355,174 @@ export default function FruitProduction() {
                           <option value="">--{t("select")}--</option>
                           {coordinates?.map((value: any, key: any) => (
                             <option key={key} value={value.id}>
-                              {t(value.title)}
+                              {t(value.title_translate_key)}
                             </option>
                           ))}
                         </select>
                       </div>
                     </div>
                   </div>
+                  {/* {JSON.stringify(seriesData)} */}
                   <div className="flex flex-row">
                     <div className="md:w-1/2 flex-column">
-                      {bacteria?.data?.map((dataValue: any, dataIndex: any) => (
-                        <div className="w-full md:flex" key={dataIndex}>
+                      {selectedCoordinate[0] &&
+                        selectedCoordinate[0].type == "map" &&
+                        bacteria?.data?.map(
+                          (dataValue: any, dataIndex: any) => (
+                            <div className="w-full text-center" key={dataIndex}>
+                              {selectedCoordinate[0].title.includes(
+                                "fabrik"
+                              ) && (
+                                <span className="py-2">
+                                  {"fabrik " + parseInt(dataIndex + 1)}
+                                </span>
+                              )}
+                              <div className="w-full md:flex">
+                                <div className="md:w-1/2 md:mb-0 mr-1">
+                                  <label className="text-black dark:text-white text-xs flex flex-row">
+                                    {t("e_coli")}
+                                  </label>
+
+                                  <input
+                                    type="number"
+                                    id="small-input"
+                                    name="ecoli[]"
+                                    value={dataValue.ecoli}
+                                    onChange={(e) => {
+                                      handleInputChange({
+                                        bacteriaIndex: bacteriaIndex,
+                                        dataIndex: dataIndex,
+                                        field: "ecoli",
+                                        value: e.target.value,
+                                      });
+
+                                      updateSeriesData(
+                                        dataIndex,
+                                        "ecoli",
+                                        e.target.value
+                                      );
+                                    }}
+                                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                  />
+                                </div>
+                                <div className="md:w-1/2 md:mb-0 mr-1">
+                                  <label className="text-black dark:text-white text-xs flex flex-row">
+                                    {t("enterobacta")}
+                                  </label>
+                                  <input
+                                    type="number"
+                                    id="small-input"
+                                    name="enterobacta[]"
+                                    onChange={(e) => {
+                                      handleInputChange({
+                                        bacteriaIndex: bacteriaIndex,
+                                        dataIndex: dataIndex,
+                                        field: "enterobacta",
+                                        value: e.target.value,
+                                      });
+                                      updateSeriesData(
+                                        dataIndex,
+                                        "enterobacta",
+                                        e.target.value
+                                      );
+                                    }}
+                                    value={dataValue.enterobacta}
+                                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                  />
+                                </div>
+                                <div className="md:w-1/2 md:mb-0 mr-1">
+                                  <label className="text-black dark:text-white text-xs flex flex-row">
+                                    {t("aerobic")}
+                                  </label>
+                                  <input
+                                    type="number"
+                                    id="small-input"
+                                    name="aeroba[]"
+                                    value={dataValue.aeroba}
+                                    onChange={(e) => {
+                                      handleInputChange({
+                                        bacteriaIndex: bacteriaIndex,
+                                        dataIndex: dataIndex,
+                                        field: "aeroba",
+                                        value: e.target.value,
+                                      });
+
+                                      updateSeriesData(
+                                        dataIndex,
+                                        "aeroba",
+                                        e.target.value
+                                      );
+                                    }}
+                                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                  />
+                                </div>
+                                <div className="md:w-1/2 md:mb-0 mr-1">
+                                  <label className="text-black dark:text-white text-xs flex flex-row">
+                                    {t("staphylococcus")}
+                                  </label>
+                                  <input
+                                    type="number"
+                                    id="small-input"
+                                    name="staphylococcus[]"
+                                    value={dataValue.staphylococcus}
+                                    onChange={(e) => {
+                                      handleInputChange({
+                                        bacteriaIndex: bacteriaIndex,
+                                        dataIndex: dataIndex,
+                                        field: "staphylococcus",
+                                        value: e.target.value,
+                                      });
+
+                                      updateSeriesData(
+                                        dataIndex,
+                                        "staphylococcus",
+                                        e.target.value
+                                      );
+                                    }}
+                                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        )}
+
+                      {selectedCoordinate[0] &&
+                        selectedCoordinate[0].type == "spread" && (
                           <div className="md:w-1/2 md:mb-0 mr-1">
                             <label className="text-black dark:text-white text-xs flex flex-row">
-                              {t("label")}
+                              {t("bacteria")}
                             </label>
-                            <input
-                              type="text"
-                              id="small-input"
-                              name="label[]"
-                              readOnly
-                              value={dataValue.label}
-                              placeholder={t("label")}
-                              className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            />
-                          </div>
-                          <div className="md:w-1/2 md:mb-0 mr-1">
-                            <label className="text-black dark:text-white text-xs flex flex-row">
-                              {t("number_detected")}
-                            </label>
-                            <input
-                              type="number"
-                              id="small-input"
-                              name="number_detected[]"
-                              min={0}
-                              max={
-                                selectedCoordinate[0]?.type == "spread"
-                                  ? 100
-                                  : undefined
-                              }
-                              required
-                              value={dataValue.number_detected}
-                              onChange={(e) => {
-                                handleInputChange({
-                                  bacteriaIndex: bacteriaIndex,
-                                  dataIndex: dataIndex,
-                                  field: "number_detected",
-                                  value: e.target.value,
-                                });
-                                selectedCoordinate[0]?.type == "spread" &&
+
+                            <div className="flex flex-row ">
+                              {/* <input
+                                type="text"
+                                disabled
+                                value={detectedBacteria.value}
+                                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                              /> */}
+
+                              <input
+                                type="number"
+                                min={0}
+                                max={100}
+                                id="small-input"
+                                name="value[]"
+                                // value={detectedBacteria.value}
+                                onChange={(e) => {
                                   setPercentageSpread(e.target.value);
-
-                                // setSelectedCoordinate((prev) => {
-                                //   const updatedCoordinates = [...prev];
-
-                                //   const finalValue = updateSpecificCoordinate(
-                                //     updatedCoordinates,
-                                //     dataIndex,
-                                //     "number_detected",
-                                //     e.target.value
-                                //   );
-
-                                //   console.log("final", finalValue);
-                                //   return finalValue;
-                                // });
-                              }}
-                              placeholder={t("value")}
-                              className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            />
+                                  handleInputChange({
+                                    bacteriaIndex: bacteriaIndex,
+                                    dataIndex: 0,
+                                    field: "bacteria",
+                                    value: e.target.value,
+                                  });
+                                }}
+                                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-1 px-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )}
                     </div>
                     <div className="md:w-1/2">
                       {selectedCoordinate &&

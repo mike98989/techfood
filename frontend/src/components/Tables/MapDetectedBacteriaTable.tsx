@@ -39,20 +39,22 @@ const MapDetectedBacteriaTable = () => {
     const parsedDetectedData = JSON.parse(data.detected_values);
     console.log("type", data.coordinate.type);
     if (data.coordinate.type == "map") {
-      console.log("data is dataf", data.detected_values);
+      console.log("data is dataf", data);
       const parsedData = JSON.parse(data.coordinate.coordinates);
       let filteredMapData = parsedData.map((value, i) => {
         return {
           x: value.x_axis,
           y: value.y_axis,
-          number_detected: parsedDetectedData[i].number_detected,
-          label: value.label,
+          ecoli: parsedDetectedData[i]?.ecoli,
+          enterobacta: parsedDetectedData[i]?.enterobacta,
+          aeroba: parsedDetectedData[i]?.aeroba,
+          staphylococcus: parsedDetectedData[i]?.staphylococcus,
         };
       });
 
       setSeriesData({ series: [{ name: "", data: filteredMapData }] });
     } else {
-      setPercentageSpread(parsedDetectedData[0].number_detected);
+      setPercentageSpread(parsedDetectedData[0].bacteria);
     }
   };
 
@@ -71,11 +73,123 @@ const MapDetectedBacteriaTable = () => {
     series: [],
   });
 
+  // const chartOption: ApexOptions = {
+  //   chart: {
+  //     background: "rgba(255, 255, 255, 0.6)",
+  //     type: "scatter",
+  //     height: 350,
+  //     zoom: {
+  //       enabled: false, // Disables zooming
+  //     },
+  //   },
+
+  //   markers: {
+  //     size: 5, // Adjust the size of the circles
+  //   },
+  //   grid: {
+  //     padding: {
+  //       top: 5,
+  //       right: 60, // Add padding to the right
+  //       bottom: 5,
+  //       left: 20, // Add padding to the left
+  //     },
+  //   },
+  //   dataLabels: {
+  //     enabled: true, // Enable data labels
+  //     formatter: function (val, { dataPointIndex, w }) {
+  //       const point = w.config.series[0].data[dataPointIndex]; // Access the data object
+  //       const ecoli = point.ecoli ? `ecoli=${point.ecoli}` : "";
+  //       const enterobacta = point.enterobacta
+  //         ? `enterobacta=${point.enterobacta}`
+  //         : "";
+  //       const aeroba = point.aeroba ? `aeroba=${point.aeroba}` : "";
+  //       const staphylococcus = point.staphylococcus
+  //         ? `staphylococcus=${point.staphylococcus}`
+  //         : "";
+
+  //       // Combine the labels into an array, filtering out empty values
+  //       const labels = [ecoli, enterobacta, aeroba, staphylococcus].filter(
+  //         Boolean
+  //       );
+
+  //       // Join labels with `\n` (which ApexCharts internally parses for SVG text)
+  //       return labels.join("\u000A");
+  //     },
+  //     offsetY: -10, // Adjust vertical position if needed
+
+  //     style: {
+  //       fontSize: "12px",
+  //       colors: ["#D6EAF8"], // Set text color
+  //     },
+  //     background: {
+  //       enabled: true,
+  //       foreColor: "#000", // Text color
+  //       padding: 10,
+  //       opacity: 0.7,
+  //       borderRadius: 5,
+
+  //       borderColor: "#D6EAF8",
+  //       borderWidth: 1,
+  //     },
+
+  //     //   style: {
+  //     //     fontSize: "12px",
+  //     //     fontFamily: "Arial, sans-serif",
+  //     //     fontWeight: "bold",
+  //     //     color: "#000", // Text color
+  //     //     padding: "4px 8px", // Add padding to mimic a rectangular shape
+  //     //     border: "1px solid #ccc", // Add border for visual emphasis
+  //     //     borderRadius: "4px", // Slightly rounded corners
+  //     //   },
+
+  //     //   background: {
+  //     //     enabled: true,
+  //     //     borderRadius: 5,
+  //     //   },
+  //   },
+  //   xaxis: {
+  //     type: "category",
+  //     ///categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Define the fixed categories
+  //     min: 1, // Set the minimum value
+  //     max: 9, // Set the maximum value
+  //     tickAmount: 10, // Number of ticks between min and max
+  //     title: {
+  //       text: "X-Axis",
+  //     },
+  //     labels: {
+  //       formatter: (value) => value, // Ensure integer values are displayed
+  //       style: {
+  //         fontSize: "15px", // Larger font size
+  //         fontWeight: "bold", // Bold text
+  //         colors: "#000", // Black color for the digits
+  //       },
+  //     },
+  //   },
+  //   yaxis: {
+  //     min: 0, // Start x-axis from 0
+  //     max: 9,
+  //     tickAmount: 9, // Divide axis into equal parts
+  //     title: {
+  //       text: "Y-Axis",
+  //     },
+  //     labels: {
+  //       formatter: (value) => value, // Ensure integer values are displayed
+  //       style: {
+  //         fontSize: "15px", // Larger font size
+  //         fontWeight: "bold", // Bold text
+  //         colors: "#000000", // Black color for the digits
+  //       },
+  //     },
+  //   },
+  // };
+
+  //const { MessageBox, setFormMessage } = formReturnMessage();
+
   const chartOption: ApexOptions = {
     chart: {
-      background: "rgba(255, 255, 255, 0.6)",
+      background: "rgba(255, 255, 255, 0.5)",
       type: "scatter",
-      height: 350,
+      height: 300,
       zoom: {
         enabled: false, // Disables zooming
       },
@@ -83,22 +197,27 @@ const MapDetectedBacteriaTable = () => {
     markers: {
       size: 5, // Adjust the size of the circles
     },
-    grid: {
-      padding: {
-        top: 5,
-        right: 60, // Add padding to the right
-        bottom: 5,
-        left: 20, // Add padding to the left
-      },
-    },
+
     dataLabels: {
       enabled: true, // Enable data labels
       formatter: function (val, { dataPointIndex, w }) {
         const point = w.config.series[0].data[dataPointIndex]; // Access the data object
-        const title = point.number_detected
-          ? point.label + " = " + point.number_detected
-          : point.label;
-        return title; // Display the `number_detected` value
+        const ecoli = point.ecoli ? `ecoli=${point.ecoli}` : "";
+        const enterobacta = point.enterobacta
+          ? `enterobacta=${point.enterobacta}`
+          : "";
+        const aeroba = point.aeroba ? `aeroba=${point.aeroba}` : "";
+        const staphylococcus = point.staphylococcus
+          ? `staphylococcus=${point.staphylococcus}`
+          : "";
+
+        // Combine the labels into an array, filtering out empty values
+        const labels = [ecoli, enterobacta, aeroba, staphylococcus].filter(
+          Boolean
+        );
+
+        // Join labels with `\n` (which ApexCharts internally parses for SVG text)
+        return labels.join("\u000A");
       },
       offsetY: -10, // Adjust vertical position if needed
 
@@ -112,9 +231,11 @@ const MapDetectedBacteriaTable = () => {
         padding: 10,
         opacity: 0.7,
         borderRadius: 5,
+
         borderColor: "#D6EAF8",
         borderWidth: 1,
       },
+
       //   style: {
       //     fontSize: "12px",
       //     fontFamily: "Arial, sans-serif",
@@ -130,17 +251,19 @@ const MapDetectedBacteriaTable = () => {
       //     borderRadius: 5,
       //   },
     },
+
     xaxis: {
       type: "category",
-      ///categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Define the fixed categories
+      tickAmount: 10, // Number of ticks between min and max
       min: 1, // Set the minimum value
       max: 9, // Set the maximum value
-      tickAmount: 10, // Number of ticks between min and max
-      title: {
-        text: "X-Axis",
+      //   tickAmount: 9, // Number of ticks between min and max
+      axisTicks: {
+        show: false, // Hide x-axis ticks
       },
       labels: {
-        formatter: (value) => value, // Ensure integer values are displayed
+        show: false, // Hide x-axis labels
+        formatter: (value) => Math.round(value), // Ensure integer values are displayed
         style: {
           fontSize: "15px", // Larger font size
           fontWeight: "bold", // Bold text
@@ -150,23 +273,19 @@ const MapDetectedBacteriaTable = () => {
     },
     yaxis: {
       min: 0, // Start x-axis from 0
-      max: 9,
-      tickAmount: 9, // Divide axis into equal parts
-      title: {
-        text: "Y-Axis",
-      },
+      max: 10,
+      tickAmount: 10, // Divide axis into equal parts
       labels: {
-        formatter: (value) => value, // Ensure integer values are displayed
-        style: {
-          fontSize: "15px", // Larger font size
-          fontWeight: "bold", // Bold text
-          colors: "#000000", // Black color for the digits
-        },
+        show: false, // Hide y-axis labels
+      },
+      axisBorder: {
+        show: false, // Hide y-axis border
+      },
+      axisTicks: {
+        show: false, // Hide y-axis ticks
       },
     },
   };
-
-  //const { MessageBox, setFormMessage } = formReturnMessage();
 
   useEffect(() => {
     setIsLoading(true);
@@ -206,9 +325,6 @@ const MapDetectedBacteriaTable = () => {
                   <th className="text-xs font-bold text-black dark:text-white">
                     {t("title")}
                   </th>
-                  <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
-                    {t("values")}
-                  </th>
 
                   <th className="py-2 px-2 text-xs font-bold text-black dark:text-white">
                     {t("thumbnail")}
@@ -234,23 +350,14 @@ const MapDetectedBacteriaTable = () => {
                         </td>
                         <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                           <p className="text-xs text-black dark:text-white">
-                            {input.coordinate.title}
+                            <span className="font-bold">
+                              {input.coordinate.title}
+                            </span>
                             <br />
                             {input.date}
                           </p>
                         </td>
-                        <td className="border-b border-[#eee] py-2 px-2 pl-3 dark:border-strokedark">
-                          <h5 className="text-xs text-black dark:text-white">
-                            <ul className="list-decimal p-none">
-                              {/* {dataObject} */}
-                              {dataObject.map((data, i) => (
-                                <li key={i}>
-                                  {data.label + ", " + data.number_detected}
-                                </li>
-                              ))}
-                            </ul>
-                          </h5>
-                        </td>
+
                         <td className="border-b border-[#eee] py-2 px-1 dark:border-strokedark">
                           <p className="text-xs text-black dark:text-white">
                             <img
@@ -272,7 +379,7 @@ const MapDetectedBacteriaTable = () => {
                                 setOpenModal(true),
                                   setModalQueryData({
                                     modalType: "form",
-                                    modalSize: "lg",
+                                    modalSize: "2xl",
                                     modalData: {
                                       form: "EditMapDetectedBacteria",
                                       data: input,

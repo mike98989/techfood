@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
     {
 $translation = '{"en": {"greeting":"Welcome back","sign_in_title":"Sign In to Techfood","username":"Username","password": "Password","signin":"Sign in","username_placeholder":"Enter your username","password_placeholder":"Enter your password","catch_phrase":"Streamline Your Lab:","catch_sentence":"Digitizing Food Results with Precision!","add_new":"Add New","new":"New","language":"Language","dashboard": "Dashboard","my_records":"My Records","protein_lactose_water":"Protein, Lactos & Water","protein_lactose_water_chart":"Protein, Lactos & Water Charts","fruit_production":"Food Safety Monitoring","deviation_complaints":"Deviation Complaints","microbiological_sample":"Microbiological Samples Environment","product":"Product","limit":"Limit","from":"From","to":"To",
 "staffing_of_production":"Staffing of production","staffing_of_production_title":"Digitization and Follow-up of staffing of production","drill_samples_in_slaughter": "Drill samples in slaughter","drill_samples_in_slaughter_title": "Digitization and follow-up of drill samples in Slaughter","ccp_follow_up": "CCP follow up","ccp_follow_up_title": "Digitization and follow-up of CCP","oee_and_efficiency":"OEE and Efficiency","oee_and_efficiency_title":"Digitization and follow-up of OEE and Efficiency","slaughtered_head_meat_midriff":"Drill samples in slaughter (Ecoli)","slaughtered_head_meat_midriff_title":"Digitization and follow-up of drill samples in Slaughter (Ecoli)","satisfactory":"Satisfactory","actions_required":"Actions are required","map_detected_bacteria":"Detected Bacteria Map","map_detected_bacteria_title":"Suggestions for maps with detected Bacteria","thumbnail":"Thumbnail","label":"Label","number_detected":"Detected Number","daily_hygiene_rounds": "Daily Hygiene Rounds","daily_hygiene_rounds_title":"Digitization and follow-up of daily hygiene rounds","settings": "Settings","menu": "MENU","home": "Home","date": "Date","month": "Month","section": "Section","cause": "Cause","status": "Status","deviation_type": "Deviation Type","batch_number": "Batch Number","protein_value": "Protein Value","lactose_value": "Lactose Value","you_havent_purchased_item":"Your cart is waiting, complete your purchase today!","one_click_below":"One click below and it`s all yours!","purchase_access":"Purchase Access",
-"water_value": "Water Value","actions": "Actions","heading_protein_lactose_water": "Digitization and follow-up of protein, lactose and water content","heading_fruit_production":"Digitization of Food Safety Follow -up","heading_deviation_complaints":"Digitization and follow-up of Deviation follow-up","heading_drill_sample":"Streamlining Data Collection and Analysis for Drill Samples","english":"English","swedish": "Swedish","french": "French","spanish": "Spanish","portuguese":"Portuguese","fruit_production_fruit_key": {"orange":"Orange","apple":"Apple","banana":"Banana","strawberry":"Strawberry","cherries":"Cherries","avocado":"Avocado","watermelon":"Watermelon","grape":"Grape"},"save":"Save","add_row":"Add Row","select":"Select","success_save_response":"Ok! Data saved successfully","data_exist_for_week":"Data already exist for this day or week!","data_exist":"Data already exist!","total_workers":"Total Workers","incorrect_credentials":"The provided credentials are incorrect.","implemented_by":"Implemented by","cleared_before":"Cleared before","danger":"Danger","followup_of_productivity":"Follow Up of Productivity","followup_of_productivity_title":"Digitization and follow-up of productivity and efficiency using different process times","weekly_target":"Weekly Target","target":"Target","output":"Output","weekly_output":"Weekly Output","weekly_rate":"Weekly Rate","hours_and_rate":"Hours And Rate","available_hours":"Available Hours","production_hours":"Production Hours","lamb":"Lamb","pork":"Pork","beef":"Beef","ack_target_qty":"Ack-Target-Qty","ack_output_qty":"Ack-Output-Qty","ack_target_time":"Ack-Target(Time)","ack_output_time":"Ack-Output-Time","maintenance_hours":"Maintenance Hours","output_per_day":"Output/day","target_per_day":"Target/Day","output_percent":"Output Percent","accumulated":"Accumulated","available_time_per_week":"Available time per week","average_rate":"Average Rate","target_balance":"Target Balance","available_production_hours":"Available Production Hours","total_target_per_day":"Total Target/Day","output_per_day_per_time":"Output/day time","deviation_from_contract_qty":"Deviation from contract qty","deviation_from_contract_time":"Deviation from contract time","details":"Details",
+"water_value": "Water Value","actions": "Actions","heading_protein_lactose_water": "Digitization and follow-up of protein, lactose and water content","heading_fruit_production":"Digitization of Food Safety Follow -up","heading_deviation_complaints":"Digitization and follow-up of Deviation follow-up","heading_drill_sample":"Streamlining Data Collection and Analysis for Drill Samples","english":"English","swedish": "Swedish","french": "French","spanish": "Spanish","portuguese":"Portuguese","fruit_production_fruit_key": {"orange":"Orange","apple":"Apple","banana":"Banana","strawberry":"Strawberry","cherries":"Cherries","avocado":"Avocado","watermelon":"Watermelon","grape":"Grape"},"save":"Save","add_row":"Add Row","select":"Select","success_save_response":"Ok! Data saved successfully","data_exist_for_week":"Data already exist for this day or week!","data_exist":"Data already exist!","total_workers":"Total Workers","incorrect_credentials":"The provided credentials are incorrect.","implemented_by":"Implemented by","cleared_before":"Cleared before","danger":"Danger","followup_of_productivity":"Follow Up of Productivity","followup_of_productivity_title":"Digitization and follow-up of productivity and efficiency using different process times","weekly_target":"Weekly Target","target":"Target","output":"Output","weekly_output":"Weekly Output","weekly_rate":"Weekly Rate","hours_and_rate":"Hours And Rate","available_hours":"Available Hours","production_hours":"Production Hours","lamb":"Lamb","pork":"Pork","beef":"Beef","ack_target_qty":"Ack-Target-Qty","ack_output_qty":"Ack-Output-Qty","ack_target_time":"Ack-Target(Time)","ack_output_time":"Ack-Output-Time","maintenance_hours":"Maintenance Hours","output_per_day":"Output/day","target_per_day":"Target/Day","output_percent":"Output Percent","accumulated":"Accumulated","available_time_per_week":"Available time per week","average_rate":"Average Rate","target_balance":"Target Balance","available_production_hours":"Available Production Hours","total_target_per_day":"Total Target/Day","output_per_day_per_time":"Output/day time","deviation_from_contract_qty":"Deviation from contract qty","deviation_from_contract_time":"Deviation from contract time","details":"Details","time":"Time",
 "success_save_protein_lactose_water":"
 Protein, Lactos, water data saved successfully","loading":"Loading","protein":"Protein","lactose":"Lactose","water":"Water","chart_type":"Chart Type","bar":"Bar","area":"Area","stack":"Stack","not":"Not","yes":"Yes","no":"No","week":"Week","slaughter_house":"Slaughter house","slaughter_date":"Slaughter Date","slaughter_number":"Slaughter Number","piece_date":"Piece Date","number_of_days_after_slaughter":"Number of days after slaughter","kind_of_animal":"Kind of animal","aerobic":"Aerobic","e_coli":"E.Coli","enterobacta":"Enterobacter","staphylococcus":"Staphylococcus","all":"All",
 "drill_sample_product_key":{
@@ -76,7 +76,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
 "hygiene_rounds_product_type_key":{"bmp-buttermilk":"BMP-Buttermilk","bread_mix":"Bread mix","porridge":"Porridge","crispbread":"Crispbread","mme":"MME","scrubbing_fluid":"Scrubbing fluid","spray_grease":"Spray grease","spray_foamed_milk":"Spray foamed milk","waltz_cereals":"Waltz Cereals","whey":"Whey","whey_milk":"Whey milk","wpc":"WPC","gruel":"Gruel","gourd-requirements":"Gourd-Requirements","other":"Other"},
 "hygiene_rounds_line_type_key":{"the_packaging_warehouse":"The packaging warehouse","the_finished_goods_warehouse":"The finished goods warehouse","the_raw_material_warehouse":"The raw material warehouse","l52":"L52","l53":"L53","l54":"L54","l55":"L55","l56":"L56","l57":"L57","l58":"L58","l59":"L59","l62":"L62","l70":"L70","l71":"L71","l73":"L73","l81_rovema_1":"L81 (Rovema 1)","l83_rovema_3":"L83 (Rovema 3)","l84_hermic":"L84 (Hermic)","l89_rovema_4":"L89 (Rovema 4)","l90_can_line":"L90 Can line","tower_1":"Tower 1","tower_3":"Tower 3","tower_4":"Tower 4","the_ultrafiltration":"The ultrafiltration","waltz_6":"Waltz 6","waltz_78":"Waltz 7/8","tank_hall":"Tank hall"},
 "hygiene_rounds_danger_types_key": {"allergens":"Allergens","microbiological":"Microbiological","chemical":"Chemical","physical":"Physical"},
-"supervisor":"Supervisor","control":"Control","operator":"Operator","number_of_hours":"Number of hours","total_hours":"Total(Hours)","total_production":"Production-(kg)","efficiency":"Efficiency","productivity":"Productivity","monday":"Monday","tuesday":"Tuesday","wednesday":"Wednesday","thursday":"Thursday","friday":"Friday","saturday":"Saturday","sunday":"Sunday","days":"Days","weekly_total_hours_worked": "Weekly total hours",
+"supervisor":"Supervisor","control":"Control","operator":"Operator","number_of_hours":"Number of hours","total_hours":"Total(Hours)","total_production":"Production-(kg)","efficiency":"Efficiency","productivity":"Productivity","monday":"Monday","tuesday":"Tuesday","wednesday":"Wednesday","thursday":"Thursday","friday":"Friday","saturday":"Saturday","sunday":"Sunday","days":"Days","weekly_total_hours_worked": "Weekly total hours","number_of_bacteria_factory":"Number of bacteria detected in the factory","number_of_bacteria_decreased":"Number of detected bacteria decreased","number_of_bacteria_lamb":"Number of bacteria detected in lambs","number_of_bacteria_pig":"Number of bacteria detected in pig","number_of_bacteria_raw_meteria":"Number of bacteria detected on raw materials",
 "day": "Day",
 "year": "Year",
 "number_of_planned_break": "Scheduled break",
@@ -105,7 +105,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
 "total_work_time_in_min":"Total work time (in minutes)",
 "oee_factor":"OEE Factor"
 },
-"sv": {"greeting":"Välkommen tillbaka","sign_in_title": "Logga in på Techfood","username": "Användarnamn","password": "Lösenord","signin": "Logga in","username_placeholder": "Ange ditt användarnamn","password_placeholder": "Ange ditt lösenord","catch_phrase": "Strömlinjeforma ditt laboratorium:","catch_sentence": "Digitalisera livsmedelsresultat med precision!","add_new": "Lägga till ny","product": "Produkt","new":"Ny","language": "Språk","dashboard": "Instrumentbräda","my_records": "mina Rekord","protein_lactose_water": "Protein,laktos och vatten","protein_lactose_water_chart": "Protein laktos och vatten diagram","satisfactory":"Tillfredsställande","actions_required":"Åtgärder krävs","fruit_production": "Livsmedelssäkerhet uppföljning","deviation_complaints": "Avvikelse uppföljning","microbiological_sample": "Analys av mikrobiologiska provresultat","staffing_of_production": "Bemanning av produktion","staffing_of_production_title": "Digitalisering och uppföljning av bemanning av produktion","drill_samples_in_slaughter":"Borrprover i slakt","drill_samples_in_slaughter_title": "Digitalisering och uppföljning av borrprover i slakt","ccp_follow_up":"CCP uppföljning","ccp_follow_up_title": "Digitalisering och uppföljning av CCP","oee_and_efficiency":"OEE och verkningsgrad","oee_and_efficiency_title": "Digitalisering och uppföljning av OEE och verkningsgrad","you_havent_purchased_item": "Din kundvagn väntar, slutför ditt köp idag!","one_click_below": "Ett klick nedan och det är ditt!", "purchase_access": "Köp Åtkomst","slaughtered_head_meat_midriff": "Borrprover i slakt (Ecoli)",  "slaughtered_head_meat_midriff_title": "Digitalisering och uppföljning av borrprover i slakt (Ecoli)","limit": "Gränsvärde","map_detected_bacteria": "Upptäckt bakteriekarta","map_detected_bacteria_title": "Förslag för kartor med upptäckta bakterier",
+"sv": {"greeting":"Välkommen tillbaka","sign_in_title": "Logga in på Techfood","username": "Användarnamn","password": "Lösenord","signin": "Logga in","username_placeholder": "Ange ditt användarnamn","password_placeholder": "Ange ditt lösenord","catch_phrase": "Strömlinjeforma ditt laboratorium:","catch_sentence": "Digitalisera livsmedelsresultat med precision!","add_new": "Lägga till ny","product": "Produkt","new":"Ny","language": "Språk","dashboard": "Instrumentbräda","my_records": "mina Rekord","protein_lactose_water": "Protein,laktos och vatten","protein_lactose_water_chart": "Protein laktos och vatten diagram","satisfactory":"Tillfredsställande","actions_required":"Åtgärder krävs","fruit_production": "Livsmedelssäkerhet uppföljning","deviation_complaints": "Avvikelse uppföljning","microbiological_sample": "Analys av mikrobiologiska provresultat","staffing_of_production": "Bemanning av produktion","staffing_of_production_title": "Digitalisering och uppföljning av bemanning av produktion","drill_samples_in_slaughter":"Borrprover i slakt","drill_samples_in_slaughter_title": "Digitalisering och uppföljning av borrprover i slakt","ccp_follow_up":"CCP uppföljning","ccp_follow_up_title": "Digitalisering och uppföljning av CCP","oee_and_efficiency":"OEE och verkningsgrad","oee_and_efficiency_title": "Digitalisering och uppföljning av OEE och verkningsgrad","you_havent_purchased_item": "Din kundvagn väntar, slutför ditt köp idag!","one_click_below": "Ett klick nedan och det är ditt!", "purchase_access": "Köp Åtkomst","slaughtered_head_meat_midriff": "Borrprover i slakt (Ecoli)",  "slaughtered_head_meat_midriff_title": "Digitalisering och uppföljning av borrprover i slakt (Ecoli)","limit": "Gränsvärde","map_detected_bacteria": "Kartor över påvisade bakterier","map_detected_bacteria_title": "kartor över områen med påvisade bakterier",
   "thumbnail": "Miniatyr",
   "label": "Etikett",
   "number_detected": "Upptäckt antal",
@@ -160,7 +160,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "total_target_per_day": "Totalt mål/dag",
   "output_per_day_per_time": "Produktion/dagtid",
   "deviation_from_contract_qty": "Avvikelse från kontraktskvantitet",
-  "deviation_from_contract_time": "Avvikelse från kontraktstid",
+  "deviation_from_contract_time": "Avvikelse från kontraktstid","time":"Tid",
 "fruit_production_cause_key": {"tidiness_and_cleaning":"Städning","maintenance":"Underhåll","order_and_order":"Ordning och reda","pest":"Skadedjur","food_hygiene":"Livsmedelshygien"},
 "fruit_production_status_type_key": {"not_started":"Inte påbörjad","job_in_progress":"Jobb pågår","job_finished":"Jobb avslutat","effect_implemented":"Effekt implementerad"},"save":"Spara","add_row":"Lägg till rad","select":"Välj","success_save_response":"Ok! Data har sparats", "data_exist_for_week": "Data finns redan för denna dag eller vecka!",
   "data_exist": "Data finns redan!",
@@ -461,7 +461,11 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "saturday": "Lördag",
   "sunday": "Söndag",
   "days":"Dagar",
-"weekly_total_hours_worked": "Veckans totala arbetade timmar",
+"weekly_total_hours_worked": "Veckans totala arbetade timmar","number_of_bacteria_factory": "Antal bakterier upptäckta i fabriken",
+  "number_of_bacteria_decreased": "Antal upptäckta bakterier minskade",
+  "number_of_bacteria_lamb": "Antal bakterier upptäckta i lamm",
+  "number_of_bacteria_pig": "Antal bakterier upptäckta i gris",
+  "number_of_bacteria_raw_meteria": "Antal bakterier upptäckta på råvaror",
   "day": "Dag",
   "year": "År",
   "number_of_planned_break": "Planerad paus",
@@ -546,7 +550,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "total_target_per_day": "Objectif total/jour",
   "output_per_day_per_time": "Production/jour et par temps",
   "deviation_from_contract_qty": "Écart par rapport à la quantité contractuelle",
-  "deviation_from_contract_time": "Écart par rapport au temps contractuel",
+  "deviation_from_contract_time": "Écart par rapport au temps contractuel","time": "Heure",
   "drill_samples_in_slaughter": "Échantillons de Forage à l`Abattage","drill_samples_in_slaughter_title": "Numérisation et suivi des échantillons de forage dans l`abattage",
   "ccp_follow_up": "Suivi CCP","ccp_follow_up_title": "Numérisation et suivi de CCP","slaughtered_head_meat_midriff": "Échantillons de Forage à l`Abattage (Ecoli)",  "slaughtered_head_meat_midriff_title": "Numérisation et suivi des échantillons prélevés dans l`abattage (Ecoli)","oee_and_efficiency": "OEE et de l`efficacité","oee_and_efficiency_title": "Numérisation et suivi de l`OEE et de l`efficacité","map_detected_bacteria": "Carte des bactéries détectées","map_detected_bacteria_title": "Suggestions pour les cartes avec bactéries détectées",
   "thumbnail": "Vignette",
@@ -868,7 +872,11 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "saturday": "Samedi",
   "sunday": "Dimanche",
   "days":"Jours",
-  "weekly_total_hours_worked": "Heures totales travaillées par semaine",
+  "weekly_total_hours_worked": "Heures totales travaillées par semaine","number_of_bacteria_factory": "Nombre de bactéries détectées dans l`usine",
+  "number_of_bacteria_decreased": "Nombre de bactéries détectées diminué",
+  "number_of_bacteria_lamb": "Nombre de bactéries détectées dans l`agneau",
+  "number_of_bacteria_pig": "Nombre de bactéries détectées dans le porc",
+  "number_of_bacteria_raw_meteria": "Nombre de bactéries détectées sur les matières premières",
     "day": "Jour",
     "year": "Année",
     "number_of_planned_break": "Pause prévue",
@@ -951,7 +959,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "total_target_per_day": "Meta total/dia",
   "output_per_day_per_time": "Produção/dia tempo",
   "deviation_from_contract_qty": "Desvio da quantidade contratual",
-  "deviation_from_contract_time": "Desvio do tempo contratual",
+  "deviation_from_contract_time": "Desvio do tempo contratual","time":"Tempo",
   "protein_lactose_water": "Proteína Lactose & Água",
   "protein_lactose_water_chart": "Gráficos de proteína, lactose e água",
   "fruit_production": "Produção de Frutas",
@@ -1274,7 +1282,11 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "saturday": "Sábado",
   "sunday": "Domingo",
   "days":"Dias",
-  "weekly_total_hours_worked": "Total de horas trabalhadas na semana",
+  "weekly_total_hours_worked": "Total de horas trabalhadas na semana","number_of_bacteria_factory": "Número de bactérias detectadas na fábrica",
+  "number_of_bacteria_decreased": "Número de bactérias detectadas diminuído",
+  "number_of_bacteria_lamb": "Número de bactérias detectadas em cordeiros",
+  "number_of_bacteria_pig": "Número de bactérias detectadas em porcos",
+  "number_of_bacteria_raw_meteria": "Número de bactérias detectadas em matérias-primas",
     "day": "Dia",
     "year": "Ano",
     "number_of_planned_break": "Pausa programada",
@@ -1346,7 +1358,7 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "total_target_per_day": "Meta total/día",
   "output_per_day_per_time": "Producción/día tiempo",
   "deviation_from_contract_qty": "Desviación de la cantidad contractual",
-  "deviation_from_contract_time": "Desviación del tiempo contractual",
+  "deviation_from_contract_time": "Desviación del tiempo contractual","time": "Tiempo",
   "protein": "Proteína",
   "lactose": "Lactosa",
   "water": "Agua",
@@ -1681,7 +1693,11 @@ Protein, Lactos, water data saved successfully","loading":"Loading","protein":"P
   "saturday": "Sábado",
   "sunday": "Domingo",
   "days":"Dias",
-  "weekly_total_hours_worked": "Horas totales trabajadas semanalmente",
+  "weekly_total_hours_worked": "Horas totales trabajadas semanalmente","number_of_bacteria_factory": "Número de bacterias detectadas en la fábrica",
+  "number_of_bacteria_decreased": "Número de bacterias detectadas disminuido",
+  "number_of_bacteria_lamb": "Número de bacterias detectadas en cordero",
+  "number_of_bacteria_pig": "Número de bacterias detectadas en cerdo",
+  "number_of_bacteria_raw_meteria": "Número de bacterias detectadas en materias primas",
     "day": "Día",
     "year": "Año",
     "number_of_planned_break": "Pausa programada",
@@ -2094,12 +2110,12 @@ $product_types = [
 
         
         
-        Translations::create([
-            'translation' => str_replace("’","'",$translation),
-            'status'=>'1',
-        ]);
+        // Translations::create([
+        //     'translation' => str_replace("’","'",$translation),
+        //     'status'=>'1',
+        // ]);
         
-        //User::factory(20)->create();
+        User::factory(30)->create();
         //LabInputs::factory(100)->create();
         //FruitProduction::factory(100)->create();
         //DeviationComplaint::factory(100)->create();
