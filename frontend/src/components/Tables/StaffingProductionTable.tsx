@@ -6,7 +6,6 @@ import { ReusableMethods } from "../../methods/ReusableMethods";
 import AlertModal from "../Modals/AlertModals";
 import { useTranslation } from "react-i18next";
 const computValues = (values: any[], setSortedStaffingProduction: any) => {
-  console.log("values", values);
   //const dataArray: string[] = [];
   const groupedData = values.reduce((acc, item) => {
     // Check if the week already exists in the accumulator
@@ -97,7 +96,7 @@ const computValues = (values: any[], setSortedStaffingProduction: any) => {
     key,
     ...value,
   }));
-  console.log("result is ", formattedData);
+  // console.log("result is ", formattedData);
   setSortedStaffingProduction(formattedData);
   //return formattedData;
 };
@@ -132,9 +131,9 @@ const StaffingProduction = () => {
     if (staffingProduction.length > 1) {
       //////Sort the Data first
       const year = new Date().getFullYear();
-      const data: string[] = staffingProduction
-        .filter((value: any) => value.year == year)
-        .sort((a: any, b: any) => a.week - b.week);
+      const data: string[] = staffingProduction.sort(
+        (a: any, b: any) => a.week - b.week
+      );
       computValues(data, setSortedStaffingProduction);
       //   console.log("computed is " + computed);
       //   setSortedStaffingProduction(computed);

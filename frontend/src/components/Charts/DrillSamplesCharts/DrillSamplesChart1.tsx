@@ -484,8 +484,10 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("aerobic") +
@@ -543,8 +545,10 @@ const DrillSamplesChart1: React.FC<ChartProps> = (props: any) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("enterobacta") +

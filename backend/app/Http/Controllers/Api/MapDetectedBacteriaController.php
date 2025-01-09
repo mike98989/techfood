@@ -41,10 +41,15 @@ class MapDetectedBacteriaController extends Controller
         foreach ($validatedData as $bacteriaData) {
             // Save each batch associated with the PO Number
             //foreach ($bacteriaData['data'] as $data) {
+            // Ensure the data is an array
+            $data = array_values($bacteriaData['data']);
+// if (!is_array($data)) {
+//     $data = array_values((array) $data);
+// }
                 MapDetectedBacteria::create([
                     'user_id'=>$user->id,
                     'date' => $bacteriaData['date'],
-                    'detected_values' => json_encode($bacteriaData['data']),
+                    'detected_values' => json_encode($data),
                     'coordinate_id' => $bacteriaData['coordinateId'],
                 ]);
             //}
@@ -80,7 +85,7 @@ class MapDetectedBacteriaController extends Controller
     public function getCoordinates(Request $request)
     {
         $user = $request->user();
-        $coordinates =  MapDetectedBacteriaCoordinates::where('status',1)->where('user_id',$user->id)->with('image')->orderBy('title', 'desc')->get();
+        $coordinates =  MapDetectedBacteriaCoordinates::where('status',1)->with('image')->orderBy('title', 'desc')->get();
         return response()->json(['data'=>$coordinates],200);
     }
 }

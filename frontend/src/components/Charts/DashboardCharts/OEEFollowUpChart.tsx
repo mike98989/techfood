@@ -36,28 +36,28 @@ const computeChart = (data: any, t: any, parameterValue: string) => {
       const currentYear = new Date().getFullYear(); // Get the current year
 
       /////// If the date is this year
-      if (dateToCheck.getFullYear() === currentYear) {
-        if (!resultMap.has(date)) {
-          resultMap.set(date, {
-            dataValues: 0,
-          });
-        }
-
-        const dateEntry = resultMap.get(date);
-
-        if (parameterValue == "availability") {
-          dateEntry.dataValues = Math.round(inputdata[i].availability);
-        }
-        if (parameterValue === "performance") {
-          dateEntry.dataValues = Math.round(inputdata[i].performance);
-        }
-        if (parameterValue === "quality") {
-          dateEntry.dataValues = Math.round(inputdata[i].quality);
-        }
-        if (parameterValue === "oee") {
-          dateEntry.dataValues = Math.round(inputdata[i].overall_oee);
-        }
+      //if (dateToCheck.getFullYear() === currentYear) {
+      if (!resultMap.has(date)) {
+        resultMap.set(date, {
+          dataValues: 0,
+        });
       }
+
+      const dateEntry = resultMap.get(date);
+
+      if (parameterValue == "availability") {
+        dateEntry.dataValues = Math.round(inputdata[i].availability);
+      }
+      if (parameterValue === "performance") {
+        dateEntry.dataValues = Math.round(inputdata[i].performance);
+      }
+      if (parameterValue === "quality") {
+        dateEntry.dataValues = Math.round(inputdata[i].quality);
+      }
+      if (parameterValue === "oee") {
+        dateEntry.dataValues = Math.round(inputdata[i].overall_oee);
+      }
+      //}
     }
 
     // Convert the Map to an array of objects
@@ -163,8 +163,10 @@ const OEEFollowUpChart: React.FC<ChartProps> = (props: any) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("availability") + " " + t("limit") + " (" + constantLimit + ")",

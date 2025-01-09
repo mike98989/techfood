@@ -2,10 +2,11 @@
 export const URL = "localhost/";
 export const PROTOCOL = "http://";
 //export const PROTOCOL = "https://";
-export const API_VERSION = "v1/";
-export const API = "api/";
 //export const STORAGE = "backend/storage/app/public/";
 export const STORAGE = "storage/";
+
+export const API_VERSION = "v1/";
+export const API = "api/";
 export const BASE_URL = PROTOCOL + URL;
 export const FRONT_END_BASE_URL = "localhost/";
 export const PAGINATE_ITEM_COUNT = 50;

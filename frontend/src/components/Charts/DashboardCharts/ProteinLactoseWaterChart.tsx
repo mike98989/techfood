@@ -97,8 +97,10 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("protein") +
@@ -119,8 +121,10 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("lactose") +
@@ -141,8 +145,10 @@ const ProteinLactoseWaterChart: React.FC<ChartProps> = ({ chartData }) => {
           label: {
             borderColor: "#000000",
             style: {
-              color: "white",
+              color: "#000000",
               background: "#000000",
+              fontWeight: "bold",
+              fontSize: "13px",
             },
             text:
               t("water") +
